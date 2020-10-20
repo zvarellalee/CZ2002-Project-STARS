@@ -1,4 +1,4 @@
-package entity;
+
 
 public class RegisteredCourse {
 	private boolean onWaitlist;
