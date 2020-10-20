@@ -26,6 +26,7 @@ public class Student {
 		Calendar cal2 = Calendar.getInstance();
 		cal2.setTime(cal.getTime());
 		cal2.set(Calendar.HOUR_OF_DAY,22);
+		cal.set(Calendar.DAY_OF_MONTH,14);
 		this.accessStart = cal;
 		this.accessEnd = cal2;
 		courseList = new ArrayList<RegisteredCourse>();
