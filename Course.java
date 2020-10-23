@@ -1,5 +1,3 @@
-package entities;
-
 import java.util.ArrayList;
 
 /* Each course refers to a particular module from a particular school.*/
