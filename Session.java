@@ -2,13 +2,13 @@ package cz2002_Project;
 
 import java.util.Calendar;
 
-public class Lesson {
+public class Session {
 	private String sessionType; // type of session
 	private String venue;		// location of session
 	private Calendar sessionStart; // start time
 	private Calendar sessionEnd; // end time
 	
-	public Lesson(String sessionType, String venue, Calendar sessionStart, Calendar sessionEnd) {
+	public Session(String sessionType, String venue, Calendar sessionStart, Calendar sessionEnd) {
 		this.sessionType = sessionType;
 		this.venue = venue;
 		this.sessionStart = sessionStart;
