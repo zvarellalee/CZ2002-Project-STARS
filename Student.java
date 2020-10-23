@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Student {
+public class Student extends User {
 	private String matricNumber; 					// student's matric number, gender and nationality
 	private String gender;
 	private String nationality;	
@@ -11,7 +11,9 @@ public class Student {
 	private ArrayList<RegisteredCourse> courseList; // list of courses Student is registered for
 	
 	// ------ constructor ------
-	public Student(String matricNumber, String gender, String nationality) {
+	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, 
+					String matricNumber, String gender, String nationality) {
+		super(username, password, adminAccess, firstName, lastName, salt);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
@@ -31,9 +33,11 @@ public class Student {
 		this.accessEnd = cal2;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
-	public Student(String matricNumber, String gender, String nationality, 
+	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt,
+					String matricNumber, String gender, String nationality, 
 					int startYear, int startMth, int startDay, int startHour, int startMin,
 					int endMth, int endDay, int endHour, int endMin) {
+		super(username, password, adminAccess, firstName, lastName, salt);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
