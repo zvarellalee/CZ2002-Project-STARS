@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Index {
 	private int indexNumber; // identifier of index (key value)
 	private int vacancies; // number of slots available 
-	private ArrayList<Lesson> lessonList; // list of all lessons in the index
+	private ArrayList<Session> sessionList; // list of all sessions in the index
 	private ArrayList<Student> studentList; // list of all students enrolled in the course
 	private ArrayList<Student> waitList; // list of all students on the wait list.
 	
@@ -13,7 +13,7 @@ public class Index {
 	public Index(int indexNumber, int vacancies) {
 		this.indexNumber = indexNumber;
 		this.vacancies = vacancies;
-		lessonList = new ArrayList<Lesson>();
+		sessionList = new ArrayList<Session>();
 		studentList = new ArrayList<Student>();
 		waitList = new ArrayList<Student>();
 	}
@@ -27,8 +27,8 @@ public class Index {
 		return vacancies;
 	}
 	
-	public ArrayList<Lesson> getLessonList() {
-		return lessonList;
+	public ArrayList<Session> getSessionList() {
+		return sessionList;
 	}
 	
 	public ArrayList<Student> getStudentList() {
@@ -79,20 +79,20 @@ public class Index {
 
 	}
 	
-	// set the lessonList to a predefined lessonList
-	public void setLessonList(ArrayList<Lesson> lessonList) {
-		this.lessonList = lessonList;
+	// set the sessionList to a predefined sessionList
+	public void setSessionList(ArrayList<Session> sessionList) {
+		this.sessionList = sessionList;
 	}
 	
 	
-	// add a lesson to the lessonList
-	public void addLessonList(Lesson lesson) { 
-		lessonList.add(lesson);
+	// add a session to the sessionList
+	public void addSessionList(Session session) { 
+		sessionList.add(session);
 	}
 	
-	// remove a lesson from the lessonList
-	public void removeLessonList(Lesson lesson) {
-		if (lessonList.contains(lesson))
-			lessonList.remove(lesson);
+	// remove a session from the sessionList
+	public void removeSessionList(Session session) {
+		if (sessionList.contains(session))
+			sessionList.remove(session);
 	} 
 }
