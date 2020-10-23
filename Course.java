@@ -47,4 +47,14 @@ public class Course {
 		this.indexList = indexList;
 	}
 	
+	public void addIndex(Index index) {
+		indexList.add(index);
+	}
+	
+	public void removeIndex(Index index) {
+		if (indexList.contains(index)) {
+			indexList.remove(index);
+		}
+	}
+	
 }
