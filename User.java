@@ -1,4 +1,5 @@
 public class User {
+	private String name;
 	private String username;
 	private String password;
 	private boolean adminAccess;
@@ -9,6 +10,9 @@ public class User {
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+	public String getName() {
+		return name;
 	}
 	public String getUsername() {
 		return username;
