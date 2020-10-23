@@ -8,7 +8,7 @@ public class Course {
 	private String school;
 	private ArrayList<Index> indexList;
 
-	public Course(String courseCode, String courseName, String school, ArrayList<Index> indexList) {
+	public Course(String courseCode, String courseName, String school) {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
