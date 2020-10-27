@@ -7,7 +7,7 @@ public class User {
 	private String lastName;
 	private String salt;
 	
-	public User(String username, String password) {
+	public User(String username, String password, boolean adminAccess, String firstName, String lastName, String salt) {
 		this.username = username;
 		this.password = password;
 	}
@@ -25,6 +25,9 @@ public class User {
 	}
 	public String getLastName() {
 		return lastName;
+	}
+	public void setAdminAccess(boolean admin) {
+		adminAccess = admin;
 	}
 	public boolean getAdminAccess() {
 		return adminAccess;
