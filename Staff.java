@@ -1,11 +1,10 @@
-
-
-public class Staff {
+public class Staff extends User{
 	
 	private String name;
 	private String staffID;
 	
-	public Staff (String staffID) {
+	public Staff (String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String staffID) {
+		super(username, password, adminAccess, firstName, lastName, salt);
 		this.staffID = staffID;
 	}
 	
