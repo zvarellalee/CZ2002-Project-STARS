@@ -1,5 +1,3 @@
-
-
 public class RegisteredCourse {
 	private boolean onWaitlist;
 	private Course course;
@@ -29,7 +27,7 @@ public class RegisteredCourse {
 	}
 	
 	public Student getStudent() {
-		return Student;
+		return student;
 	}
 	
 	
