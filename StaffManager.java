@@ -25,11 +25,11 @@ public class StaffManager implements Manager{
 	}
 	
 	public void addStudent(Student student){
-        	//do nothing
+        //do nothing
 	}
 	
 	public void addCourse(String courseCode){
-        	//do nothing
+        //do nothing
 	}
 	
 	public void addStudentToIndex(Index index, Student student){
@@ -41,7 +41,12 @@ public class StaffManager implements Manager{
 	}
 	
 	public void printStudentList(String courseCode){
-		//do nothing
+		System.out.println("Course Code: " + course.getCourseCode(courseCode););
+		System.out.println("Name\tGender\tNationality");
+		
+		//Student student = course.getStudent();
+		System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
+						+ student.getGender() + ",\t" + student.getNationality());
 	}
 	
 	private Course findCourse(String courseCode){
