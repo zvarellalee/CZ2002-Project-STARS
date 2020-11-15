@@ -25,11 +25,11 @@ public class StaffManager implements Manager{
 	}
 	
 	public void addStudent(Student student){
-        //do nothing
+		//do nothing
 	}
 	
 	public void addCourse(String courseCode){
-        //do nothing
+		//do nothing
 	}
 	
 	public void addStudentToIndex(Index index, Student student){
