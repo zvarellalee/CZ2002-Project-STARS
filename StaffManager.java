@@ -20,16 +20,16 @@ public class StaffManager implements Manager{
 		course.setCourseName(courseCode);
 	}
 	
+	public void updateCourseSchool(Course course, String courseSchool){
+		course.setSchool(courseCode);
+	}
+	
 	public void addStudent(Student student){
-        //do nothing
+        	//do nothing
 	}
 	
 	public void addCourse(String courseCode){
-        //do nothing
-	}
-	
-	public void updateCourseSchool(Course course, String courseSchool){
-		course.setSchool(courseCode);
+        	//do nothing
 	}
 	
 	public void addStudentToIndex(Index index, Student student){
