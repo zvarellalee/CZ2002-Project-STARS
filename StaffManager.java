@@ -37,16 +37,31 @@ public class StaffManager implements Manager{
 	}
 	
 	public void printStudentList(int indexNumber){
-		//do nothing
+		System.out.println("Index Number: " + indexNumber;);
+		System.out.println("Name\tGender\tNationality");
+		
+		/*ArrayList<Index> courseIndex = course.getIndexList();
+		
+		for (Index index : courseIndex) {
+			for (Student student : courseIndex.getStudentList()) {
+				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
+								+ student.getGender() + ",\t" + student.getNationality());
+			}
+		}*/
 	}
 	
 	public void printStudentList(String courseCode){
-		System.out.println("Course Code: " + course.getCourseCode(courseCode););
+		System.out.println("Course Code: " + courseCode;);
 		System.out.println("Name\tGender\tNationality");
 		
-		//Student student = course.getStudent();
-		System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
-						+ student.getGender() + ",\t" + student.getNationality());
+		/*ArrayList<Index> courseIndex = course.getIndexList();
+		
+		for (Index index : courseIndex) {
+			for (Student student : courseIndex.getStudentList()) {
+				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
+								+ student.getGender() + ",\t" + student.getNationality());
+			}
+		}*/
 	}
 	
 	private Course findCourse(String courseCode){
