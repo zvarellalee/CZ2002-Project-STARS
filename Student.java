@@ -17,7 +17,7 @@ public class Student extends User {
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
-		Calendar cal = Calendar.getInstance();
+		/*Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR,2020);
 		cal.set(Calendar.MONTH,8);
 		cal.set(Calendar.DAY_OF_MONTH,11);
@@ -30,7 +30,9 @@ public class Student extends User {
 		cal2.set(Calendar.HOUR_OF_DAY,22);
 		cal.set(Calendar.DAY_OF_MONTH,14);
 		this.accessStart = cal;
-		this.accessEnd = cal2;
+		this.accessEnd = cal2;*/
+		this.accessStart = accessStart;
+		this.accessEnd = accessEnd;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
 	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt,
@@ -41,7 +43,7 @@ public class Student extends User {
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
-		Calendar cal = Calendar.getInstance();
+		/*Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR,startYear);
 		cal.set(Calendar.MONTH,startMth);
 		cal.set(Calendar.DAY_OF_MONTH,startDay);
@@ -56,7 +58,9 @@ public class Student extends User {
 		cal2.set(Calendar.HOUR_OF_DAY,endHour);
 		cal2.set(Calendar.MINUTE,endMin);
 		this.accessStart = cal;
-		this.accessEnd = cal2;
+		this.accessEnd = cal2;*/
+		this.accessStart = accessStart;
+		this.accessEnd = accessEnd;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
 	
