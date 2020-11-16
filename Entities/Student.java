@@ -1,3 +1,5 @@
+package Entities;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,9 +13,9 @@ public class Student extends User {
 	private ArrayList<RegisteredCourse> courseList; // list of courses Student is registered for
 	
 	// ------ constructor ------
-	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, 
+	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
 					String matricNumber, String gender, String nationality) {
-		super(username, password, adminAccess, firstName, lastName, salt);
+		super(username, password, adminAccess, firstName, lastName, salt, email);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
@@ -35,11 +37,11 @@ public class Student extends User {
 		this.accessEnd = accessEnd;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
-	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt,
+	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
 					String matricNumber, String gender, String nationality, 
 					int startYear, int startMth, int startDay, int startHour, int startMin,
 					int endMth, int endDay, int endHour, int endMin) {
-		super(username, password, adminAccess, firstName, lastName, salt);
+		super(username, password, adminAccess, firstName, lastName, salt, email);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
