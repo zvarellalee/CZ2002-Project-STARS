@@ -26,6 +26,9 @@ public class User {
 	public String getLastName() {
 		return lastName;
 	}
+	public String getSalt() {
+		return salt;
+	}
 	public void setAdminAccess(boolean admin) {
 		adminAccess = admin;
 	}
