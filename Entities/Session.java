@@ -1,4 +1,4 @@
-package cz2002_Project;
+package Entities;
 
 import java.util.Calendar;
 
