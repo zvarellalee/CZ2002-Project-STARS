@@ -6,13 +6,13 @@ public class Course {
 	private String courseCode;
 	private String courseName;
 	private String school;
+	private int AU;
 	private ArrayList<Index> indexList;
 
 	public Course(String courseCode, String courseName, String school) {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
-		this.indexList = new ArrayList<Index>();
 	}
 	
 	public String getCourseCode() {
@@ -37,6 +37,14 @@ public class Course {
 
 	public void setSchool(String school) {
 		this.school = school;
+	}
+
+	public int getAU() {
+		return AU;
+	}
+
+	public void setAU(int AU) {
+		this.AU = AU;
 	}
 
 	public ArrayList<Index> getIndexList() {
