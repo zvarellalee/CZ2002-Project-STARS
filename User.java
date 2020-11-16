@@ -1,18 +1,20 @@
 public class User {
-	private String name;
 	private String username;
 	private String password;
 	private boolean adminAccess;
 	private String firstName;
 	private String lastName;
 	private String salt;
+	private String email;
 	
-	public User(String username, String password, boolean adminAccess, String firstName, String lastName, String salt) {
+	public User(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email) {
 		this.username = username;
 		this.password = password;
-	}
-	public String getName() {
-		return name;
+		this.adminAccess = adminAccess;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.salt = salt;
+		this.email = email;
 	}
 	public String getUsername() {
 		return username;
@@ -28,6 +30,9 @@ public class User {
 	}
 	public String getSalt() {
 		return salt;
+	}
+	public String getEmail() {
+		return email;
 	}
 	public void setAdminAccess(boolean admin) {
 		adminAccess = admin;
