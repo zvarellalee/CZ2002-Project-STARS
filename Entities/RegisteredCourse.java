@@ -1,3 +1,5 @@
+package Entities;
+
 public class RegisteredCourse {
 	private boolean onWaitlist;
 	private Course course;
