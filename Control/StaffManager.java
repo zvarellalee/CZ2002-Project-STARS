@@ -1,8 +1,12 @@
-package planner.manager;
+package Control;
 
 import java.util.*;
+import Entities.Course;
+import Entities.Index;
+import Entities.Student;
+import Entities.User;
 
-public class StaffManager implements Manager{
+public class StaffManager {
 	private User Staff;
 	private Calendar accessStart;
 	private Calendar accessEnd;
@@ -17,11 +21,11 @@ public class StaffManager implements Manager{
 	}
 	
 	public void updateCourseName(Course course, String courseName){
-		course.setCourseName(courseCode);
+		course.setCourseName(courseName);
 	}
 	
 	public void updateCourseSchool(Course course, String courseSchool){
-		course.setSchool(courseCode);
+		course.setSchool(courseSchool);
 	}
 	
 	public void addStudent(Student student){
@@ -37,7 +41,7 @@ public class StaffManager implements Manager{
 	}
 	
 	public void printStudentList(int indexNumber){
-		System.out.println("Index Number: " + indexNumber;);
+		System.out.println("Index Number: " + indexNumber);
 		System.out.println("Name\tGender\tNationality");
 		
 		/*ArrayList<Index> courseIndex = course.getIndexList();
@@ -51,7 +55,7 @@ public class StaffManager implements Manager{
 	}
 	
 	public void printStudentList(String courseCode){
-		System.out.println("Course Code: " + courseCode;);
+		System.out.println("Course Code: " + courseCode);
 		System.out.println("Name\tGender\tNationality");
 		
 		/*ArrayList<Index> courseIndex = course.getIndexList();
@@ -65,10 +69,10 @@ public class StaffManager implements Manager{
 	}
 	
 	private Course findCourse(String courseCode){
-		//do nothing
+		return null; //TODO
 	}
 	
 	private Index findIndex(int index){
-		//do nothing
+		return null; //TODO
 	}
 }
