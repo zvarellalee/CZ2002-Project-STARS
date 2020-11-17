@@ -11,7 +11,7 @@ public class Database {
 	public static ArrayList<Staff> staffList = new ArrayList<Staff>();
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
 
-	public static void main(String[] args) {
+	public static void initialise() {
 		// Initialize students
 		Student carl = new Student("carl", "123", false, "Carl", 
 				"Butt", "xyz", "test@lmao.com", "U123U", "Asexual", "Alien");
@@ -51,5 +51,9 @@ public class Database {
 		// Initialize courseList with test data
 		courseList.add(oodp);
 		courseList.add(algo);
+	}
+	
+	public static Student returnStudent() {
+		return studentList.get(0);
 	}
 }
