@@ -7,37 +7,24 @@ import java.util.Date;
 public class Student extends User {
 	private String matricNumber; 					// student's matric number, gender and nationality
 	private String gender;
-	private String nationality;	
+	private String nationality;
+	private int numAU;					//remaining AU, update whenever student adds/drops a course
 	private Calendar accessStart; 					// start and end of STARS access period
 	private Calendar accessEnd;
 	private ArrayList<RegisteredCourse> courseList; // list of courses Student is registered for
 	
 	// ------ constructor ------
 	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
-					String matricNumber, String gender, String nationality) {
+					String matricNumber, String gender, String nationality, int numAU, Calendar accessStart, Calendar accessEnd) {
 		super(username, password, adminAccess, firstName, lastName, salt, email);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
-		/*Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR,2020);
-		cal.set(Calendar.MONTH,8);
-		cal.set(Calendar.DAY_OF_MONTH,11);
-		cal.set(Calendar.HOUR_OF_DAY,14);
-		cal.set(Calendar.MINUTE,0);
-		cal.set(Calendar.SECOND,0);
-		cal.set(Calendar.MILLISECOND,0);
-		Calendar cal2 = Calendar.getInstance();
-		cal2.setTime(cal.getTime());
-		cal2.set(Calendar.HOUR_OF_DAY,22);
-		cal.set(Calendar.DAY_OF_MONTH,14);
-		this.accessStart = cal;
-		this.accessEnd = cal2;*/
 		this.accessStart = accessStart;
 		this.accessEnd = accessEnd;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
-	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
+	/*public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
 					String matricNumber, String gender, String nationality, 
 					int startYear, int startMth, int startDay, int startHour, int startMin,
 					int endMth, int endDay, int endHour, int endMin) {
@@ -45,7 +32,7 @@ public class Student extends User {
 		this.matricNumber = matricNumber;
 		this.gender = gender;
 		this.nationality = nationality;
-		/*Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR,startYear);
 		cal.set(Calendar.MONTH,startMth);
 		cal.set(Calendar.DAY_OF_MONTH,startDay);
@@ -60,11 +47,9 @@ public class Student extends User {
 		cal2.set(Calendar.HOUR_OF_DAY,endHour);
 		cal2.set(Calendar.MINUTE,endMin);
 		this.accessStart = cal;
-		this.accessEnd = cal2;*/
-		this.accessStart = accessStart;
-		this.accessEnd = accessEnd;
+		this.accessEnd = cal2;
 		courseList = new ArrayList<RegisteredCourse>();
-	}
+	}*/
 	
 	// ------ accessor methods ------
 	public String getMatricNumber() {
@@ -77,6 +62,10 @@ public class Student extends User {
 	
 	public String getNationality() {
 		return nationality;
+	}
+	
+	public int getNumAU() {
+		return numAU;
 	}
 	
 	public Calendar getAccessStart() {
@@ -103,6 +92,10 @@ public class Student extends User {
 	
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+	
+	public void setNumAU(int numAU) {
+		this.numAU = numAU;
 	}
 	
 	public void setAccessStart(Calendar accessStart) {
