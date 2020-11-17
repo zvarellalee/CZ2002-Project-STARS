@@ -15,7 +15,7 @@ public class Course {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
-		indexList = new ArrayList<Index> ();
+		indexList = new ArrayList<Index>();
 	}
 	
 	// ------ accessor methods ------
