@@ -1,4 +1,4 @@
-package Control;
+package control;
 
 import java.util.*;
 import Entities.Course;
