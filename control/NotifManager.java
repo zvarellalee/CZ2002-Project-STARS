@@ -8,7 +8,7 @@ import Entities.Student;
 
 public class NotifManager {
 	private static final String sender_email = "tester_email";
-    private static final String sender_password = "password123";
+	private static final String sender_password = "password123";
 		
 	public static void sendEmail(Student student, String courseCode){
 		String email = student.getEmail();
@@ -34,7 +34,7 @@ public class NotifManager {
 			msg.setSubject("Test email");
 			msg.setText("Does it work?");
 			Transport.send(msg);
-			}
+		}
 		catch (AddressException ae) {
 			ae.printStackTrace();
 		}
