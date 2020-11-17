@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 public class Staff extends User {
 	
