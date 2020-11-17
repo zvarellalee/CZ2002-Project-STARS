@@ -8,7 +8,7 @@ public class Student extends User {
 	private String matricNumber; 					// student's matric number, gender and nationality
 	private String gender;
 	private String nationality;
-	private int numAU;					//remaining AU, update whenever student adds/drops a course
+	private int numAU;						//remaining AU, update whenever student adds/drops a course
 	private Calendar accessStart; 					// start and end of STARS access period
 	private Calendar accessEnd;
 	private ArrayList<RegisteredCourse> courseList; // list of courses Student is registered for
@@ -24,32 +24,6 @@ public class Student extends User {
 		this.accessEnd = accessEnd;
 		courseList = new ArrayList<RegisteredCourse>();
 	}
-	/*public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
-					String matricNumber, String gender, String nationality, 
-					int startYear, int startMth, int startDay, int startHour, int startMin,
-					int endMth, int endDay, int endHour, int endMin) {
-		super(username, password, adminAccess, firstName, lastName, salt, email);
-		this.matricNumber = matricNumber;
-		this.gender = gender;
-		this.nationality = nationality;
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR,startYear);
-		cal.set(Calendar.MONTH,startMth);
-		cal.set(Calendar.DAY_OF_MONTH,startDay);
-		cal.set(Calendar.HOUR_OF_DAY,startHour);
-		cal.set(Calendar.MINUTE,startMin);
-		cal.set(Calendar.SECOND,0);
-		cal.set(Calendar.MILLISECOND,0);
-		Calendar cal2 = Calendar.getInstance();
-		cal2.setTime(cal.getTime());
-		cal.set(Calendar.MONTH,endMth);
-		cal.set(Calendar.DAY_OF_MONTH,endDay);
-		cal2.set(Calendar.HOUR_OF_DAY,endHour);
-		cal2.set(Calendar.MINUTE,endMin);
-		this.accessStart = cal;
-		this.accessEnd = cal2;
-		courseList = new ArrayList<RegisteredCourse>();
-	}*/
 	
 	// ------ accessor methods ------
 	public String getMatricNumber() {
@@ -106,14 +80,14 @@ public class Student extends User {
 		this.accessEnd = accessEnd;
 	}
 	
-	// Not sure if we need this? Same for setCourseList()
+	// Not sure if we need this? Same for getCourseList()
 	/*public void setCourseList(ArrayList<RegisteredCourse> courseList) {
 		this.courseList = courseList;
 	}*/
 	
 	// To test, delete later
 	/*public static void main(String[] args) {
-		Student stud = new Student("gay", "burger", "lol");
+		Student stud = new Student("test", "burger", "lol");
 		Student stud2 = new Student("noob", "cow", "eat", 2020, 9, 10, 3, 5, 9, 13, 4, 30);
 		Calendar cal = Calendar.getInstance();
 		System.out.println(stud.getAccessStart().getTime());
