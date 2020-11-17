@@ -53,7 +53,4 @@ public class Database {
 		courseList.add(algo);
 	}
 	
-	public static Student returnStudent() {
-		return studentList.get(0);
-	}
 }
