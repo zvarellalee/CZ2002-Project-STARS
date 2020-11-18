@@ -7,6 +7,7 @@ import entities.Course;
 import entities.Staff;
 import entities.Student;
 import control.StaffManager;
+import control.StudentManager;
 
 public class StaffUI implements UserUI {
 	
@@ -119,22 +120,46 @@ public class StaffUI implements UserUI {
 						selection = sc.nextInt();
 						
 						if (selection == 1) {
+							System.out.print("Enter Course Code to add: ");
+							String courseCode = sc.next();
+							System.out.print("Enter Course Name to add: ");
+							String courseName = sc.next();
+							System.out.print("Enter Faculty to add: ");
+							String school = sc.next();
+							System.out.print("Input Index List to add: ");
+							//TODO: Find out how to input Index List
 							
+							staffManager.addCourse(courseCode, courseName, school, indexList);
 						}
 						else if (selection == 2) {
+							System.out.print("Enter Course Code to update: ");
+							String courseCode = sc.next();
+							System.out.print("Enter Course Name to update: ");
+							String courseName = sc.next();
+							System.out.print("Enter Faculty to update: ");
+							String school = sc.next();
 							
+							Course course = StudentManager.getCourseFromCourseCode(courseCode);
+							staffManager.updateCourseCode(course, courseCode);
+							staffManager.updateCourseName(course, courseName);
+							staffManager.updateCourseSchool(course, school);
 						}
 					}
 					while (selection != 3);
 					break;
 				case 4:
 					// Check vacancies for index number
+					//TODO
 					break;
 				case 5:
 					// Print student list by index number
+					// #TODO
 					break;
 				case 6:
 					// Print student list by course code
+					System.out.print("Enter Course Code: ");
+					String courseCode = sc.next();
+					staffManager.printStudentList(courseCode);
 					break;
 				case 7:
 					// exit
