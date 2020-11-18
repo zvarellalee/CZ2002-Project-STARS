@@ -11,10 +11,11 @@ public class Course {
 	private int AU;
 	private ArrayList<Index> indexList;
 
-	public Course(String courseCode, String courseName, String school) {
+	public Course(String courseCode, String courseName, String school, int AU) {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
+		this.AU = AU;
 		indexList = new ArrayList<Index>();
 	}
 	
