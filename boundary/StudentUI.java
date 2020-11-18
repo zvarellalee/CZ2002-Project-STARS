@@ -10,12 +10,21 @@ public class StudentUI {
 	
 	private static Student user;
 	
+	public Student getStudent() {
+		return StudentUI.user;
+	}
+	
+	public void setStudent(Student user) {
+		StudentUI.user = user;
+	}
+	
 	// to test
 	public static void main(String[] args) {
 		Database.initialise();
 		user = Database.studentList.get(0);
 		StudentUI showUI = new StudentUI();
-		showUI.initStudentUI(user);
+		showUI.setStudent(user);
+		showUI.initStudentUI();
 	}
 	
 	public void initStudentUI(Student user) {
