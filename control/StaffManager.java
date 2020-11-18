@@ -131,13 +131,13 @@ public class StaffManager {
 	}
 	
 	private Index findIndex(int indexNumber, String courseCode){
-			Course course = findCourse(courseCode);
-			List<Index> indexList = course.getIndexList();
+		Course course = findCourse(courseCode);
+		List<Index> indexList = course.getIndexList();
 			
-			for (Index i: indexList ) {
-				if (i.getIndexNumber() == indexNumber) {
-					return i;
-				}
+		for (Index i: indexList ) {
+			if (i.getIndexNumber() == indexNumber) {
+				return i;
 			}
+		}
 	}
 }
