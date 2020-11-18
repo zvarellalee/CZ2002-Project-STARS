@@ -15,9 +15,9 @@ public class Database {
 	public static void initialise() {
 		// Initialize students
 		Student carl = new Student("carl", "123", false, "Carl", 
-				"Butt", "xyz", "test@lmao.com", "U123U", "Asexual", "Alien");
+				"Butt", "xyz", "test@lmao.com", "U123U", "Asexual", "Alien", 21);
 		Student stacey = new Student("stacey", "321", false, "Stacey", 
-				"Smiles", "zxy", "test2@lmao.com", "U321U", "GenderFluid", "North Korean");
+				"Smiles", "zxy", "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 21);
 		
 		// Initialize staffs
 		Staff lokey = new Staff ("dustbin", "jkl", true, "Loke", "Dustbin", "abc", "a@test.com", "S666S");
