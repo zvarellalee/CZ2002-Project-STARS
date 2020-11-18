@@ -111,7 +111,7 @@ public class StudentManager {
 	
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
-		Course droppedCourse = StudentManager.getCourseFromCourseCode(courseCode);
+		Course droppedCourse = getCourseFromCourseCode(courseCode);
 		
 		for (RegisteredCourse course : courses) {
 			if (course.getCourse().getCourseCode() == courseCode) {
@@ -177,43 +177,53 @@ public class StudentManager {
 		System.out.println("");
 	}
 	
-	public static boolean checkVacancies(Course course, int index) {
-		for (Index id: course.getIndexList()) {
-			if (id.getIndexNumber() == index) {
-				System.out.println("================================================================");
-				System.out.println("Course Code\t\t\tIndex\tVacancy");
-				System.out.println("================================================================");
-				System.out.println(course.getCourseCode() + "\t\t" + index + "\t\t" + id.getVacancies());
-				System.out.println("");
-				return true;
+	public boolean checkVacancies(String courseCode) {
+		// initialise course does not exist
+		boolean courseExists = false;
+		// find the course that student wants to check
+		Course selectedCourse = getCourseFromCourseCode(courseCode);
+		
+		// if course code is found
+		if (selectedCourse != null) {
+			// get all indexes from course
+			courseExists = true;
+			ArrayList<Index> courseIndexes = getAllIndexesFromCourse(selectedCourse);
+			
+			System.out.println("\nCourse Code: " + selectedCourse.getCourseCode());
+			System.out.println("Course Name: " + selectedCourse.getCourseName());
+
+			// print all the indexes and their respective vacancies and waitLists
+			System.out.println("================================================================");
+			System.out.println("Index\t\tVacancy\t\tWaitlist");
+			System.out.println("================================================================");
+			for (Index index: courseIndexes) {
+				System.out.println(index.getIndexNumber() + "\t\t" + index.getVacancies() + "\t\t" + index.getWaitListSize());
 			}
+			System.out.println("");
 		}
-		System.out.println("Invalid index number! Please try again.");
-		System.out.println("");
-		return false;
+		
+		return courseExists;
 	}
 	
-	public static Course getCourseFromCourseCode(String courseCode) {
+	// --- helper methods---
+	public Course getCourseFromCourseCode(String courseCode) {
 		for (Course course: Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				return course;
 			}
 		}
-		System.out.println("Invalid course code! Please try again.");
+		System.out.println("\nInvalid Course Code! Please try again.");
 		System.out.println("");
 		return null;
 	}
 	
-	public static void printAllIndexesFromCourse(Course course) {
-		System.out.println("\nCourse Code: "+ course.getCourseCode());
-		System.out.println("Course Name: "+ course.getCourseName());
-		System.out.println("================================================================");
-		System.out.println("Indexes Available");
-		System.out.println("================================================================");
+	
+	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
+		ArrayList<Index> courseIndexes = new ArrayList<Index>();
 		for (Index id: course.getIndexList()) {
-			System.out.println(id.getIndexNumber());
+			courseIndexes.add(id);
 		}
-		System.out.println("");
+		return courseIndexes;
 	}
 	
-}
+	
