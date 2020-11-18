@@ -6,7 +6,7 @@ import entities.Course;
 import entities.Student;
 import control.StudentManager;
 
-public class StudentUI {
+public class StudentUI implements UserUI {
 	
 	private static Student user;
 	
@@ -22,12 +22,12 @@ public class StudentUI {
 	public static void main(String[] args) {
 		Database.initialise();
 		user = Database.studentList.get(0);
-		StudentUI showUI = new StudentUI();
-		showUI.setStudent(user);
-		showUI.initStudentUI();
+		StudentUI studentUI = new StudentUI();
+		studentUI.setStudent(user);
+		studentUI.showUI();
 	}
 	
-	public void initStudentUI() {
+	public void showUI() {
 
 		StudentManager studentManager = new StudentManager(user);
 		Scanner sc = new Scanner(System.in); 
@@ -73,19 +73,19 @@ public class StudentUI {
 					do {
 						System.out.print("Enter course code: ");
 						String courseCode = sc.next();
-						selectedCourse = studentManager.getCourseFromCourseCode(courseCode);
+						selectedCourse = StudentManager.getCourseFromCourseCode(courseCode);
 						if (selectedCourse != null) {
 							courseExists = true;
 						}
 					} while (!courseExists);
 					
-					studentManager.printAllIndexesFromCourse(selectedCourse);
+					StudentManager.printAllIndexesFromCourse(selectedCourse);
 					
 					boolean indexExists = false;
 					do {
 						System.out.print("Enter index: ");
 						int index = sc.nextInt();
-						indexExists = studentManager.checkVacancies(selectedCourse, index);
+						indexExists = StudentManager.checkVacancies(selectedCourse, index);
 					} while (!indexExists);
 					
 				    // extras or can be made into method
