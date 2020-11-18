@@ -57,7 +57,7 @@ public class StaffManager {
 	}
 	
 
-	public void addCourse(String courseCode, String courseName, String school, ArrayList<Index> indexList ) {
+	public void addCourse(String courseCode, String courseName, String school, int AU, ArrayList<Index> indexList) {
 		for (Course course : Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				System.out.println("Course "+ courseCode +" already exists");
@@ -65,7 +65,7 @@ public class StaffManager {
 			}
 		}
 		
-		Course newCourse = new Course ( courseCode, courseName, school);
+		Course newCourse = new Course (courseCode, courseName, school, 3);
 		ArrayList<Index> il 	= new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		Database.courseList.add(newCourse); 
