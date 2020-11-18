@@ -24,8 +24,8 @@ public class Database {
 		Staff lala = new Staff ("lalala", "ghj", true, "Lala", "Lol", "cba", "b@test.com", "S888S");
 		
 		// Initialize courses
-		Course oodp = new Course("2002", "Obviously Oolong Dying Programme", "Weed Science");
-		Course algo = new Course("2001", "Algorithms", "Computer Science");
+		Course oodp = new Course("2002", "Obviously Oolong Dying Programme", "Weed Science", 3);
+		Course algo = new Course("2001", "Algorithms", "Computer Science", 3);
 		
 		// Initialize indexes
 		Index a = new Index(1, 10);
