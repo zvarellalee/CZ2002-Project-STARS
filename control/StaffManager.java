@@ -114,14 +114,11 @@ public class StaffManager {
 	
 	
 	public void printStudentList(String courseCode){
+		Course course = findCourse(courseCode);
+		
 		System.out.println("Course Code: " + courseCode);
 		System.out.println("Name\tGender\tNationality");
 		
-		for (Course c : Database.courseList) {
-			if (c.getCourseCode().equals(courseCode)) {
-				Course course = c;
-			}
-		}
 		ArrayList<Index> courseIndex = course.getIndexList();
 		
 		for (Index index : courseIndex) {
@@ -132,17 +129,13 @@ public class StaffManager {
 		}
 	}	
 	
-	public void printStudentList(int index){{
+	public void printStudentList(int indexNumber, String courseCode){
 		System.out.println("Index Number: " + index);
 		System.out.println("Name\tGender\tNationality");
 		
-		for (Index i : Database.indexList) {
-			if (i.getIndexNumber().equals(index)) {
-				Index courseIndex = i;
-			}
-		}
+		Index index = findIndex(indexNumber, courseCode);
 		
-		for (Student student : courseIndex.getStudentList()) {
+		for (Student student : index.getStudentList()) {
 			System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
 							+ student.getGender() + ",\t" + student.getNationality());
 		}
