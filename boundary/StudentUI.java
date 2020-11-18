@@ -63,25 +63,14 @@ public class StudentUI implements UserUI {
 					break;
 				case 4:
 					// check vacancies 
+					// initialise course does not exist
 					boolean courseExists = false;
-					Course selectedCourse;
+					// loop user to re-enter courseCode if course does not exist
 					do {
-						System.out.print("Enter course code: ");
+						System.out.print("Enter Course Code: ");
 						String courseCode = sc.next();
-						selectedCourse = StudentManager.getCourseFromCourseCode(courseCode);
-						if (selectedCourse != null) {
-							courseExists = true;
-						}
-					} while (!courseExists);
-					
-					studentManager.printAllIndexesFromCourse(selectedCourse);
-					
-					boolean indexExists = false;
-					do {
-						System.out.print("Enter index: ");
-						int index = sc.nextInt();
-						indexExists = studentManager.checkVacancies(selectedCourse, index);
-					} while (!indexExists);
+						courseExists = studentManager.checkVacancies(courseCode);
+					} while(!courseExists);
 					break;
 				case 5:
 					// change index number
