@@ -10,28 +10,26 @@ import entities.Student;
 
 public class StaffManager {
 	private Staff user;
-	private Calendar accessStart;
-	private Calendar accessEnd;
 	
 	public StaffManager(Staff user) {
 		this.user = user;
 		// Database.initialise(); // To test out the UI
 	}
 	
-	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd){
-		this.accessStart = accessStart;
-		this.accessEnd = accessEnd;
+	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd, Student student) {
+		student.setAccessStart(accessStart);
+		student.setAccessEnd(accessEnd);
 	}
 	
-	public void updateCourseCode(Course course, String courseCode){
+	public void updateCourseCode(Course course, String courseCode) {
 		course.setCourseCode(courseCode);
 	}
 	
-	public void updateCourseName(Course course, String courseName){
+	public void updateCourseName(Course course, String courseName) {
 		course.setCourseName(courseName);
 	}
 	
-	public void updateCourseSchool(Course course, String courseSchool){
+	public void updateCourseSchool(Course course, String courseSchool) {
 		course.setSchool(courseSchool);
 	}
 	
