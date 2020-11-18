@@ -10,6 +10,7 @@ public class Database {
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 	public static ArrayList<Staff> staffList = new ArrayList<Staff>();
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
+	public static ArrayList<Course> indexList = new ArrayList<Index>();
 
 	public static void initialise() {
 		// Initialize students
@@ -51,6 +52,10 @@ public class Database {
 		// Initialize courseList with test data
 		courseList.add(oodp);
 		courseList.add(algo);
+		
+		// Initialize indexList with test data
+		indexList.add(12345);
+		indexList.add(67890);
 	}
 	
 }
