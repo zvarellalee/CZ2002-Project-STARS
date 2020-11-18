@@ -117,14 +117,35 @@ public class StaffManager {
 		System.out.println("Course Code: " + courseCode);
 		System.out.println("Name\tGender\tNationality");
 		
-		/*ArrayList<Index> courseIndex = course.getIndexList();
+		for (Course c : Database.courseList) {
+			if (c.getCourseCode().equals(courseCode)) {
+				Course course = c;
+			}
+		}
+		ArrayList<Index> courseIndex = course.getIndexList();
 		
 		for (Index index : courseIndex) {
 			for (Student student : courseIndex.getStudentList()) {
 				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
 								+ student.getGender() + ",\t" + student.getNationality());
 			}
-		}*/
+		}
+	}	
+	
+	public void printStudentList(int index){{
+		System.out.println("Index Number: " + index);
+		System.out.println("Name\tGender\tNationality");
+		
+		for (Index i : Database.indexList) {
+			if (i.getIndexNumber().equals(index)) {
+				Index courseIndex = i;
+			}
+		}
+		
+		for (Student student : courseIndex.getStudentList()) {
+			System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
+							+ student.getGender() + ",\t" + student.getNationality());
+		}
 	}
 	
 	private Course findCourse(String courseCode){
