@@ -39,6 +39,10 @@ public class Index {
 		return waitList;
 	}
 	
+	public int getWaitListSize() {
+		return waitList.size();
+	}
+	
 	// ------ mutator methods ------
 	// change the number of vacancies
 	public void setVacancies(int num) {
