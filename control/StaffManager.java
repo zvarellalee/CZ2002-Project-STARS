@@ -1,15 +1,22 @@
 package control;
 
 import java.util.*;
-import Entities.Course;
-import Entities.Index;
-import Entities.Student;
-import Entities.User;
+import database.Database;
+import entities.Course;
+import entities.Index;
+import entities.RegisteredCourse;
+import entities.Staff;
+import entities.Student;
 
 public class StaffManager {
-	private User Staff;
+	private Staff user;
 	private Calendar accessStart;
 	private Calendar accessEnd;
+	
+	public StaffManager(Staff user) {
+		this.user = user;
+		// Database.initialise(); // To test out the UI
+	}
 	
 	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd){
 		this.accessStart = accessStart;
@@ -37,14 +44,14 @@ public class StaffManager {
 			}
 		}	
 		
-        	studentList.add(student);
+        	Database.studentList.add(student);
 		printStudentList();
 	}
 	
 	private  void printStudentList() { 
 		System.out.println("Matriculation Number         Full Name");
 		System.out.println("---------------------------------------------------");
-		for (Student student : studentList){
+		for (Student student : Database.studentList){
 			System.out.print(student.getMatricNumber() + "\t");
 			System.out.println(student.getFirstName() + " " + student.getLastName()); 
 			// decide how much to display
@@ -53,7 +60,7 @@ public class StaffManager {
 	
 
 	public void addCourse(String courseCode, String courseName, String school, ArrayList<Index> indexList ) {
-		for (Course course : courseList) {
+		for (Course course : Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				System.out.println("Course "+ courseCode +" already exists");
 				return;
@@ -63,14 +70,14 @@ public class StaffManager {
 		Course newCourse = new Course ( courseCode, courseName, school);
 		ArrayList<Index> il 	= new ArrayList<Index>();
 		newCourse.setIndexList(il);
-		courseList.add(newCourse); 
+		Database.courseList.add(newCourse); 
 		printCourseList();
 	}
 	
 	public void printCourseList() {
 		System.out.println("Course Code : Course Name");
 		System.out.println("---------------------------------------------------");
-		for (Course course : courseList){
+		for (Course course : Database.courseList){
 			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
 			
 		}
@@ -93,7 +100,7 @@ public class StaffManager {
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
-						studentList.add(s);
+						Database.studentList.add(s);
 						rc.setOnWaitlist(false);
 						studentWaitlist.remove(s);
 						vacancy--;
@@ -123,11 +130,12 @@ public class StaffManager {
 	}
 	
 	private Course findCourse(String courseCode){
-		for (Course c : courseList) {
+		for (Course c : Database.courseList) {
 			if (c.getCourseCode().equals(courseCode)) {
 				return c;
 			}
 		}
+		return null;
 	}
 	
 	private Index findIndex(int indexNumber, String courseCode){
@@ -139,5 +147,6 @@ public class StaffManager {
 				return i;
 			}
 		}
+		return null;
 	}
 }
