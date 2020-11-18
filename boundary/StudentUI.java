@@ -27,7 +27,7 @@ public class StudentUI {
 		showUI.initStudentUI();
 	}
 	
-	public void initStudentUI(Student user) {
+	public void initStudentUI() {
 
 		StudentManager studentManager = new StudentManager(user);
 		Scanner sc = new Scanner(System.in); 
