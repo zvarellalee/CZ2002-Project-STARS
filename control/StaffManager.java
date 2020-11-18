@@ -28,31 +28,85 @@ public class StaffManager {
 		course.setSchool(courseSchool);
 	}
 	
-	public void addStudent(Student student){
-		//do nothing
-	}
-	
-	public void addCourse(String courseCode){
-		//do nothing
-	}
-	
-	public void addStudentToIndex(Index index, Student student){
-		//do nothing
-	}
-	
-	public void printStudentList(int indexNumber){
-		System.out.println("Index Number: " + indexNumber);
-		System.out.println("Name\tGender\tNationality");
+	public void addStudent(Student student) { 
 		
-		/*ArrayList<Index> courseIndex = course.getIndexList();
-		
-		for (Index index : courseIndex) {
-			for (Student student : courseIndex.getStudentList()) {
-				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
-								+ student.getGender() + ",\t" + student.getNationality());
+		for (Student s : Database.studentList) {
+			if (s.getMatricNumber().equals(student.getMatricNumber())) {
+				System.out.println("Student already exists");
+				return;
 			}
-		}*/
+		}	
+		
+        	studentList.add(student);
+		printStudentList();
 	}
+	
+	private  void printStudentList() { 
+		System.out.println("Matriculation Number         Full Name");
+		System.out.println("---------------------------------------------------");
+		for (Student student : studentList){
+			System.out.print(student.getMatricNumber() + "\t");
+			System.out.println(student.getFirstName() + " " + student.getLastName()); 
+			// decide how much to display
+		}
+	}
+	
+
+	public void addCourse(String courseCode, String courseName, String school, ArrayList<Index> indexList ) {
+		for (Course course : courseList) {
+			if (course.getCourseCode().equals(courseCode)) {
+				System.out.println("Course "+ courseCode +" already exists");
+				return;
+			}
+		}
+		
+		Course newCourse = new Course ( courseCode, courseName, school);
+		ArrayList<Index> il 	= new ArrayList<Index>();
+		newCourse.setIndexList(il);
+		courseList.add(newCourse); 
+		printCourseList();
+	}
+	
+	public void printCourseList() {
+		System.out.println("Course Code : Course Name");
+		System.out.println("---------------------------------------------------");
+		for (Course course : courseList){
+			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
+			
+		}
+	}
+	
+	public void addStudentToIndex(String courseCode, int indexNumber) {
+		Index index = findIndex( indexNumber, courseCode);
+		Course course = findCourse(courseCode);
+		int vacancy = index.getVacancies();
+		ArrayList<Student> studentWaitlist = index.getWaitList();
+		ArrayList<Student> studentlist = index.getStudentList();
+		
+		if (vacancy <= 0) {
+			System.out.println("No vacancies");
+			return;
+		}
+		
+		for (Student s : studentWaitlist) {
+			if(vacancy > 0 || studentWaitlist.isEmpty()) {
+				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
+				for ( RegisteredCourse rc : registeredCourseList) {
+					if (rc.getIndex().equals(index)) {
+						studentList.add(s);
+						rc.setOnWaitlist(false);
+						studentWaitlist.remove(s);
+						vacancy--;
+					}
+				}
+						
+		     }
+		}
+		
+		index.setVacancies(vacancy);
+			
+	}
+	
 	
 	public void printStudentList(String courseCode){
 		System.out.println("Course Code: " + courseCode);
@@ -69,10 +123,21 @@ public class StaffManager {
 	}
 	
 	private Course findCourse(String courseCode){
-		return null; //TODO
+		for (Course c : courseList) {
+			if (c.getCourseCode().equals(courseCode)) {
+				return c;
+			}
+		}
 	}
 	
-	private Index findIndex(int index){
-		return null; //TODO
+	private Index findIndex(int indexNumber, String courseCode){
+			Course course = findCourse(courseCode);
+			List<Index> indexList = course.getIndexList();
+			
+			for (Index i: indexList ) {
+				if (i.getIndexNumber() == indexNumber) {
+					return i;
+				}
+			}
 	}
 }
