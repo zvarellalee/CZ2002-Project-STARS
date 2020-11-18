@@ -16,7 +16,7 @@ public class StudentManager {
 		// Database.initialise(); // To test out the UI
 	}
 	
-	public Index findIndex(int index) {
+	public static Index findIndex(int index) {
 		// Finds the Index object from index number
 		for (Course c : Database.courseList) {
 			for (Index i : c.getIndexList())
@@ -109,6 +109,44 @@ public class StudentManager {
 
 	}
 	
+	public void dropCourse(String courseCode) {	
+		ArrayList<RegisteredCourse> courses = user.getCourseList();
+		Course droppedCourse = StudentManager.getCourseFromCourseCode(courseCode);
+		
+		for (RegisteredCourse course : courses) {
+			if (course.getCourse().getCourseCode() == courseCode) {
+				// Remove Student from the studentList in Index
+				ArrayList<Student> updated = course.getIndex().getStudentList();
+				updated.remove(user);
+				course.getIndex().setStudentList(updated);
+				// Update Student's number of AUs
+				user.setNumAU(user.getNumAU() - droppedCourse.getAU());
+				// Remove course from student's list of registered courses
+				courses.remove(course);
+				System.out.println("Course Code" + courseCode + "successfully dropped.");
+				
+				// Increase vacancy by 1 if wait list is empty
+				if (course.getIndex().getWaitList().isEmpty()) {
+					course.getIndex().setVacancies(course.getIndex().getVacancies() + 1);
+				}
+				else {
+					// Add course for first student in the wait list
+					Student waiting = course.getIndex().getWaitList().get(0);
+					StudentManager enrollUser = new StudentManager(waiting);
+					enrollUser.addCourse(courseCode);
+					
+					// Notify enrolled student
+					// TODO
+				}
+				
+				return;
+			}
+		}
+		// If course code is not found
+		System.out.println("Invalid Course Code! Please try again.");
+		return;
+	}
+	
 	/********** Test Function ********************
 	public static void main(String[] args) {
 		Database.initialise();
@@ -122,21 +160,6 @@ public class StudentManager {
 		System.out.println(student.getUser().getNumAU());
 	}
 	*********************************************/
-	
-	public void dropCourse(String courseCode) {
-		// Remove from ArrayList
-		ArrayList<RegisteredCourse> courses = user.getCourseList();
-		
-		// Remove Student from the studentList in Index
-		
-		// Update Student's number of AUs
-		
-		// Add course for first student in the wait list
-		
-		// Add course AUs for enrolled student
-		
-		// Notify enrolled student
-	}
 	
 	public Student getUser() {
 		return user;
@@ -154,7 +177,7 @@ public class StudentManager {
 		System.out.println("");
 	}
 	
-	public boolean checkVacancies(Course course, int index) {
+	public static boolean checkVacancies(Course course, int index) {
 		for (Index id: course.getIndexList()) {
 			if (id.getIndexNumber() == index) {
 				System.out.println("================================================================");
@@ -170,7 +193,7 @@ public class StudentManager {
 		return false;
 	}
 	
-	public Course getCourseFromCourseCode(String courseCode) {
+	public static Course getCourseFromCourseCode(String courseCode) {
 		for (Course course: Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				return course;
@@ -181,7 +204,7 @@ public class StudentManager {
 		return null;
 	}
 	
-	public void printAllIndexesFromCourse(Course course) {
+	public static void printAllIndexesFromCourse(Course course) {
 		System.out.println("\nCourse Code: "+ course.getCourseCode());
 		System.out.println("Course Name: "+ course.getCourseName());
 		System.out.println("================================================================");
