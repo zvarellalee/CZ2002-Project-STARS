@@ -206,7 +206,7 @@ public class StudentManager {
 	}
 	
 	// --- helper methods---
-	public Course getCourseFromCourseCode(String courseCode) {
+	public static Course getCourseFromCourseCode(String courseCode) {
 		for (Course course: Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				return course;
@@ -225,5 +225,4 @@ public class StudentManager {
 		}
 		return courseIndexes;
 	}
-	
 	
