@@ -65,7 +65,7 @@ public class StaffManager {
 			}
 		}
 		
-		Course newCourse = new Course (courseCode, courseName, school, 3);
+		Course newCourse = new Course (courseCode, courseName, school, AU);
 		ArrayList<Index> il 	= new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		Database.courseList.add(newCourse); 
