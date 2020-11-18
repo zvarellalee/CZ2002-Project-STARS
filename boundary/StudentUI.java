@@ -60,11 +60,6 @@ public class StudentUI implements UserUI {
 				case 3:
 					// check/print courses registered
 					studentManager.printRegistered();
-					
-					// extras or can be made into method
-					System.out.print("Press Enter to return to STARS Menu.");
-					sc.next();
-					System.out.println("");
 					break;
 				case 4:
 					// check vacancies 
@@ -79,19 +74,14 @@ public class StudentUI implements UserUI {
 						}
 					} while (!courseExists);
 					
-					StudentManager.printAllIndexesFromCourse(selectedCourse);
+					studentManager.printAllIndexesFromCourse(selectedCourse);
 					
 					boolean indexExists = false;
 					do {
 						System.out.print("Enter index: ");
 						int index = sc.nextInt();
-						indexExists = StudentManager.checkVacancies(selectedCourse, index);
+						indexExists = studentManager.checkVacancies(selectedCourse, index);
 					} while (!indexExists);
-					
-				    // extras or can be made into method
-					System.out.print("Press Enter to return to STARS Menu.");
-					sc.next();
-					System.out.println("");
 					break;
 				case 5:
 					// change index number
