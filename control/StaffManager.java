@@ -93,7 +93,7 @@ public class StaffManager {
 		}
 		
 		for (Student s : studentWaitlist) {
-			if(vacancy > 0 || studentWaitlist.isEmpty()) {
+			if(vacancy > 0 || !studentWaitlist.isEmpty()) {
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
