@@ -51,7 +51,7 @@ public class StudentManager {
 					
 					// Check if index/course is already enrolled, exits if yes
 					for (RegisteredCourse registered : user.getCourseList()) {
-						if (course.getCourseCode() == registered.getCourse().getCourseCode()) {
+						if (course.getCourseCode().equals(registered.getCourse().getCourseCode())) {
 							System.out.println("You have already enrolled in this course!");
 							System.out.println("Returning back to main menu...");
 							sc.close();
@@ -169,16 +169,16 @@ public class StudentManager {
 		// initialise course does not exist
 		boolean courseExists = false;
 		// find the course that student wants to check
-		Course selectedCourse = findCourse(courseCode);
+		Course selectedCurrentCourse = findCourse(courseCode);
 		
 		// if course code is found in database
-		if (selectedCourse != null) {
+		if (selectedCurrentCourse != null) {
 			courseExists = true;
 			// get all indexes from course
-			ArrayList<Index> courseIndexes = getAllIndexesFromCourse(selectedCourse);
+			ArrayList<Index> courseIndexes = getAllIndexesFromCourse(selectedCurrentCourse);
 			
-			System.out.println("\nCourse Code: " + selectedCourse.getCourseCode());
-			System.out.println("Course Name: " + selectedCourse.getCourseName());
+			System.out.println("\nCourse Code: " + selectedCurrentCourse.getCourseCode());
+			System.out.println("Course Name: " + selectedCurrentCourse.getCourseName());
 
 			// print all the indexes and their respective vacancies and waitLists
 			System.out.println("================================================================");
@@ -197,36 +197,36 @@ public class StudentManager {
 		// initialise index number does not exist
 		boolean indexExists = false;
 		// find the course which student wants to change currentIndex
-		Index selectedIndex = findIndex(currentIndex);
-		Course selectedCourse = getCourseFromIndex(selectedIndex);
+		Index selectedCurrentIndex = findIndex(currentIndex);
+		Course selectedCurrentCourse = getCourseFromIndex(selectedCurrentIndex);
 		
 		// if current index does not exist in database
-		if (selectedIndex == null) {
+		if (selectedCurrentIndex == null) {
 			return indexExists;
 		}
 		
 		// check if current index exists in index list of registered courses
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		for (RegisteredCourse registered : courses) {
-			if (selectedIndex.getIndexNumber() == registered.getIndex().getIndexNumber()) {
+			if (selectedCurrentIndex.getIndexNumber() == registered.getIndex().getIndexNumber()) {
 				break;
 			}
 			else {
-				selectedIndex = null;
-				selectedCourse = null;
+				selectedCurrentIndex = null;
+				selectedCurrentCourse = null;
 				System.out.println("\nIndex not registered! Please try again.");
 				System.out.println("");
 			}
 		}
 		
 		// if index already registered by student
-		if (selectedCourse != null) {
+		if (selectedCurrentCourse != null) {
 			int newIndex = 0;
 			Index selectedNewIndex = null;
 			Course selectedNewCourse = null;
 			do {
 				// display all indexes for the course
-				checkVacancies(selectedCourse.getCourseCode());
+				checkVacancies(selectedCurrentCourse.getCourseCode());
 			
 				// let student input new index to change to
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
@@ -248,7 +248,7 @@ public class StudentManager {
 				}
 				
 				//check if new index is the same as current index
-				if (newIndex== selectedIndex.getIndexNumber()) {
+				if (newIndex== selectedCurrentIndex.getIndexNumber()) {
 					// continue if user tries to change to same index
 					System.out.println("\nYou are already enrolled in this Index!");
 					System.out.println("Please select a new Index.");
@@ -257,7 +257,7 @@ public class StudentManager {
 				}
 				
 				// check if new index is in the same course
-				if (selectedNewCourse != selectedCourse) {
+				if (selectedNewCourse != selectedCurrentCourse) {
 					System.out.println("\nNew Index does not exist in the Course.");
 					System.out.println("Please select a new Index.");
 					continue;
@@ -294,29 +294,29 @@ public class StudentManager {
 				
 				// drop student from currentIndex
 				// remove student from studentList in currentIndex
-				ArrayList<Student> currentIndexStudentList = selectedIndex.getStudentList();
+				ArrayList<Student> currentIndexStudentList = selectedCurrentIndex.getStudentList();
 				currentIndexStudentList.remove(user);
-				selectedIndex.setStudentList(currentIndexStudentList);
+				selectedCurrentIndex.setStudentList(currentIndexStudentList);
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : courses) {
-					if (registered.getIndex() == selectedIndex) {
+					if (registered.getIndex() == selectedCurrentIndex) {
 						courses.remove(registered);
 					}
 				}
 				// if currentIndex waitlist is empty 
-				if (selectedIndex.getWaitList().isEmpty()) {
+				if (selectedCurrentIndex.getWaitList().isEmpty()) {
 					// increase vacancy of currentIndex by 1
-					selectedIndex.setVacancies(selectedIndex.getVacancies() + 1);
+					selectedCurrentIndex.setVacancies(selectedCurrentIndex.getVacancies() + 1);
 				}
 				else {
 					// add course for first student in waitlist
-					Student waiting = selectedIndex.getWaitList().get(0);
+					Student waiting = selectedCurrentIndex.getWaitList().get(0);
 					StudentManager enrollUser = new StudentManager(waiting);
-					enrollUser.addCourse(selectedCourse.getCourseCode());
+					enrollUser.addCourse(selectedCurrentCourse.getCourseCode());
 					// notify enrolled student 
 					// TODO
 				}
-				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
+				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCurrentCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
 				System.out.println("");
 				printRegistered();
 			}
