@@ -4,10 +4,10 @@ import java.util.Calendar;
 import java.util.Scanner;
 import database.Database;
 import entities.Course;
+import entities.Index;
 import entities.Staff;
 import entities.Student;
 import control.StaffManager;
-import control.StudentManager;
 
 public class StaffUI implements UserUI {
 	
@@ -71,7 +71,7 @@ public class StaffUI implements UserUI {
 							int startMth, startDay, startHour, startMin, endMth, endDay, endHour, endMin;
 
 							System.out.print("Enter Start Month (1-12): ");
-							startMth = sc.nextInt();
+							startMth = (sc.nextInt()) - 1;
 							System.out.print("Enter Day: ");
 							startDay = sc.nextInt();
 							System.out.print("Enter Hour: ");
@@ -85,7 +85,7 @@ public class StaffUI implements UserUI {
 							accessStart.set(Calendar.MINUTE, startMin);
 							
 							System.out.print("Enter End Month (1-12): ");
-							endMth = sc.nextInt();
+							endMth = (sc.nextInt()) - 1;
 							System.out.print("Enter Day: ");
 							endDay = sc.nextInt();
 							System.out.print("Enter Hour: ");
@@ -126,10 +126,21 @@ public class StaffUI implements UserUI {
 							String courseName = sc.next();
 							System.out.print("Enter Faculty to add: ");
 							String school = sc.next();
-							System.out.print("Input Index List to add: ");
-							//TODO: Find out how to input Index List
+							System.out.print("Enter Number of AUs for the course: ");
+							int au = sc.nextInt();
 							
-							staffManager.addCourse(courseCode, courseName, school, indexList);
+							staffManager.addCourse(courseCode, courseName, school, au);
+							Course newCourse = staffManager.findCourse(courseCode);
+							System.out.print("Enter number of Indexes to insert into Course (" + courseName + ") : ");
+							int numIndex = sc.nextInt();
+							for (int i = 0; i < numIndex; i++) {
+								System.out.print("Enter Index Number of Index: " + i);
+								int index = sc.nextInt();
+								System.out.print("Enter Number of Vacancies for Index " + index + ": ");
+								int vacancies = sc.nextInt();
+								Index newIndex = new Index(index, vacancies);
+								newCourse.addIndex(newIndex);
+							}
 						}
 						else if (selection == 2) {
 							System.out.print("Enter Course Code to update: ");
@@ -138,22 +149,33 @@ public class StaffUI implements UserUI {
 							String courseName = sc.next();
 							System.out.print("Enter Faculty to update: ");
 							String school = sc.next();
+							System.out.print("Enter Index to update: ");
+							int index = sc.nextInt();
+							System.out.print("Enter new Vacancy to Index " + index + ": ");
+							int vacancy = sc.nextInt();
 							
-							Course course = StudentManager.getCourseFromCourseCode(courseCode);
+							Course course = staffManager.findCourse(courseCode);
 							staffManager.updateCourseCode(course, courseCode);
 							staffManager.updateCourseName(course, courseName);
 							staffManager.updateCourseSchool(course, school);
+							Index updatedIndex = staffManager.findIndex(index);
+							updatedIndex.setVacancies(vacancy);
 						}
 					}
 					while (selection != 3);
 					break;
 				case 4:
 					// Check vacancies for index number
-					//TODO
+					System.out.print("Enter index to check vacancy: ");
+					int index = sc.nextInt();
+					Index checkIndex = staffManager.findIndex(index);
+					System.out.println("Vacancies for index " + checkIndex.getIndexNumber() + ": " + checkIndex.getVacancies());
 					break;
 				case 5:
 					// Print student list by index number
-					// #TODO
+					System.out.print("Enter index to display student list: ");
+					index = sc.nextInt();
+					staffManager.printStudentList(index);
 					break;
 				case 6:
 					// Print student list by course code
