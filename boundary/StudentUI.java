@@ -57,12 +57,16 @@ public class StudentUI implements UserUI {
 			System.out.println("");
 			switch(choice) {
 				case 1:
-					//TODO
 					// add course 
+					System.out.println("Please enter the Course Code that you wish to add: ");
+					courseCode = sc.next();
+					studentManager.addCourse(courseCode);
 					break;
 				case 2:
-					//TODO
 					// drop course 
+					System.out.println("Please enter the Course Code that you wish to drop: ");
+					courseCode = sc.next();
+					studentManager.dropCourse(courseCode);
 					break;
 				case 3:
 					// check/print courses registered
