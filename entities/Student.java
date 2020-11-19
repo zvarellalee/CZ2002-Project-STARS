@@ -2,21 +2,19 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Student extends User {
 	private String matricNumber; 					// student's matric number, gender and nationality
 	private String gender;
-	private String nationality;
-	private int numAU;						//remaining AU, update whenever student adds/drops a course
+	private String nationality;	
+	private int numAU;								//remaining AU, update whenever student adds/drops a course
 	private Calendar accessStart; 					// start and end of STARS access period
 	private Calendar accessEnd;
 	private ArrayList<RegisteredCourse> courseList; // list of courses Student is registered for
 	
 	// ------ constructor ------
-	// using this constructor for now
-	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
-			String matricNumber, String gender, String nationality, int numAU) {
+	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, 
+					String salt, String email, String matricNumber, String gender, String nationality, int numAU) {
 		super(username, password, adminAccess, firstName, lastName, salt, email);
 		this.matricNumber = matricNumber;
 		this.gender = gender;
@@ -39,17 +37,6 @@ public class Student extends User {
 		courseList = new ArrayList<RegisteredCourse>();
 	}
 	
-	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email,
-					String matricNumber, String gender, String nationality, int numAU, Calendar accessStart, Calendar accessEnd) {
-		super(username, password, adminAccess, firstName, lastName, salt, email);
-		this.matricNumber = matricNumber;
-		this.gender = gender;
-		this.nationality = nationality;
-		this.accessStart = accessStart;
-		this.accessEnd = accessEnd;
-		courseList = new ArrayList<RegisteredCourse>();
-	}
-	
 	// ------ accessor methods ------
 	public String getMatricNumber() {
 		return matricNumber;
@@ -63,10 +50,6 @@ public class Student extends User {
 		return nationality;
 	}
 	
-	public int getNumAU() {
-		return numAU;
-	}
-	
 	public Calendar getAccessStart() {
 		return accessStart;
 	}
@@ -75,10 +58,12 @@ public class Student extends User {
 		return accessEnd;
 	}
 	
-	// Not sure if we need this? Same for setCourseList()
-	/*public ArrayList<RegisteredCourse> getCourseList() {
+	public ArrayList<RegisteredCourse> getCourseList() {
 		return courseList;
-	}*/
+	}
+	public int getNumAU() {
+		return numAU;
+	}
 	
 	// ------ mutator methods ------
 	public void setMatricNumber(String matricNumber) {
@@ -93,10 +78,6 @@ public class Student extends User {
 		this.nationality = nationality;
 	}
 	
-	public void setNumAU(int numAU) {
-		this.numAU = numAU;
-	}
-	
 	public void setAccessStart(Calendar accessStart) {
 		this.accessStart = accessStart;
 	}
@@ -105,20 +86,12 @@ public class Student extends User {
 		this.accessEnd = accessEnd;
 	}
 	
-	// Not sure if we need this? Same for getCourseList()
-	/*public void setCourseList(ArrayList<RegisteredCourse> courseList) {
+	public void setCourseList(ArrayList<RegisteredCourse> courseList) {
 		this.courseList = courseList;
-	}*/
+	}
 	
-	// To test, delete later
-	/*public static void main(String[] args) {
-		Student stud = new Student("test", "burger", "lol");
-		Student stud2 = new Student("noob", "cow", "eat", 2020, 9, 10, 3, 5, 9, 13, 4, 30);
-		Calendar cal = Calendar.getInstance();
-		System.out.println(stud.getAccessStart().getTime());
-		System.out.println(stud.getAccessEnd().getTime());
-		System.out.println(stud2.getAccessStart().getTime());
-		System.out.println(stud2.getAccessEnd().getTime());
-		System.out.println(cal.getTime());
-	}*/
+	public void setNumAU(int au) {
+		this.numAU = au;
+	}
+	
 }
