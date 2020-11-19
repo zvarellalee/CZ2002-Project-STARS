@@ -140,7 +140,7 @@ public class StaffManager {
 		}
 	}
 	
-	private Course findCourse(String courseCode) {
+	public Course findCourse(String courseCode) {
 		for (Course c : Database.courseList) {
 			if (c.getCourseCode().equals(courseCode)) {
 				return c;
