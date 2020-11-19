@@ -77,7 +77,7 @@ public class StudentUI implements UserUI {
 						System.out.print("Enter Course Code (Enter Q to exit): ");
 						courseCode = sc.next();
 						if (courseCode.toUpperCase().equals("Q")) {
-							System.out.println("Returning back to main menu...");
+							System.out.println("\nReturning back to main menu...");
 							System.out.println("");
 							break;
 						}
