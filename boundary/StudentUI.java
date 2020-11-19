@@ -1,8 +1,10 @@
 package boundary;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import database.Database;
 import entities.Course;
+import entities.Index;
 import entities.Student;
 import control.StudentManager;
 
@@ -32,6 +34,9 @@ public class StudentUI implements UserUI {
 		StudentManager studentManager = new StudentManager(user);
 		Scanner sc = new Scanner(System.in); 
 		int choice;
+		String courseCode;
+		boolean courseExists;
+		boolean indexExists;
 		
 		do { 
 			System.out.println("-----------------------------------------");
@@ -52,9 +57,11 @@ public class StudentUI implements UserUI {
 			System.out.println("");
 			switch(choice) {
 				case 1:
+					//TODO
 					// add course 
 					break;
 				case 2:
+					//TODO
 					// drop course 
 					break;
 				case 3:
@@ -64,21 +71,44 @@ public class StudentUI implements UserUI {
 				case 4:
 					// check vacancies 
 					// initialise course does not exist
-					boolean courseExists = false;
+					courseExists = false;
 					// loop user to re-enter courseCode if course does not exist
 					do {
-						System.out.print("Enter Course Code: ");
-						String courseCode = sc.next();
+						System.out.print("Enter Course Code (Enter Q to exit): ");
+						courseCode = sc.next();
+						if (courseCode.toUpperCase().equals("Q")) {
+							System.out.println("Returning back to main menu...");
+							System.out.println("");
+							break;
+						}
 						courseExists = studentManager.checkVacancies(courseCode);
 					} while(!courseExists);
 					break;
 				case 5:
 					// change index number
+					// initialise index number does not exist
+					indexExists = false;
+					// let student input current index to change index
+					int currentIndex = 0;
+					do {
+						// print courses registered
+						studentManager.printRegistered();
+						System.out.print("Enter the current Index you want to change (Enter 0 to exit): ");
+						currentIndex = sc.nextInt();
+						if (currentIndex == 0) {
+							System.out.println("\nReturning back to main menu...");
+							System.out.println("");
+							break;
+						}
+						indexExists = studentManager.changeIndex(currentIndex);
+					} while (!indexExists);
 					break;
 				case 6:
+					// TODO
 					// swap index number
 					break;
 				case 7:
+					// TODO: what is this method for???
 					// check max AU
 					break;
 				case 8:
