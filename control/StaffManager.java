@@ -57,7 +57,7 @@ public class StaffManager {
 	}
 	
 
-	public void addCourse(String courseCode, String courseName, String school, int AU, ArrayList<Index> indexList) {
+	public void addCourse(String courseCode, String courseName, String school, int AU) {
 		for (Course course : Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
 				System.out.println("Course "+ courseCode +" already exists");
@@ -112,7 +112,7 @@ public class StaffManager {
 	}
 	
 	
-	public void printStudentList(String courseCode){
+	public void printStudentList(String courseCode) {
 		Course course = findCourse(courseCode);
 		
 		System.out.println("Course Code: " + courseCode);
