@@ -46,7 +46,7 @@ public class StaffManager {
 		printStudentList();
 	}
 	
-	private  void printStudentList() { 
+	private void printStudentList() { 
 		System.out.println("Matriculation Number         Full Name");
 		System.out.println("---------------------------------------------------");
 		for (Student student : Database.studentList){
@@ -140,7 +140,7 @@ public class StaffManager {
 		}
 	}
 	
-	private Course findCourse(String courseCode){
+	private Course findCourse(String courseCode) {
 		for (Course c : Database.courseList) {
 			if (c.getCourseCode().equals(courseCode)) {
 				return c;
@@ -149,7 +149,7 @@ public class StaffManager {
 		return null;
 	}
 	
-	private Index findIndex(int index) {
+	public Index findIndex(int index) {
 		// Finds the Index object from index number
 		for (Course c : Database.courseList) {
 			for (Index i : c.getIndexList())
