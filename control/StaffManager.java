@@ -66,7 +66,7 @@ public class StaffManager {
 		}
 		
 		Course newCourse = new Course (courseCode, courseName, school, AU);
-		ArrayList<Index> il 	= new ArrayList<Index>();
+		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		Database.courseList.add(newCourse); 
 		printCourseList();
@@ -81,9 +81,8 @@ public class StaffManager {
 		}
 	}
 	
-	public void addStudentToIndex(String courseCode, int indexNumber) {
-		Index index = findIndex( indexNumber, courseCode);
-		Course course = findCourse(courseCode);
+	public void addStudentToIndex(int indexNumber) {
+		Index index = findIndex( indexNumber);
 		int vacancy = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
@@ -122,18 +121,18 @@ public class StaffManager {
 		ArrayList<Index> courseIndex = course.getIndexList();
 		
 		for (Index index : courseIndex) {
-			for (Student student : courseIndex.getStudentList()) {
+			for (Student student : index.getStudentList()) {
 				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
 								+ student.getGender() + ",\t" + student.getNationality());
 			}
 		}
 	}	
 	
-	public void printStudentList(int indexNumber, String courseCode){
-		System.out.println("Index Number: " + index);
+	public void printStudentList(int indexNumber) {
+		System.out.println("Index Number: " + indexNumber);
 		System.out.println("Name\tGender\tNationality");
 		
-		Index index = findIndex(indexNumber, courseCode);
+		Index index = findIndex(indexNumber);
 		
 		for (Student student : index.getStudentList()) {
 			System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
@@ -150,15 +149,16 @@ public class StaffManager {
 		return null;
 	}
 	
-	private Index findIndex(int indexNumber, String courseCode){
-		Course course = findCourse(courseCode);
-		List<Index> indexList = course.getIndexList();
-			
-		for (Index i: indexList ) {
-			if (i.getIndexNumber() == indexNumber) {
-				return i;
-			}
+	private Index findIndex(int index) {
+		// Finds the Index object from index number
+		for (Course c : Database.courseList) {
+			for (Index i : c.getIndexList())
+				if (i.getIndexNumber() == index) {
+					return i;
+				}
 		}
+		System.out.println("\nInvalid Index! Please try again.");
+		System.out.println("");
 		return null;
 	}
 }
