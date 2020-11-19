@@ -107,7 +107,26 @@ public class StaffUI implements UserUI {
 					break;
 				case 2:
 					// Add a student
-					// TODO: OMG HALP SO MANY DETAILS TO ADD?
+					System.out.print("Enter New Student's First Name: ");
+					String firstName = sc.next();
+					System.out.print("Enter New Student's Last Name: ");
+					String lastName = sc.next();
+					System.out.print("Enter New Student's Username: ");
+					String username = sc.next();
+					System.out.print("Enter New Student's Default Password: ");
+					String password = sc.next();
+					System.out.print("Enter New Student's Email: ");
+					String email = sc.next();
+					System.out.print("Enter New Student's Matriculation Number: ");
+					String matricNumber = sc.next();
+					System.out.print("Enter New Student's Gender: ");
+					String gender = sc.next();
+					System.out.print("Enter New Student's Nationality: ");
+					String nationality = sc.next();
+					
+					Student newStudent = new Student(username, password, false, firstName, 
+							lastName, null, email, matricNumber, gender, nationality, 0);
+					staffManager.addStudent(newStudent);
 					break;
 				case 3:
 					// Add/Update a course
