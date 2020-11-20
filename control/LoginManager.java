@@ -1,6 +1,9 @@
 package control;
 
 import java.util.*;
+
+import entities.Student;
+import entities.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -19,7 +22,8 @@ public class LoginManager{
 			}
 		}
 		
-		if (currUser == null) return null; // if user not found, return null
+		if (currUser == null)
+			return null; // if user not found, return null
 		
 		String encryptedPassword = currUser.getPassword();
 		String salt = currUser.getSalt();
@@ -29,8 +33,10 @@ public class LoginManager{
 				Manager newManager = new StaffManager(); // if admin, return staff manager
 				return newManager;
 			} else {
-				Manager newManager = new StudentManager(); // else, return the student manager
-				return newManager;
+				if (LoginManager.checkAccessPeriod(currUser) == true) {
+					Manager newManager = new StudentManager(); // else, return the student manager
+					return newManager;
+				}
 			}
 		} else {
 			return null; // if password is incorrect, return false
@@ -62,12 +68,25 @@ public class LoginManager{
 		return password;
 	}
 	
-	public Boolean checkAccess(User user) {
-		// redundant?
-		return true;
-	}
-	
 	public void getFromFile() {
 		// get users array from file
+	}
+	
+	private static boolean checkAccessPeriod(Student stud) {
+		// Check current time
+		Calendar currentTime = Calendar.getInstance();
+
+		// Check if accessed time is before access period
+		if (currentTime.compareTo(stud.getAccessStart()) < 0) {
+			System.out.println("You are not allowed to access yet! Access Period is" + stud.getAccessStart().getTime());
+			return false;
+		// Check if accessed time is after access period
+		} else if (currentTime.compareTo(stud.getAccessEnd()) > 0) {
+			System.out.println("Your access period is over! Please contact the system administrator\n");
+			return false;
+		}
+		// Returns true when student logins during access period
+		else
+			return true;
 	}
 }
