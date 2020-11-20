@@ -33,7 +33,6 @@ public class StudentManager {
 			// Exits if courseCode is not found
 			System.out.println("No course found! Returning back to main menu...");
 			return;
-			
 		}
 		
 		// Student inputs index
@@ -42,9 +41,17 @@ public class StudentManager {
 		Index index = null;
 		
 		while(userinput) {
+			int choice = -1;
 			System.out.print("\nEnter an Index to enroll in: ");
 			Scanner sc = new Scanner(System.in);
-			int choice = sc.nextInt();
+			try {
+				choice = sc.nextInt();
+			}
+			catch (Exception InputMismatchException) {  // Error handling
+				System.out.println("Invalid Input!");
+				sc.next();
+				continue;
+			}
 			sc.close();
 			for (Index i : course.getIndexList()) {
 				if (choice == i.getIndexNumber()) {
@@ -70,7 +77,7 @@ public class StudentManager {
 					if (index.getVacancies() != 0 ) {
 						// Decrease vacancy of index by 1
 						index.setVacancies(index.getVacancies() - 1);
-						// Add course AUss
+						// Add course AUs
 						user.setNumAU(user.getNumAU() + course.getAU());
 						userinput = false;
 						break;
@@ -235,7 +242,14 @@ public class StudentManager {
 				// let student input new index to change to
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
 				Scanner sc = new Scanner(System.in);
+				try {
 				newIndex = sc.nextInt();
+				}
+				catch (Exception InputMismatchException) {  // Error handling
+					System.out.println("Invalid Input!");
+					sc.next();
+					continue;
+				}
 				sc.close();
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
