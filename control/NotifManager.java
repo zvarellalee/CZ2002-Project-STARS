@@ -21,7 +21,12 @@ public class NotifManager {
 		props.put("mail.smtp.starttls.enable","true");
 		props.put("mail.smtp.auth", "true"); 
 				
-		Session session = Session.getInstance(props, new javax.mail.Authenticator(sender_email, sender_password));
+		Session session = Session.getInstance(props,
+			new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(sender_email, sender_password);
+				}
+		});
 		
 		try {
 			MimeMessage msg = new MimeMessage(session);
