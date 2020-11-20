@@ -1,10 +1,10 @@
-package Control;
+package control;
 
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import Entities.Course;
-import Entities.Student;
+import entities.Course;
+import entities.Student;
 
 public class NotifManager {
 	private static final String sender_email = "tester_email";
@@ -15,17 +15,13 @@ public class NotifManager {
 		InternetAddress student_email = new InternetAddress(email);
 		
 		Properties props = new Properties();
+		props.put("mail.smtp.user", sender_email);
 		props.put("mail.smtp.host", "smtp-mail.outlook.com");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.starttls.enable","true");
 		props.put("mail.smtp.auth", "true"); 
 				
-		Authenticator auth = new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(sender_email, sender_password);
-			}
-		};
-		Session session = Session.getInstance(props, auth);
+		Session session = Session.getInstance(props, new javax.mail.Authenticator(sender_email, sender_password));
 		
 		try {
 			MimeMessage msg = new MimeMessage(session);
@@ -34,9 +30,6 @@ public class NotifManager {
 			msg.setSubject("Test email");
 			msg.setText("Does it work?");
 			Transport.send(msg);
-		}
-		catch (AddressException ae) {
-			ae.printStackTrace();
 		}
 		catch (MessagingException me) {
 			me.printStackTrace();
