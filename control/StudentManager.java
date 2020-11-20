@@ -45,6 +45,7 @@ public class StudentManager {
 			System.out.print("\nEnter an Index to enroll in: ");
 			Scanner sc = new Scanner(System.in);
 			int choice = sc.nextInt();
+			sc.close();
 			for (Index i : course.getIndexList()) {
 				if (choice == i.getIndexNumber()) {
 					index = i;
@@ -54,9 +55,15 @@ public class StudentManager {
 						if (course.getCourseCode().equals(registered.getCourse().getCourseCode())) {
 							System.out.println("You have already enrolled in this course!");
 							System.out.println("Returning back to main menu...");
-							sc.close();
 							return;
 						}
+					}
+					
+					// Check if there are any timetable clashes, exits if yes
+					if (ScheduleManager.willClash(index, user.getCourseList()) == true) {
+						System.out.println("New Index Clashes with your current indexes!");
+						System.out.println("Returning back to main menu...");
+						return;
 					}
 					
 					// Check if index has vacancies
@@ -84,9 +91,6 @@ public class StudentManager {
 			if (userinput)
 				System.out.println("Please enter a valid index!");
 		}
-		
-		// Check if there are any clashes
-		//TODO
 		
 		// Enroll student in the index
 		ArrayList<RegisteredCourse> newCourseList = user.getCourseList();
@@ -232,6 +236,7 @@ public class StudentManager {
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
 				Scanner sc = new Scanner(System.in);
 				newIndex = sc.nextInt();
+				sc.close();
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
 					System.out.println("");
@@ -274,6 +279,7 @@ public class StudentManager {
 				else {
 					// TODO 
 					// check if clash with any other registered indexes, continue if yes
+					// Loop through the sessions in the indexes and see if there are any overlaps
 				}
 				
 				indexExists = true;
