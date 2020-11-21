@@ -164,7 +164,7 @@ public class StudentManager extends Manager{
 		return user;
 	}
 	
-	public void printRegistered() {
+	public void printRegistered(Student user) {
 		// print course code, course name, index of registered courses
 		System.out.println("Courses Registered for " + user.getFirstName() + " " + user.getLastName() + " (" + user.getMatricNumber() + "):");
 		System.out.println("================================================================");
@@ -216,10 +216,10 @@ public class StudentManager extends Manager{
 			return indexExists;
 		}
 		
-		// check if current index exists in index list of registered courses
+		// check if current index exists in student's list of registered courses
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		for (RegisteredCourse registered : courses) {
-			if (selectedCurrentIndex.getIndexNumber() == registered.getIndex().getIndexNumber()) {
+			if (currentIndex == registered.getIndex().getIndexNumber()) {
 				break;
 			}
 			else {
@@ -290,12 +290,14 @@ public class StudentManager extends Manager{
 					System.out.println("");
 					continue;
 				}
-				else {
-					// TODO 
-					// check if clash with any other registered indexes, continue if yes
-					// Loop through the sessions in the indexes and see if there are any overlaps
+				// if new index has vacancy
+				// check if new index clash with any other registered indexes, continue if yes
+				else if (ScheduleManager.willClash(selectedNewIndex, user.getCourseList()) == true) {
+					System.out.println("\nNew Index Clashes with your current indexes!");
+					System.out.println("Please select a new Index.");
+					System.out.println("");
+					continue;
 				}
-				
 				indexExists = true;
 			} while (!indexExists);
 			
@@ -338,21 +340,175 @@ public class StudentManager extends Manager{
 				}
 				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCurrentCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
 				System.out.println("");
-				printRegistered();
+				printRegistered(user);
 			}
 			
 		}
 		return indexExists;
 	}
 	
-	public void swapIndex(int newIndex, Student peer) {
-		//TODO
+	public boolean swapIndex(int oldIndex, String matricNumber) {
+		// TODO: check if fail test cases 
+		// initialise swap fail
+		boolean canSwap = false;
+		// find the peer to change student's currentIndex to peer's newIndex     
+		Student peer = getStudentFromMatricNumber(matricNumber);
+		// find the course user wants to change currentIndex
+		Index userIndex = findIndex(oldIndex);
+		Course userCourse = getCourseFromIndex(userIndex);
+		
+		// if currentIndex does not exist or peer does not exist in database
+		if (userIndex == null) {
+			System.out.println("Index does not exist in database! Please try again.");
+			System.out.println("");
+			return canSwap;
+		}
+		if (peer == null) {
+			System.out.println("Peer does not exist in database! Please try again.");
+			System.out.println("");
+			return canSwap;
+		}
+		
+		// initialise user's and peer's registered courses 
+		ArrayList<RegisteredCourse> userRegCourses = user.getCourseList();
+		ArrayList<RegisteredCourse> peerRegCourses = peer.getCourseList();
+		
+		// check if currentIndex exists in user's list of registered courses
+		for (RegisteredCourse registered : userRegCourses) {
+			if (oldIndex == registered.getIndex().getIndexNumber()) {
+				break;
+			}
+			else {
+				userIndex = null;
+				userCourse = null;
+				System.out.println("\nIndex not registered! Please try again.");
+				System.out.println("");
+			}
+		}
+		
+		// if index already registered by user
+		if (userCourse != null) {
+			int newIndex = 0;
+			Index peerIndex = null;
+			Course peerCourse = null;
+			do {
+				// let user input new index to change to
+				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
+				Scanner sc = new Scanner(System.in);
+				newIndex = sc.nextInt();
+				// cannot sc.close() here if not UI will have error
+				if (newIndex == 0) {
+					System.out.println("\nGoing back...");
+					System.out.println("");
+					return canSwap;
+				}
+				
+				// check if peerIndex is in peer's list of registered courses
+				
+				boolean peerCourseExists = true;
+				for (RegisteredCourse registered : peerRegCourses) {
+					// selected index exists in peer's registered courses
+					if (newIndex == registered.getIndex().getIndexNumber()) {
+						break;
+					}
+					else {
+						// selected peerIndex does not exist in peer's registered courses
+						System.out.println("\nIndex not registered by peer! Please try again.");
+						System.out.println("");
+						peerCourseExists = false;
+					}
+				}
+				// if peer does not have selected index
+				if (!peerCourseExists) {
+					continue;
+				}
+				
+				// get peer's index and course based on user's input
+				peerIndex = findIndex(newIndex);
+				peerCourse = getCourseFromIndex(peerIndex);
+				
+				//check if input index is the same as current index
+				if (newIndex == userIndex.getIndexNumber()) {
+					// continue if user tries to change to same index
+					System.out.println("\nYou are already enrolled in this Index!");
+					System.out.println("Please select a new Index.");
+					System.out.println("");
+					continue;
+				}
+				
+				// check if peer index is in the same course
+				if (peerCourse != userCourse) {
+					System.out.println("\nNew Index does not exist in the Course.");
+					System.out.println("Please select a new Index.");
+					continue;
+				}
+				
+				// check if peer's index clash with any other user's registered indexes, continue if yes
+				if (ScheduleManager.willClash(peerIndex, user.getCourseList()) == true) {
+					System.out.println("\nNew Index Clashes with your current indexes!");
+					System.out.println("Please select a new Index.");
+					System.out.println("");
+					continue;
+				}
+				
+				// check if user's index clash with any other peer's registered indexes, continue if yes
+				if (ScheduleManager.willClash(userIndex, peer.getCourseList()) == true) {
+					System.out.println("\nCurrent Index Clashes with your peers' indexes!");
+					System.out.println("Please select a new Index.");
+					System.out.println("");
+					continue;
+				}
+					
+				canSwap = true;
+			} while (!canSwap);
+			
+			if (canSwap) {
+				// enroll user to peerIndex
+				// add user to studentList in peerIndex
+				ArrayList<Student> peerIndexStudentList = peerIndex.getStudentList();
+				peerIndexStudentList.add(user);
+				peerIndex.setStudentList(peerIndexStudentList);
+				// add peer index to student's list of registered index
+				RegisteredCourse peerRegisteredIndex = new RegisteredCourse(false, peerCourse, peerIndex, user);
+				userRegCourses.add(peerRegisteredIndex);
+				
+				// drop user from currentIndex
+				// remove user from studentList in currentIndex
+				ArrayList<Student> currentIndexStudentList = userIndex.getStudentList();
+				currentIndexStudentList.remove(user);
+				userIndex.setStudentList(currentIndexStudentList);
+				// remove index from student's list of registered index
+				for (RegisteredCourse registered : userRegCourses) {
+					if (registered.getIndex() == userIndex) {
+						userRegCourses.remove(registered);
+					}
+				}
+				
+				// enroll peer to currentIndex
+				// add peer to studentList in currentIndex
+				currentIndexStudentList.add(peer);
+				// add user index to peer's list of registered index
+				RegisteredCourse userRegisteredIndex = new RegisteredCourse(false, userCourse, userIndex, peer);
+				peerRegCourses.add(userRegisteredIndex);
+				// drop peer from peerIndex
+				// remove peerIndex from peer's list of registered index
+				for (RegisteredCourse registered : peerRegCourses) {
+					if (registered.getIndex() == userIndex) {
+						userRegCourses.remove(registered);
+					}
+				}
+				
+				System.out.println("\nIndex " + oldIndex + " from Course Code " + userCourse.getCourseCode() + " has been successfully swapped with " + peer.getMatricNumber() + "'s Index " + newIndex + ".");
+				System.out.println("");
+				printRegistered(user);
+			}
+		}
+		return canSwap;
 	}
 	
 	
 	
 	// --- helper methods---
-	/**
 	private static Course findCourse(String courseCode) {
 		// Finds the Course object from courseCode
 		for (Course course: Database.courseList) {
@@ -364,6 +520,7 @@ public class StudentManager extends Manager{
 		System.out.println("");
 		return null;
 	}
+	
 	private static Index findIndex(int index) {
 		// Finds the Index object from index number
 		for (Course c : Database.courseList) {
@@ -376,7 +533,7 @@ public class StudentManager extends Manager{
 		System.out.println("");
 		return null;
 	}
-	*/
+
 	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
 		ArrayList<Index> courseIndexes = new ArrayList<Index>();
 		for (Index id: course.getIndexList()) {
@@ -394,5 +551,15 @@ public class StudentManager extends Manager{
 			}
 		}
 		return course;
+	}
+	
+	private static Student getStudentFromMatricNumber(String matricNumber) {
+		Student student = null;
+		for (Student s: Database.studentList) {
+			if (s.getMatricNumber().equals(matricNumber)) {
+				student = s;
+			}
+		}
+		return student;
 	}
 }
