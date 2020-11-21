@@ -13,7 +13,7 @@ public class FileManager {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
 		try {
-			fos = new FileOutputStream(filename);
+			fos = new FileOutputStream("data/"+filename);
 			out = new ObjectOutputStream(fos);
 			out.writeObject(list);
 			out.close();
@@ -28,7 +28,7 @@ public class FileManager {
 		ObjectInputStream in;
 		
 		try {
-			fis = new FileInputStream(filename);
+			fis = new FileInputStream("data/"+filename);
 			in = new ObjectInputStream(fis);
 			details = (ArrayList) in.readObject();
 			in.close();
