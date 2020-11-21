@@ -15,13 +15,13 @@ public class Database {
 	public static void initialise() {
 		// Initialize students
 		Student carl = new Student("carl", "123", false, "Carl", 
-				"Butt", "xyz", "test@lmao.com", "U123U", "Asexual", "Alien", 21);
+				"Butt", null, "test@lmao.com", "U123U", "Asexual", "Alien", 21);
 		Student stacey = new Student("stacey", "321", false, "Stacey", 
-				"Smiles", "zxy", "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 21);
+				"Smiles", null, "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 21);
 		
 		// Initialize staffs
-		Staff lokey = new Staff ("dustbin", "jkl", true, "Loke", "Dustbin", "abc", "a@test.com", "S666S");
-		Staff lala = new Staff ("lalala", "ghj", true, "Lala", "Lol", "cba", "b@test.com", "S888S");
+		Staff lokey = new Staff ("dustbin", "jkl", true, "Loke", "Dustbin", null, "a@test.com", "S666S");
+		Staff lala = new Staff ("lalala", "ghj", true, "Lala", "Lol", null, "b@test.com", "S888S");
 		
 		// Initialize courses
 		Course oodp = new Course("2002", "Obviously Oolong Dying Programme", "Weed Science", 3);
