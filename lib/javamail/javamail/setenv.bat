@@ -1,0 +1,1 @@
+set Classpath=%Classpath%;C:\fuji_laptop_bkup\backup\MySubjects\2016-17\sem2\cz2002\assign\javamail\javax.mail.jar;

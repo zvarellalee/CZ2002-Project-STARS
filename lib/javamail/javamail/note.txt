@@ -1,0 +1,4 @@
+Solve error javax.mail.AuthenticationFailedException
+JavaMail with Gmail: 535-5.7.1 Username and Password not accepted
+
+--May be this problem cause by Gmail account protection. Just click below link and disable security settings.It will work. https://www.google.com/settings/security/lesssecureapps
