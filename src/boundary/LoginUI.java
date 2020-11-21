@@ -11,13 +11,14 @@ public class LoginUI {
 		int choice = 1;
 		String username;
 		String password;
-		
-		manager.getFromFile(); // instantiate the users array in loginManager
-		
-		System.out.println("Welcome to mySTARS. Please select an option: ");
-		while (choice < 2) {
+		do {
+			System.out.println("-----------------------------------------");
+			System.out.println("Welcome to the mySTARS Homepage!");
+			System.out.println("-----------------------------------------");
 			System.out.println("1. Login");
 			System.out.println("2. Quit");
+			System.out.println("-----------------------------------------");
+			System.out.print("Enter your choice: ");
 			if (sc.hasNextInt()) {
 				choice = sc.nextInt();
 			} else {
@@ -27,15 +28,15 @@ public class LoginUI {
 			
 			switch (choice) {
 				case 1: 
-					System.out.println("Enter username: ");
+					sc.nextLine(); // eat the newLine character
+					System.out.print("Enter username: ");
 					username = sc.nextLine();
-					System.out.println("Enter password: ");
+					System.out.print("Enter password: ");
 					password = sc.nextLine();
-
-					newUI = manager.authenticate(username, password);
-					if (newUI != null)
-						choice = 2;
-						manager.login(newUI);
+					boolean success = manager.authenticate(username, password);
+					if (!success) {
+						System.out.println("Incorrect username/password\n");
+					}
 					break;
 				default: 
 					System.out.println("Thank you for using mySTARS.");
@@ -43,6 +44,6 @@ public class LoginUI {
 			}
 			
 			
-		}
+		} while (choice < 2);
 	}
 }
