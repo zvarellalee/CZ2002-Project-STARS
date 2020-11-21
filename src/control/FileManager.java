@@ -6,12 +6,13 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import entities.Student;
 import java.util.ArrayList;
 
 public class FileManager {
-	public static List courses;
-	public static List students;
-	public static List staffs;
+	private static List courses;
+	private static List students;
+	private static List staffs;
 	
 	public static void write(String filename, List list) {
 		FileOutputStream fos = null;
@@ -43,4 +44,30 @@ public class FileManager {
 		}
 		return details;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List getCourseDB() {
+		return courses;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List getStudentDB() {
+		return students;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static List getStaffDB() {
+		return staffs;
+	}
+	
+	public static int getStudentIndex(Student student) {
+		for (int i = 0; i < FileManager.getStudentDB().size(); i++) {
+			if (FileManager.getStudentDB().get(i).equals(student)) {
+				return i;
+			}
+		}
+		System.out.println("Student Not Found.");
+		return -1;
+	}
+	
 }

@@ -42,8 +42,6 @@ public class LoginUI {
 					System.out.println("Thank you for using mySTARS.");
 					break;
 			}
-			
-			
 		} while (choice < 2);
 	}
 }

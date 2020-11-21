@@ -19,7 +19,8 @@ public class StudentManager extends Manager{
 	public Student getUser() {
 		return user;
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public void addCourse(String courseCode) {
 		Course course = null;
 		
@@ -114,6 +115,10 @@ public class StudentManager extends Manager{
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
+		// Add to Course Database
+		int i = FileManager.getStudentIndex(user);
+		FileManager.getStudentDB().set(i, user);
+		FileManager.write("student.dat", FileManager.getStudentDB());
 	}
 	
 	public void dropCourse(String courseCode) {	
