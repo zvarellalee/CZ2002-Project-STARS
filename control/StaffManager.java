@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author 
+ * @version 1.0
+ * @since
+ */
+
 package control;
 
 import java.util.*;
@@ -9,31 +16,63 @@ import entities.Staff;
 import entities.Student;
 
 public class StaffManager {
+	/**
+	 * Stores which Staff is using the Manager
+	 */
 	private Staff user;
 	
+	/**
+	 * Initializing the Staff
+	 * @param user Staff
+	 */
 	public StaffManager(Staff user) {
 		this.user = user;
 		// Database.initialise(); // To test out the UI
 	}
 	
+	/**
+	 * Edits the Access Period of the Input Student
+	 * @param accessStart Calendar Access Start Period
+	 * @param accessEnd Calendar Access End Period
+	 * @param student Student
+	 */
 	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd, Student student) {
 		student.setAccessStart(accessStart);
 		student.setAccessEnd(accessEnd);
 	}
 	
+	/**
+	 * Updates the Course Code
+	 * @param course Course
+	 * @param courseCode Course Code
+	 */
 	public void updateCourseCode(Course course, String courseCode) {
 		course.setCourseCode(courseCode);
 	}
 	
+	/**
+	 * Updates the Course Name
+	 * @param course Course
+	 * @param courseName Course Name
+	 */
 	public void updateCourseName(Course course, String courseName) {
 		course.setCourseName(courseName);
 	}
 	
+	/**
+	 * Updates the Faculty of the Course
+	 * @param course Course
+	 * @param courseSchool Faculty
+	 */
 	public void updateCourseSchool(Course course, String courseSchool) {
 		course.setSchool(courseSchool);
 	}
 	
-	public void addStudent(Student student) { 
+	/**
+	 * Adds Student
+	 * @param student Student
+	 */
+	public void addStudent(Student student) {
 		
 		for (Student s : Database.studentList) {
 			if (s.getMatricNumber().equals(student.getMatricNumber())) {
@@ -46,7 +85,10 @@ public class StaffManager {
 		printStudentList();
 	}
 	
-	private void printStudentList() { 
+	/**
+	 * Prints out the List of Students with their Matriculation Number and Full Name
+	 */
+	private void printStudentList() {
 		System.out.println("Matriculation Number         Full Name");
 		System.out.println("---------------------------------------------------");
 		for (Student student : Database.studentList){
@@ -57,6 +99,13 @@ public class StaffManager {
 	}
 	
 
+	/**
+	 * Adds Course
+	 * @param courseCode Course Code
+	 * @param courseName Course Name
+	 * @param school Faculty
+	 * @param AU Number of AUs
+	 */
 	public void addCourse(String courseCode, String courseName, String school, int AU) {
 		for (Course course : Database.courseList) {
 			if (course.getCourseCode().equals(courseCode)) {
@@ -72,6 +121,9 @@ public class StaffManager {
 		printCourseList();
 	}
 	
+	/**
+	 * Prints the List of Courses with Course Code and Name
+	 */
 	public void printCourseList() {
 		System.out.println("Course Code : Course Name");
 		System.out.println("---------------------------------------------------");
@@ -81,6 +133,10 @@ public class StaffManager {
 		}
 	}
 	
+	/**
+	 * Adds Student to the Index's ArrayList of Students and Waitlist
+	 * @param indexNumber Index Number
+	 */
 	public void addStudentToIndex(int indexNumber) {
 		Index index = findIndex( indexNumber);
 		int vacancy = index.getVacancies();
@@ -112,9 +168,16 @@ public class StaffManager {
 	}
 	
 	
+	/**
+	 * Prints the List of Students enrolled in the Course
+	 * Displays the Name, Gender and Nationality of the Students
+	 * @param courseCode Course Code
+	 */
 	public void printStudentList(String courseCode) {
 		Course course = findCourse(courseCode);
-		
+		if (course == null)
+			return;
+	
 		System.out.println("Course Code: " + courseCode);
 		System.out.println("Name\tGender\tNationality");
 		
@@ -126,29 +189,50 @@ public class StaffManager {
 								+ student.getGender() + ",\t" + student.getNationality());
 			}
 		}
+		System.out.println();
 	}	
 	
+	/**
+	 * Prints the List of Students enrolled in the Index
+	 * Displays the Name, Gender and Nationality of the Students
+	 * @param indexNumber Index Number
+	 */
 	public void printStudentList(int indexNumber) {
+		Index index = findIndex(indexNumber);
+		if (index == null)
+			return;
+		
 		System.out.println("Index Number: " + indexNumber);
 		System.out.println("Name\tGender\tNationality");
-		
-		Index index = findIndex(indexNumber);
 		
 		for (Student student : index.getStudentList()) {
 			System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
 							+ student.getGender() + ",\t" + student.getNationality());
 		}
+		System.out.println();
 	}
 	
+	/**
+	 * Finds the Course Object using the Course Code
+	 * @param courseCode Course Code
+	 * @return Course Object
+	 */
 	public Course findCourse(String courseCode) {
 		for (Course c : Database.courseList) {
 			if (c.getCourseCode().equals(courseCode)) {
 				return c;
 			}
 		}
+		System.out.println("\nInvalid Course Code! Please try again.");
+		System.out.println("");
 		return null;
 	}
 	
+	/**
+	 * Finds the Index Object using the Index Number
+	 * @param Index Index Number
+	 * @return Index Object
+	 */
 	public Index findIndex(int index) {
 		// Finds the Index object from index number
 		for (Course c : Database.courseList) {
