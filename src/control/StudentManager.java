@@ -16,6 +16,10 @@ public class StudentManager extends Manager{
 		// Database.initialise(); // To test out the UI
 	}
 	
+	public Student getUser() {
+		return user;
+	}
+	
 	public void addCourse(String courseCode) {
 		Course course = null;
 		
@@ -147,24 +151,6 @@ public class StudentManager extends Manager{
 		// If course code is not found
 		System.out.println("Invalid Course Code! Please try again.");
 		return;
-	}
-	
-	/********** Test Function ********************
-	public static void main(String[] args) {
-		Database.initialise();
-		
-		StudentManager student = new StudentManager(Database.studentList.get(0));
-		student.addCourse("2002");
-		
-		System.out.println(student.getUser().getCourseList().get(0).getCourse().getCourseName());
-		System.out.println(student.getUser().getCourseList().get(0).getCourse().getIndexList().get(1).getWaitList());
-		System.out.println(Database.courseList.get(0).getIndexList().get(1).getVacancies());
-		System.out.println(student.getUser().getNumAU());
-	}
-	*********************************************/
-	
-	public Student getUser() {
-		return user;
 	}
 	
 	public void printRegistered(Student user) {
@@ -357,7 +343,7 @@ public class StudentManager extends Manager{
 		
 		// if currentIndex and peer do not exist in database
 		if (userIndex == null && peer == null) {
-			System.out.println("\nBoth Index and Peer do\ not exist in database! Please try again.");
+			System.out.println("\nBoth Index and Peer do not exist in database! Please try again.");
 			System.out.println("");
 			return canSwap;
 		}
