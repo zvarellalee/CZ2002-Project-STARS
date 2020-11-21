@@ -77,8 +77,14 @@ public class StudentManager extends Manager{
 					if (index.getVacancies() != 0 ) {
 						// Decrease vacancy of index by 1
 						index.setVacancies(index.getVacancies() - 1);
-						// Add course AUs
-						user.setNumAU(user.getNumAU() + course.getAU());
+						// Check number of AUs of student, add course AU
+						int newAU = user.getNumAU() + course.getAU();
+						if (newAU > 21) {
+							System.out.println("Maximum AU exceeded!");
+							System.out.println("Returning back to main menu...");
+							return;
+						}
+						user.setNumAU(newAU);
 						userinput = false;
 						break;
 					}
@@ -104,8 +110,6 @@ public class StudentManager extends Manager{
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
-		
-
 	}
 	
 	public void dropCourse(String courseCode) {	
@@ -137,7 +141,6 @@ public class StudentManager extends Manager{
 					// Notify enrolled student
 					// TODO
 				}
-				
 				return;
 			}
 		}
@@ -246,7 +249,7 @@ public class StudentManager extends Manager{
 				newIndex = sc.nextInt();
 				}
 				catch (Exception InputMismatchException) {  // Error handling
-					System.out.println("Invalid Input!");
+					System.out.println("Invalid Input! Please try again.");
 					sc.next();
 					continue;
 				}
@@ -271,7 +274,6 @@ public class StudentManager extends Manager{
 					// continue if user tries to change to same index
 					System.out.println("\nYou are already enrolled in this Index!");
 					System.out.println("Please select a new Index.");
-					System.out.println("");
 					continue;
 				}
 				
@@ -287,7 +289,6 @@ public class StudentManager extends Manager{
 					// continue if 0 vacancy
 					System.out.println("\nIndex " + newIndex + " has 0 vacancy left.");
 					System.out.println("Please select a new Index.");
-					System.out.println("");
 					continue;
 				}
 				// if new index has vacancy
@@ -295,12 +296,10 @@ public class StudentManager extends Manager{
 				else if (ScheduleManager.willClash(selectedNewIndex, user.getCourseList()) == true) {
 					System.out.println("\nNew Index Clashes with your current indexes!");
 					System.out.println("Please select a new Index.");
-					System.out.println("");
 					continue;
 				}
 				indexExists = true;
 			} while (!indexExists);
-			
 			
 			if (indexExists) {
 				// enroll student to newIndex
@@ -342,7 +341,6 @@ public class StudentManager extends Manager{
 				System.out.println("");
 				printRegistered(user);
 			}
-			
 		}
 		return indexExists;
 	}
@@ -357,14 +355,21 @@ public class StudentManager extends Manager{
 		Index userIndex = findIndex(oldIndex);
 		Course userCourse = getCourseFromIndex(userIndex);
 		
-		// if currentIndex does not exist or peer does not exist in database
+		// if currentIndex and peer do not exist in database
+		if (userIndex == null && peer == null) {
+			System.out.println("\nBoth Index and Peer do\ not exist in database! Please try again.");
+			System.out.println("");
+			return canSwap;
+		}
+		
+		// if currentIndex or peer does not exist in database
 		if (userIndex == null) {
-			System.out.println("Index does not exist in database! Please try again.");
+			System.out.println("\nIndex does not exist in database! Please try again.");
 			System.out.println("");
 			return canSwap;
 		}
 		if (peer == null) {
-			System.out.println("Peer does not exist in database! Please try again.");
+			System.out.println("\nPeer does not exist in database! Please try again.");
 			System.out.println("");
 			return canSwap;
 		}
@@ -395,7 +400,14 @@ public class StudentManager extends Manager{
 				// let user input new index to change to
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
 				Scanner sc = new Scanner(System.in);
-				newIndex = sc.nextInt();
+				try {
+					newIndex = sc.nextInt();
+				} 
+				catch (Exception InputMismatchException) {  // Error handling
+					System.out.println("Invalid Input! Please try again.");
+					sc.next();
+					continue;
+				}
 				// cannot sc.close() here if not UI will have error
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
@@ -404,7 +416,6 @@ public class StudentManager extends Manager{
 				}
 				
 				// check if peerIndex is in peer's list of registered courses
-				
 				boolean peerCourseExists = true;
 				for (RegisteredCourse registered : peerRegCourses) {
 					// selected index exists in peer's registered courses
@@ -458,7 +469,6 @@ public class StudentManager extends Manager{
 					System.out.println("");
 					continue;
 				}
-					
 				canSwap = true;
 			} while (!canSwap);
 			
@@ -515,7 +525,6 @@ public class StudentManager extends Manager{
 		return courseIndexes;
 	}
 
-	
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
 		for (Course c: Database.courseList) {
