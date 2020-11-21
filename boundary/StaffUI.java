@@ -171,23 +171,38 @@ public class StaffUI implements UserUI {
 								System.out.println("New Indexes Successfully Added!\n");
 							}
 							else if (selection == 2) {
+								// Update Course Code
 								System.out.print("Enter Course Code to update: ");
 								String courseCode = sc.next();
+								String clear = sc.nextLine();
+								Course course = staffManager.findCourse(courseCode);
+								// Error Handling
+								if (course == null) {
+									continue;
+								}
+								staffManager.updateCourseCode(course, courseCode);
+								//Update Course Name
 								System.out.print("Enter Course Name to update: ");
-								String courseName = sc.next();
+								String courseName = sc.nextLine();
+								staffManager.updateCourseName(course, courseName);
+								// Update Faculty
 								System.out.print("Enter Faculty to update: ");
-								String school = sc.next();
+								String school = sc.nextLine();
+								staffManager.updateCourseSchool(course, school);
+								// Update Index Number
 								System.out.print("Enter Index to update: ");
 								int index = sc.nextInt();
+								Index updatedIndex = staffManager.findIndex(index);
+								// Error Handling
+								if (updatedIndex == null) {
+									continue;
+								}
+								// Update Vacancies
 								System.out.print("Enter new Vacancy to Index " + index + ": ");
 								int vacancy = sc.nextInt();
-								
-								Course course = staffManager.findCourse(courseCode);
-								staffManager.updateCourseCode(course, courseCode);
-								staffManager.updateCourseName(course, courseName);
-								staffManager.updateCourseSchool(course, school);
-								Index updatedIndex = staffManager.findIndex(index);
 								updatedIndex.setVacancies(vacancy);
+								
+								System.out.println("Course " + course.getCourseCode() + " Successfully Updated!\n");
 							}
 						}
 						while (selection != 3);
@@ -197,6 +212,9 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter index to check vacancy: ");
 						int index = sc.nextInt();
 						Index checkIndex = staffManager.findIndex(index);
+						// Error Handling
+						if (checkIndex == null)
+							continue;
 						System.out.println("Vacancies for index " + checkIndex.getIndexNumber() + ": " + checkIndex.getVacancies());
 						break;
 					case 5:
