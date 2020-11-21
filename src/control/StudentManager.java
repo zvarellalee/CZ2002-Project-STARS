@@ -506,34 +506,7 @@ public class StudentManager extends Manager{
 		return canSwap;
 	}
 	
-	
-	
 	// --- helper methods---
-	private static Course findCourse(String courseCode) {
-		// Finds the Course object from courseCode
-		for (Course course: Database.courseList) {
-			if (course.getCourseCode().equals(courseCode)) {
-				return course;
-			}
-		}
-		System.out.println("\nInvalid Course Code! Please try again.");
-		System.out.println("");
-		return null;
-	}
-	
-	private static Index findIndex(int index) {
-		// Finds the Index object from index number
-		for (Course c : Database.courseList) {
-			for (Index i : c.getIndexList())
-				if (i.getIndexNumber() == index) {
-					return i;
-				}
-		}
-		System.out.println("\nInvalid Index! Please try again.");
-		System.out.println("");
-		return null;
-	}
-
 	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
 		ArrayList<Index> courseIndexes = new ArrayList<Index>();
 		for (Index id: course.getIndexList()) {
