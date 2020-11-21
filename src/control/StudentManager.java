@@ -24,10 +24,12 @@ public class StudentManager extends Manager {
 	public void addCourse(String courseCode) {
 		Course course = null;
 		
+		boolean courseExists = false;
 		// Shows indexes in course and their vacancies
 		System.out.println("Index\tVacancies");
 		for (Course c : Database.courseList) {
 			if (c.getCourseCode().equals(courseCode)) {
+				courseExists = true;
 				course = c;
 				for (Index index : course.getIndexList()) {
 					System.out.print(index.getIndexNumber());
@@ -35,7 +37,9 @@ public class StudentManager extends Manager {
 				}
 				break;
 			}
-			// Exits if courseCode is not found
+		}
+		// Exits if courseCode is not found
+		if (!courseExists) {
 			System.out.println("No course found! Returning back to main menu...");
 			return;
 		}
@@ -66,6 +70,7 @@ public class StudentManager extends Manager {
 						if (course.getCourseCode().equals(registered.getCourse().getCourseCode())) {
 							System.out.println("You have already enrolled in this course!");
 							System.out.println("Returning back to main menu...");
+							System.out.println("");
 							return;
 						}
 					}
@@ -74,6 +79,7 @@ public class StudentManager extends Manager {
 					if (ScheduleManager.willClash(index, user.getCourseList()) == true) {
 						System.out.println("New Index Clashes with your current indexes!");
 						System.out.println("Returning back to main menu...");
+						System.out.println("");
 						return;
 					}
 					
@@ -86,6 +92,7 @@ public class StudentManager extends Manager {
 						if (newAU > 21) {
 							System.out.println("Maximum AU exceeded!");
 							System.out.println("Returning back to main menu...");
+							System.out.println("");
 							return;
 						}
 						user.setNumAU(newAU);
@@ -95,6 +102,7 @@ public class StudentManager extends Manager {
 					else {
 						System.out.println("Index " + choice + " has 0 vacancy left.");
 						System.out.println("You have been put on the waitlist.");
+						System.out.println("");
 						// Enqueue student in the wait list of the index
 						index.addWaitList(user);
 						
@@ -105,8 +113,10 @@ public class StudentManager extends Manager {
 				}
 			}
 			// If user input is not in the index list, ask for input again
-			if (userinput)
+			if (userinput) {
 				System.out.println("Please enter a valid index!");
+				System.out.println("");
+			}
 		}
 		
 		// Enroll student in the index
@@ -118,7 +128,7 @@ public class StudentManager extends Manager {
 //		int i = FileManager.getStudentIndex(user);
 //		FileManager.getStudentDB().set(i, user);
 //		FileManager.write("student.dat", FileManager.getStudentDB());
-		System.out.println("Course Successfully Added!\n");
+		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");
 	}
 	
 	public void dropCourse(String courseCode) {	
@@ -165,7 +175,7 @@ public class StudentManager extends Manager {
 		System.out.println("Course Code\tCourse Name \t\t\t\tIndex");
 		System.out.println("================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
-			System.out.println(course.getCourse().getCourseCode() + "\t\t" + course.getCourse().getCourseName() + "\t" + course.getIndex().getIndexNumber());
+			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-35.35s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber());
 		}
 		System.out.println("");
 	}
