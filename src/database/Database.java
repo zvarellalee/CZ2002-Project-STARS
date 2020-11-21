@@ -59,6 +59,21 @@ public class Database {
 		//indexList.add(12345);
 		//indexList.add(67890);
 		
+		// test cases used for case 5 and 6
+		/*
+		// carl registers oodp at index 1
+		RegisteredCourse registered1 = new RegisteredCourse(false, oodp, a, carl);
+		ArrayList<RegisteredCourse> reg = new ArrayList<RegisteredCourse>();
+		reg.add(registered1);
+		studentList.get(0).setCourseList(reg);
+		
+		// stacey registers algo at index 3
+		RegisteredCourse registered2 = new RegisteredCourse(false, algo, c, stacey);
+		ArrayList<RegisteredCourse> reg2 = new ArrayList<RegisteredCourse>();
+		reg2.add(registered2);
+		studentList.get(1).setCourseList(reg2);
+		*/
+		
 		FileManager.write("course.dat", courseList);
 		FileManager.write("student.dat", studentList);
 		FileManager.write("staff.dat", staffList);
