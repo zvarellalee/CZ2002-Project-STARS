@@ -442,6 +442,7 @@ public class StudentManager extends Manager {
 				if (peerCourse != userCourse) {
 					System.out.println("\nNew Index does not exist in the Course.");
 					System.out.println("Please select a new Index.");
+					System.out.println("");
 					continue;
 				}
 				
