@@ -1,43 +1,50 @@
 package control;
 
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import entities.Course;
-import entities.Student;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class NotifManager {
 	private static final String sender_email = "tester_email";
 	private static final String sender_password = "password123";
 		
-	public static void sendEmail(Student student, String courseCode){
-		String email = student.getEmail();
-		InternetAddress student_email = new InternetAddress(email);
+	public static void sendEmail(String email, String courseCode, String body){
+		
 		
 		Properties props = new Properties();
-		props.put("mail.smtp.user", sender_email);
-		props.put("mail.smtp.host", "smtp-mail.outlook.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
-		props.put("mail.smtp.starttls.enable","true");
-		props.put("mail.smtp.auth", "true"); 
-				
+		
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(sender_email, sender_password);
-				}
-		});
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(sender_email, sender_password);
+					}
+				  });
 		
 		try {
-			MimeMessage msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(sender_email));
-			msg.addRecipient(Message.RecipientType.TO, student_email);
-			msg.setSubject("Test email");
-			msg.setText("Does it work?");
-			Transport.send(msg);
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(sender_email));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(email));
+			message.setSubject("Hello student");
+			message.setText("body" + courseCode);
+			
+			Transport.send(message);
+			
+			System.out.println("Email sent");
+			
 		}
-		catch (MessagingException me) {
-			me.printStackTrace();
+		catch (MessagingException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }
