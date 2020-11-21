@@ -250,7 +250,7 @@ public class StudentManager {
 					sc.next();
 					continue;
 				}
-				sc.close();
+				// cannot sc.close() here if not UI will have error
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
 					System.out.println("");
