@@ -38,16 +38,23 @@ public class User implements Serializable{
 	public String getEmail() {
 		return email;
 	}
-	public void setAdminAccess(boolean admin) {
-		adminAccess = admin;
-	}
 	public boolean getAdminAccess() {
 		return adminAccess;
+	}
+	public void setAdminAccess(boolean admin) {
+		adminAccess = admin;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
