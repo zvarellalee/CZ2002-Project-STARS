@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class FileManager {
+	public static List courses;
+	public static List students;
+	public static List staffs;
+	
 	public static void write(String filename, List list) {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
