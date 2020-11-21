@@ -140,6 +140,7 @@ public class StudentUI implements UserUI {
 				}
 			}
 			catch (Exception InputMismatchException) {
+				System.out.println("LMAO");
 				sc.next();
 				System.out.println("Invalid input! Returning back to main menu...\n");
 			}

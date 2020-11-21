@@ -8,12 +8,12 @@ import entities.RegisteredCourse;
 import entities.Student;
 import java.util.Scanner;
 
-public class StudentManager extends Manager{
+public class StudentManager extends Manager {
 	private Student user;
 	
 	public StudentManager(Student user) {
 		this.user = user;
-		// Database.initialise(); // To test out the UI
+		Database.initialise(); // To test out the UI
 	}
 	
 	public Student getUser() {
@@ -57,7 +57,6 @@ public class StudentManager extends Manager{
 				sc.next();
 				continue;
 			}
-			sc.close();
 			for (Index i : course.getIndexList()) {
 				if (choice == i.getIndexNumber()) {
 					index = i;
@@ -116,9 +115,10 @@ public class StudentManager extends Manager{
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
 		// Add to Course Database
-		int i = FileManager.getStudentIndex(user);
-		FileManager.getStudentDB().set(i, user);
-		FileManager.write("student.dat", FileManager.getStudentDB());
+//		int i = FileManager.getStudentIndex(user);
+//		FileManager.getStudentDB().set(i, user);
+//		FileManager.write("student.dat", FileManager.getStudentDB());
+		System.out.println("Course Successfully Added!\n");
 	}
 	
 	public void dropCourse(String courseCode) {	

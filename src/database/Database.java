@@ -1,6 +1,8 @@
 package database;
 
 import java.util.ArrayList;
+
+import control.FileManager;
 import entities.Course;
 import entities.Index;
 import entities.Staff;
@@ -15,9 +17,9 @@ public class Database {
 	public static void initialise() {
 		// Initialize students
 		Student carl = new Student("carl", "123", false, "Carl", 
-				"Butt", null, "test@lmao.com", "U123U", "Asexual", "Alien", 21);
+				"Butt", null, "test@lmao.com", "U123U", "Asexual", "Alien", 0);
 		Student stacey = new Student("stacey", "321", false, "Stacey", 
-				"Smiles", null, "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 21);
+				"Smiles", null, "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 0);
 		
 		// Initialize staffs
 		Staff lokey = new Staff ("dustbin", "jkl", true, "Loke", "Dustbin", null, "a@test.com", "S666S");
@@ -56,6 +58,10 @@ public class Database {
 		// Initialize indexList with test data
 		//indexList.add(12345);
 		//indexList.add(67890);
+		
+		FileManager.write("course.dat", courseList);
+		FileManager.write("student.dat", studentList);
+		FileManager.write("staff.dat", staffList);
 	}
 	
 }

@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+
+import entities.Course;
 import entities.Student;
 import java.util.ArrayList;
 
@@ -68,6 +70,10 @@ public class FileManager {
 		}
 		System.out.println("Student Not Found.");
 		return -1;
+	}
+	
+	public static int getCourseIndex(Course course) {
+		return 0;
 	}
 	
 }
