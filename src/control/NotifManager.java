@@ -14,7 +14,7 @@ public class NotifManager {
 	private static final String sender_email = "tester_email";
 	private static final String sender_password = "password123";
 		
-	public static void sendEmail(String email, String courseCode, String body){
+	public static boolean sendEmail(String email, String courseCode, String body){
 		
 		
 		Properties props = new Properties();
@@ -29,7 +29,7 @@ public class NotifManager {
 						return new PasswordAuthentication(sender_email, sender_password);
 					}
 				  });
-		
+		boolean status = false;
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(sender_email));
@@ -41,10 +41,12 @@ public class NotifManager {
 			Transport.send(message);
 			
 			System.out.println("Email sent");
+			status = true;
 			
 		}
 		catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
+		return status;
 	}
 }
