@@ -74,14 +74,18 @@ public class StaffManager extends Manager{
 	 */
 	public void addStudent(Student student) {
 		
-		for (Student s : Database.studentList) {
+		for (Student s : FileManager.getStudentDB()) {
 			if (s.getMatricNumber().equals(student.getMatricNumber())) {
 				System.out.println("Student already exists");
 				return;
 			}
 		}	
 		
-        	Database.studentList.add(student);
+		List studentList;
+		studentList = FileManager.getStudentDB();
+		studentList.add(student);
+       	        FileManager.write("student.dat" , studentList);
+        
 		printStudentList();
 	}
 	
@@ -91,10 +95,9 @@ public class StaffManager extends Manager{
 	private void printStudentList() {
 		System.out.println("Matriculation Number         Full Name");
 		System.out.println("---------------------------------------------------");
-		for (Student student : Database.studentList){
+		for (Student student : FileManager.getStudentDB()){
 			System.out.print(student.getMatricNumber() + "\t");
-			System.out.println(student.getFirstName() + " " + student.getLastName()); 
-			// decide how much to display
+			System.out.println(student.getFirstName() + " " + student.getLastName()); 		
 		}
 	}
 	
@@ -107,7 +110,7 @@ public class StaffManager extends Manager{
 	 * @param AU Number of AUs
 	 */
 	public void addCourse(String courseCode, String courseName, String school, int AU) {
-		for (Course course : Database.courseList) {
+		for (Course course : FileManager.getCourseDB()) {
 			if (course.getCourseCode().equals(courseCode)) {
 				System.out.println("Course "+ courseCode +" already exists");
 				return;
@@ -117,7 +120,12 @@ public class StaffManager extends Manager{
 		Course newCourse = new Course (courseCode, courseName, school, AU);
 		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
-		Database.courseList.add(newCourse); 
+		
+        	List courseList;
+		courseList = FileManager.getCourseDB();
+		courseList.add(newCourse);
+        	FileManager.write("Course.dat" , courseList);     
+		
 		printCourseList();
 	}
 	
@@ -127,7 +135,7 @@ public class StaffManager extends Manager{
 	public void printCourseList() {
 		System.out.println("Course Code : Course Name");
 		System.out.println("---------------------------------------------------");
-		for (Course course : Database.courseList){
+		for (Course course : FileManager.getCourseDB()){
 			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
 			
 		}
@@ -138,7 +146,8 @@ public class StaffManager extends Manager{
 	 * @param indexNumber Index Number
 	 */
 	public void addStudentToIndex(int indexNumber) {
-		Index index = findIndex( indexNumber);
+		Course c = null;
+		Index index = findIndex(indexNumber);// might change
 		int vacancy = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
@@ -154,8 +163,12 @@ public class StaffManager extends Manager{
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
-				
+						
+						c = rc.getCourse(); // might change
+						
 						rc.setOnWaitlist(false);
+						FileManager.updateStudentDB(s);
+						
 						studentWaitlist.remove(s);
 						index.setWaitList(studentWaitlist);
 						
@@ -170,7 +183,8 @@ public class StaffManager extends Manager{
 		}
 		
 		index.setVacancies(vacancy);
-			
+		
+		FileManager.updateCourseDB(c);
 	}
 	
 	
