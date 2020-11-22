@@ -2,7 +2,6 @@ package control;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import database.Database;
 import entities.Course;
 import entities.Index;
@@ -126,12 +125,8 @@ public class StudentManager extends Manager {
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
-		// Add to Course Database
-		int i = FileManager.getStudentIndex(user);
-		List<Student> updatedStudents = FileManager.getStudentDB();
-		updatedStudents.set(i, user);
-		FileManager.setStudentDB(updatedStudents);
-		FileManager.write("student.dat", updatedStudents);
+		// Update Student Database
+		FileManager.updateStudentDB(user);
 		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");
 	}
 	
@@ -148,7 +143,9 @@ public class StudentManager extends Manager {
 				// Update Student's number of AUs
 				user.setNumAU(user.getNumAU() - droppedCourse.getAU());
 				// Remove course from student's list of registered courses
-				courses.remove(course); 
+				courses.remove(course);
+				// Update Student Database
+				FileManager.updateStudentDB(user);
 				System.out.println("Course Code " + courseCode + " successfully dropped.");
 				
 				// Increase vacancy by 1 if wait list is empty

@@ -54,18 +54,6 @@ public class FileManager {
 		return details;
 	}
 	
-	public static List<Course> getCourseDB() {
-		return courses;
-	}
-	
-	public static List<Student> getStudentDB() {
-		return students;
-	}
-	
-	public static List<Staff> getStaffDB() {
-		return staffs;
-	}
-	
 	public static int getStudentIndex(Student student) {
 		for (int i = 0; i < students.size(); i++) {
 			if (students.get(i).equals(student)) {
@@ -75,10 +63,6 @@ public class FileManager {
 		System.out.println("Student Not Found.");
 		System.out.println(-1);
 		return -1;
-	}
-	
-	public static int getCourseIndex(Course course) {
-		return 0;
 	}
 	
 	public static void setStudentDB(List<Student> updatedStudents) {
@@ -91,5 +75,13 @@ public class FileManager {
 	
 	public static void setStaffDB(List<Staff> updatedStaffs) {
 		staffs = updatedStaffs;
+	}
+	
+	public static void updateStudentDB(Student student) {
+		int i = FileManager.getStudentIndex(student);
+		List<Student> updatedStudents = students;
+		updatedStudents.set(i, student);
+		setStudentDB(updatedStudents);
+		write("student.dat", updatedStudents);
 	}
 }
