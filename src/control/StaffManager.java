@@ -39,6 +39,7 @@ public class StaffManager extends Manager{
 	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd, Student student) {
 		student.setAccessStart(accessStart);
 		student.setAccessEnd(accessEnd);
+		FileManager.updateStudentDB(student);
 	}
 	
 	/**
@@ -48,6 +49,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseCode(Course course, String courseCode) {
 		course.setCourseCode(courseCode);
+		FileManager.updateCourseDB(course);
 	}
 	
 	/**
@@ -57,6 +59,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseName(Course course, String courseName) {
 		course.setCourseName(courseName);
+		FileManager.updateCourseDB(course);
 	}
 	
 	/**
@@ -66,6 +69,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseSchool(Course course, String courseSchool) {
 		course.setSchool(courseSchool);
+		FileManager.updateCourseDB(course);
 	}
 	
 	/**
@@ -124,7 +128,7 @@ public class StaffManager extends Manager{
         	List courseList;
 		courseList = FileManager.getCourseDB();
 		courseList.add(newCourse);
-        	FileManager.write("Course.dat" , courseList);     
+        	FileManager.write("course.dat" , courseList);     
 		
 		printCourseList();
 	}
