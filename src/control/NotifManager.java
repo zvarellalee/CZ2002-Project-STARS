@@ -15,9 +15,8 @@ import entities.Student;
 public class NotifManager {
 		
 	public static boolean sendEmail(String email, Student student, String courseCode) {
-		//an actual email
-		final String sender_username = "cz2002email";
-		final String sender_password = "cz2002dummy";
+		final String sender_username = "username";
+		final String sender_password = "password";
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
