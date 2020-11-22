@@ -2,17 +2,18 @@ package database;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+
 import control.FileManager;
 import entities.Course;
 import entities.Index;
-import entities.Session;
 import entities.Staff;
 import entities.Student;
 
-public class Database {
-	public static ArrayList<Student> studentList = new ArrayList<Student>();
-	public static ArrayList<Staff> staffList = new ArrayList<Staff>();
-	public static ArrayList<Course> courseList = new ArrayList<Course>();
+public class Database {	
+	private static HashMap<String,Course> courseMap = new HashMap<String,Course>();
+	private static HashMap<String,Student> studentMap = new HashMap<String,Student>();
+	private static HashMap<String,Staff> staffMap = new HashMap<String,Staff>();
 
 	public static void initialise() {		
 		// Initialize students
@@ -62,48 +63,22 @@ public class Database {
 		algo.addIndex(d);
 		algo.addIndex(e);
 		
-		// Initialise sessions
-		Calendar sessionStart = Calendar.getInstance();
-		Calendar sessionEnd = Calendar.getInstance();
-		Calendar sessionEnd2 = Calendar.getInstance();
-		
-		sessionStart.set(Calendar.DAY_OF_WEEK, 3);
-		sessionStart.set(Calendar.HOUR_OF_DAY, 16);
-		sessionStart.set(Calendar.MINUTE, 30);
-		sessionEnd.set(Calendar.DAY_OF_WEEK, 3);
-		sessionEnd.set(Calendar.HOUR_OF_DAY, 18);
-		sessionEnd.set(Calendar.MINUTE, 30);
-		sessionEnd2.set(Calendar.DAY_OF_WEEK, 3);
-		sessionEnd2.set(Calendar.HOUR_OF_DAY, 20);
-		sessionEnd2.set(Calendar.MINUTE, 00);
-		Session f = new Session("Lecture", "Home", sessionStart, sessionEnd);
-		Session g = new Session("Laboratory", "Sentosa", sessionStart, sessionEnd2);
-				
-		// Add Sessions for Indexes
-		a.addSessionList(f);
-		a.addSessionList(g);
-		b.addSessionList(f);
-		
 		// Initialize studentList with test data
-		studentList.add(carl);
-		studentList.add(stacey);
+		studentMap.put(carl.getMatricNumber(),carl);
+		studentMap.put(stacey.getMatricNumber(),stacey);
 		
 		// Initialize staffList with test data
-		staffList.add(lokey);
-		staffList.add(lala);
+		staffMap.put(lokey.getStaffID(),lokey);
+		staffMap.put(lala.getStaffID(),lala);
 		
 		// Initialize courseList with test data
-		courseList.add(oodp);
-		courseList.add(algo);
+		courseMap.put(oodp.getCourseCode(),oodp);
+		courseMap.put(algo.getCourseCode(),algo);
 		
 		// Write to .dat files
-		FileManager.setCourseDB(courseList);
-		FileManager.setStudentDB(studentList);
-		FileManager.setStaffDB(staffList);
-		
-		FileManager.write("course.dat", courseList);
-		FileManager.write("student.dat", studentList);
-		FileManager.write("staff.dat", staffList);
+		FileManager.write("course.dat", courseMap);
+		FileManager.write("student.dat", studentMap);
+		FileManager.write("staff.dat", staffMap);
 	}
 	
 }
