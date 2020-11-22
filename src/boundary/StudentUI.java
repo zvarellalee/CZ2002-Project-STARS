@@ -1,7 +1,6 @@
 package boundary;
 
 import java.util.Scanner;
-// import database.Database;
 import entities.Student;
 import control.StudentManager;
 
@@ -16,15 +15,6 @@ public class StudentUI implements UserUI {
 	public void setStudent(Student user) {
 		StudentUI.user = user;
 	}
-	
-//	// to test
-//	public static void main(String[] args) {
-//		Database.initialise();
-//		user = Database.studentList.get(0);
-//		StudentUI studentUI = new StudentUI();
-//		studentUI.setStudent(user);
-//		studentUI.showUI();
-//	}
 	
 	public void showUI() {
 

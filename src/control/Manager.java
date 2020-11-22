@@ -1,6 +1,5 @@
 package control;
 
-import database.Database;
 import entities.Course;
 import entities.Index;
 
@@ -11,7 +10,7 @@ public class Manager {
 	 * @return Course Object
 	 */
 	public Course findCourse(String courseCode) {
-		for (Course c : Database.courseList) {
+		for (Course c : FileManager.getCourseDB()) {
 			if (c.getCourseCode().equals(courseCode)) {
 				return c;
 			}
@@ -28,7 +27,7 @@ public class Manager {
 	 */
 	public Index findIndex(int index) {
 		// Finds the Index object from index number
-		for (Course c : Database.courseList) {
+		for (Course c : FileManager.getCourseDB()) {
 			for (Index i : c.getIndexList())
 				if (i.getIndexNumber() == index) {
 					return i;
