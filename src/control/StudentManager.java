@@ -89,19 +89,21 @@ public class StudentManager extends Manager {
 						return;
 					}
 					
+					// Check number of AUs of student, add course AU to student's AUs 
+					int newAU = user.getNumAU() + course.getAU();
+					if (newAU > 21) {
+						System.out.println("Maximum AU exceeded!");
+						System.out.println("Returning back to main menu...");
+						System.out.println("");
+						return;
+					}
+					// set new AU of student (even if need to be on waitlist)
+					user.setNumAU(newAU);
+					
 					// Check if index has vacancies
 					if (index.getVacancies() != 0 ) {
 						// Decrease vacancy of index by 1
 						index.setVacancies(index.getVacancies() - 1);
-						// Check number of AUs of student, add course AU
-						int newAU = user.getNumAU() + course.getAU();
-						if (newAU > 21) {
-							System.out.println("Maximum AU exceeded!");
-							System.out.println("Returning back to main menu...");
-							System.out.println("");
-							return;
-						}
-						user.setNumAU(newAU);
 						userinput = false;
 						break;
 					}
