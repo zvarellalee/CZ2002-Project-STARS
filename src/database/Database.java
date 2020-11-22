@@ -5,6 +5,7 @@ import java.util.Calendar;
 import control.FileManager;
 import entities.Course;
 import entities.Index;
+import entities.Session;
 import entities.Staff;
 import entities.Student;
 
@@ -60,6 +61,28 @@ public class Database {
 		algo.addIndex(c);
 		algo.addIndex(d);
 		algo.addIndex(e);
+		
+		// Initialise sessions
+		Calendar sessionStart = Calendar.getInstance();
+		Calendar sessionEnd = Calendar.getInstance();
+		Calendar sessionEnd2 = Calendar.getInstance();
+		
+		sessionStart.set(Calendar.DAY_OF_WEEK, 3);
+		sessionStart.set(Calendar.HOUR_OF_DAY, 16);
+		sessionStart.set(Calendar.MINUTE, 30);
+		sessionEnd.set(Calendar.DAY_OF_WEEK, 3);
+		sessionEnd.set(Calendar.HOUR_OF_DAY, 18);
+		sessionEnd.set(Calendar.MINUTE, 30);
+		sessionEnd2.set(Calendar.DAY_OF_WEEK, 3);
+		sessionEnd2.set(Calendar.HOUR_OF_DAY, 20);
+		sessionEnd2.set(Calendar.MINUTE, 00);
+		Session f = new Session("Lecture", "Home", sessionStart, sessionEnd);
+		Session g = new Session("Laboratory", "Sentosa", sessionStart, sessionEnd2);
+				
+		// Add Sessions for Indexes
+		a.addSessionList(f);
+		a.addSessionList(g);
+		b.addSessionList(f);
 		
 		// Initialize studentList with test data
 		studentList.add(carl);
