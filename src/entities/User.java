@@ -1,8 +1,13 @@
 /**
- * Stores the shared User information for Staff and Student child classes
+ * Represents a user in mySTARS with the 
+ * relevant information stored in this class.
+ * Each user can either be a staff or student user
+ * where staff has administrative rights.
+ * @author 
  * @version 1.0
  * @since 2020-11-20
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -12,30 +17,43 @@ import java.security.NoSuchAlgorithmException;
 import control.LoginManager;
 
 public class User implements Serializable{
-	/** Username of user */
+	/** 
+	 * Username that User uses to login into mySTARS
+	 */
 	private String username;
-	/** Hashed password of user */
+	/** 
+	 * Password that User uses to login into mySTARS
+	 */
 	private String password;
-	/** adminAccess reflects whether or not the user has admin priveleges */
+	/** 
+	 * Whether User has administrative rights 
+	 */
 	private boolean adminAccess;
-	/** User first name */
+	/** 
+	 * User's First Name
+	 */
 	private String firstName;
-	/** User last name */
+	/** 
+	 * User's Last Name
+	 */
 	private String lastName;
-	/** Hashing salt */
+	/** 
+	 * Hashing salt
+	 */
 	private String salt;
-	/** user email */
+	/** 
+	 * User's Email Addrss
+	 */
 	private String email;
 	
 	/**
-	 * User constructor for initialization
-	 * @param String username
-	 * @param String password
-	 * @param boolean adminAccess
-	 * @param String firstName
-	 * @param String lastName
-	 * @param String salt
-	 * @param String email
+	 * Initialising the User
+	 * @param username Username used to login into mySTARS
+	 * @param password Password used to login into mySTARS
+	 * @param adminAccess Whether the User has administrative rights
+	 * @param firstName First Name
+	 * @param lastName Last Name
+	 * @param email Email Address
 	 */
 	public User(String username, String password, boolean adminAccess, String firstName, String lastName, String email) {
 		this.username = username;
@@ -53,97 +71,99 @@ public class User implements Serializable{
 		this.email = email;
 	}
 	
+	// ------ accessor methods ------
 	/**
-	 * Accessor method for username
-	 * @return String username
+	 * Gets the Username of the User
+	 * @return username Username
 	 */
 	public String getUsername() {
 		return username;
 	}
 	
 	/**
-	 * Accessor method for password
-	 * @return String password
+	 * Gets the Password of the User
+	 * @return password Password
 	 */
 	public String getPassword() {
 		return password;
 	}
 	
 	/**
-	 * Accessor method for first name
-	 * @return String firstName
+	 * Gets the first name of the User
+	 * @return firstName First Name
 	 */
 	public String getFirstName() {
 		return firstName;
 	}
 	
 	/**
-	 * Accessor method for last name
-	 * @return String last name
+	 * Gets the last name of the User
+	 * @return lastName Last Name
 	 */
 	public String getLastName() {
 		return lastName;
 	}
 	
 	/**
-	 * Accessor method for salt
-	 * @return String salt
+	 * Gets the generated salt of the User
+	 * @return salt Salt
 	 */
 	public String getSalt() {
 		return salt;
 	}
 	
 	/**
-	 * accessor method for email
-	 * @return String email
+	 * Gets the email address of the User
+	 * @return email Email Address
 	 */
 	public String getEmail() {
 		return email;
 	}
 	
 	/**
-	 * Accessor method for admin access
-	 * @return boolean adminAccess
+	 * Gets the boolean value of whether the User has administrative rights
+	 * @return adminAccess
 	 */
 	public boolean getAdminAccess() {
 		return adminAccess;
 	}
 	
+	// ------ mutator methods ------
 	/**
-	 * Mutator method for admin access
-	 * @param boolean admin
+	 * Sets the administrative rights
+	 * @param admin Administrative rights
 	 */
 	public void setAdminAccess(boolean admin) {
 		adminAccess = admin;
 	}
 	
 	/**
-	 * Mutator method for username
-	 * @param String username
+	 * Sets the Username
+	 * @param username Username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 	
 	/**
-	 * Mutator method for password
-	 * @param String password
+	 * Sets the Password
+	 * @param password Password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 	
 	/**
-	 * Mutator method for salt
-	 * @param String salt
+	 * Sets the Salt
+	 * @param salt Salt
 	 */
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
 	
 	/**
-	 * Mutator method for email
-	 * @param String email
+	 * Sets the Email Address
+	 * @param email Email Address
 	 */
 	public void setEmail(String email) {
 		this.email = email;
