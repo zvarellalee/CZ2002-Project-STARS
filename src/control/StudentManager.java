@@ -1,7 +1,6 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.List;
 import database.Database;
 import entities.Course;
 import entities.Index;
@@ -125,6 +124,8 @@ public class StudentManager extends Manager {
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
+		// Update Course Database
+		FileManager.updateCourseDB(course);
 		// Update Student Database
 		FileManager.updateStudentDB(user);
 		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");

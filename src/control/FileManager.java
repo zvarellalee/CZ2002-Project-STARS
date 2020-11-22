@@ -61,7 +61,26 @@ public class FileManager {
 			}
 		}
 		System.out.println("Student Not Found.");
-		System.out.println(-1);
+		return -1;
+	}
+	
+	public static int getCourseIndex(Course course) {
+		for (int i = 0; i < courses.size(); i++) {
+			if (courses.get(i).equals(course)) {
+				return i;
+			}
+		}
+		System.out.println("Course Not Found.");
+		return -1;
+	}
+	
+	public static int getStaffIndex(Staff staff) {
+		for (int i = 0; i < staffs.size(); i++) {
+			if (staffs.get(i).equals(staff)) {
+				return i;
+			}
+		}
+		System.out.println("Staff Not Found.");
 		return -1;
 	}
 	
@@ -83,5 +102,21 @@ public class FileManager {
 		updatedStudents.set(i, student);
 		setStudentDB(updatedStudents);
 		write("student.dat", updatedStudents);
+	}
+	
+	public static void updateCourseDB(Course course) {
+		int i = FileManager.getCourseIndex(course);
+		List<Course> updatedCourses = courses;
+		updatedCourses.set(i, course);
+		setCourseDB(updatedCourses);
+		write("course.dat", updatedCourses);
+	}
+	
+	public static void updateStaffDB(Staff staff) {
+		int i = FileManager.getStaffIndex(staff);
+		List<Staff> updatedStaffs = staffs;
+		updatedStaffs.set(i, staff);
+		setStaffDB(updatedStaffs);
+		write("staff.dat", updatedStaffs);
 	}
 }
