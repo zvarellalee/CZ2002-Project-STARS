@@ -1,6 +1,7 @@
 /**
- * Represents a staff that has administrative rights in mySTARS
- * with the relevant information stored in this class.
+ * Represents a staff user that has administrative rights 
+ * in mySTARS, with the relevant information stored 
+ * in this class.
  * @author 
  * @version 1.0
  * @since 2020-11-20
