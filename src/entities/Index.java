@@ -120,7 +120,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Adds a student to the Array List of Students enrolled in the Index
-	 * @param studentList Array List of Students
+	 * @param Student Object
 	 */
 	public void addStudentList(Student student) { 
 		studentList.add(student);
@@ -128,7 +128,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a student from the Array List of Students enrolled in the Index
-	 * @param studentList Array List of Students
+	 * @param Student Object
 	 */
 	public void removeStudentList(Student student) {
 		if (studentList.contains(student))
