@@ -77,6 +77,18 @@ public class FileManager {
 		return -1;
 	}
 	
+	public static List<Course> getCourseDB() {
+		return courses;
+	}
+	
+	public static List<Student> getStudentDB() {
+		return students;
+	}
+	
+	public static List<Staff> getStaffDB() {
+		return staffs;
+	}
+	
 	public static void setStudentDB(List<Student> updatedStudents) {
 		students = updatedStudents;
 	}

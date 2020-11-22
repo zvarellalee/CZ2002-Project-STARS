@@ -8,7 +8,6 @@
 package control;
 
 import java.util.ArrayList;
-import database.Database;
 import entities.Course;
 import entities.Index;
 import entities.RegisteredCourse;
@@ -27,7 +26,7 @@ public class StudentManager extends Manager {
 	 */
 	public StudentManager(Student user) {
 		this.user = user;
-		// Database.initialise(); // To test out the UI
+		// Database.initialise(); // To remove
 	}
 	
 	public Student getUser() {
@@ -584,7 +583,7 @@ public class StudentManager extends Manager {
 
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
-		for (Course c: Database.courseList) {
+		for (Course c: FileManager.getCourseDB()) {
 			if (c.getIndexList().contains(index)) {
 				course = c;
 			}
@@ -594,7 +593,7 @@ public class StudentManager extends Manager {
 	
 	private static Student getStudentFromMatricNumber(String matricNumber) {
 		Student student = null;
-		for (Student s: Database.studentList) {
+		for (Student s: FileManager.getStudentDB()) {
 			if (s.getMatricNumber().equals(matricNumber)) {
 				student = s;
 			}
