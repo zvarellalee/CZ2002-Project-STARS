@@ -42,7 +42,7 @@ public class StaffManager extends Manager{
 	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd, Student student) {
 		student.setAccessStart(accessStart);
 		student.setAccessEnd(accessEnd);
-		FileManager.updateStudentDB(student);
+		updateStudentDB(student);
 	}	
 
 	public Calendar checkStudentAccessStart(Student student) {
@@ -59,7 +59,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseCode(Course course, String courseCode) {
 		course.setCourseCode(courseCode);
-		FileManager.updateCourseDB(course);
+		updateCourseDB(course);
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseName(Course course, String courseName) {
 		course.setCourseName(courseName);
-		FileManager.updateCourseDB(course);
+		updateCourseDB(course);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class StaffManager extends Manager{
 	 */
 	public void updateCourseSchool(Course course, String courseSchool) {
 		course.setSchool(courseSchool);
-		FileManager.updateCourseDB(course);
+		updateCourseDB(course);
 	}
 	
 	/**
@@ -88,17 +88,12 @@ public class StaffManager extends Manager{
 	 */
 	public void addStudent(Student student) {
 		
-		for (Student s : FileManager.getStudentDB()) {
-			if (s.getMatricNumber().equals(student.getMatricNumber())) {
-				System.out.println("Student already exists");
-				return;
-			}
-		}	
+		if (getStudentDB().containsKey(student.getMatricNumber())) {
+			System.out.println("Student already exists");
+			return;
+		}
 		
-		List studentList;
-		studentList = FileManager.getStudentDB();
-		studentList.add(student);
-       	        FileManager.write("student.dat" , studentList);
+		updateStudentDB(student);
         
 		printStudentList();
 	}
@@ -109,7 +104,7 @@ public class StaffManager extends Manager{
 	private void printStudentList() {
 		System.out.println("Matriculation Number         Full Name");
 		System.out.println("---------------------------------------------------");
-		for (Student student : FileManager.getStudentDB()){
+		for (Student student : getStudentDB().values()){
 			System.out.print(student.getMatricNumber() + "\t");
 			System.out.println(student.getFirstName() + " " + student.getLastName()); 		
 		}
@@ -124,21 +119,16 @@ public class StaffManager extends Manager{
 	 * @param AU Number of AUs
 	 */
 	public void addCourse(String courseCode, String courseName, String school, int AU) {
-		for (Course course : FileManager.getCourseDB()) {
-			if (course.getCourseCode().equals(courseCode)) {
-				System.out.println("Course "+ courseCode +" already exists");
-				return;
-			}
+		if (getCourseDB().containsKey(courseCode)) {
+			System.out.println("Course "+ courseCode +" already exists");
+			return;
 		}
 		
 		Course newCourse = new Course (courseCode, courseName, school, AU);
 		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		
-        	List courseList;
-		courseList = FileManager.getCourseDB();
-		courseList.add(newCourse);
-        	FileManager.write("course.dat" , courseList);     
+        updateCourseDB(newCourse); 
 		
 		printCourseList();
 	}
@@ -149,7 +139,7 @@ public class StaffManager extends Manager{
 	public void printCourseList() {
 		System.out.println("Course Code : Course Name");
 		System.out.println("---------------------------------------------------");
-		for (Course course : FileManager.getCourseDB()){
+		for (Course course : getCourseDB().values()){
 			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
 			
 		}
@@ -179,7 +169,7 @@ public class StaffManager extends Manager{
 					if (rc.getIndex().equals(index)) {
 												
 						rc.setOnWaitlist(false);
-						FileManager.updateStudentDB(s);
+						updateStudentDB(s);
 						
 						studentWaitlist.remove(s);
 						index.setWaitList(studentWaitlist);
@@ -198,7 +188,7 @@ public class StaffManager extends Manager{
 		
 		index.setVacancies(vacancy);
 		
-		FileManager.updateCourseDB(c);
+		updateCourseDB(c);
 	}
 	
 	
