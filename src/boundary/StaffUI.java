@@ -16,6 +16,7 @@ import entities.Index;
 import entities.Session;
 import entities.Staff;
 import entities.Student;
+import control.Manager;
 import control.StaffManager;
 
 public class StaffUI implements UserUI {
@@ -39,15 +40,6 @@ public class StaffUI implements UserUI {
 	 */
 	public void setStaff(Staff user) {
 		StaffUI.user = user;
-	}
-	
-	// to test
-	public static void main(String[] args) {
-		Database.initialise();
-		user = Database.staffList.get(0);
-		StaffUI staffUI = new StaffUI();
-		staffUI.setStaff(user);
-		staffUI.showUI();
 	}
 
 	/**
@@ -89,35 +81,34 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to edit access period: ");
 						matric = sc.next();
 						// Find the student object using matriculation number
-						for (Student s : Database.studentList) {
-							if (s.getMatricNumber().equals(matric)) {
-								student = s;
-								boolean invalid = true;
-								// Ask staff for access and end date and time
-								Calendar accessStart = Calendar.getInstance();
-								accessStart.setLenient(false);
-								Calendar accessEnd = Calendar.getInstance();
-								accessEnd.setLenient(false);
-								int startMth = -1, startDay = -1, startHour = -1, startMin = -1, endMth = -1, endDay = -1, endHour = -1, endMin = -1;
+						if (Manager.getStudentDB().containsKey(matric)) {
+							student = Manager.getStudentDB().get(matric);
+							boolean invalid = true;
+							// Ask staff for access and end date and time
+							Calendar accessStart = Calendar.getInstance();
+							accessStart.setLenient(false);
+							Calendar accessEnd = Calendar.getInstance();
+							accessEnd.setLenient(false);
+							int startMth = -1, startDay = -1, startHour = -1, startMin = -1, endMth = -1, endDay = -1, endHour = -1, endMin = -1;
 								
-								while (invalid) {
-									System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
-									accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
-									System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
-									accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
-								
-									// Edit student access period
-									if (accessEnd.compareTo(accessStart) < 0) {
-										System.out.println("Invalid access period! Please try again.\n");
-									} else invalid = false;
-								}
-
-								staffManager.editStudentAccessPeriod(accessStart, accessEnd, student);
-								System.out.println("Student's access period successfully changed!\n");
-								found = true;
-								break;
+							while (invalid) {
+								System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
+								accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
+								System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
+								accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
+							
+								// Edit student access period
+								if (accessEnd.compareTo(accessStart) < 0) {
+									System.out.println("Invalid access period! Please try again.\n");
+								} else invalid = false;
 							}
+
+							staffManager.editStudentAccessPeriod(accessStart, accessEnd, student);
+							System.out.println("Student's access period successfully changed!\n");
+							found = true;
+							break;
 						}
+						
 						// If student not found
 						if (found == false) {
 							System.out.println("Matriculation Number does not exist!\n");
@@ -131,11 +122,9 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to check access period: ");
 						String matric2 = sc.next();
 						// Find the student object using matriculation number
-						for (Student s : Database.studentList) {
-							if (s.getMatricNumber().equals(matric2)) {
-								student2 = s;
-								found2 = true;
-							}
+						if (Manager.getStudentDB().containsKey(matric2)) {
+							student2 = Manager.getStudentDB().get(matric2);
+							found2 = true;
 						}
 
 						// If student not found
@@ -172,7 +161,7 @@ public class StaffUI implements UserUI {
 						String nationality = sc.next();
 						
 						Student newStudent = new Student(username, password, false, firstName, 
-								lastName, null, email, matricNumber, gender, nationality, 0);
+								lastName, email, matricNumber, gender, nationality, 0);
 						staffManager.addStudent(newStudent);
 						break;
 					case 4:
