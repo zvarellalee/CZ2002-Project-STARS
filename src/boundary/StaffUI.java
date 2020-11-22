@@ -147,7 +147,7 @@ public class StaffUI implements UserUI {
 							Calendar accessEnd = staffManager.checkStudentAccessEnd(student2);
 							
 							System.out.println("\n---Viewing " + student2.getFirstName() + "'s Access Start Period---");	
-							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY, h:mm:ssa");
+							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY, h:mma");
 							System.out.println("Access Start Time: " + sdf.format(accessStart.getTime()));
 							System.out.println("Access End Time: " + sdf.format(accessEnd.getTime()));
 						}
@@ -296,6 +296,18 @@ public class StaffUI implements UserUI {
 					case 8:
 						// Exits
 						run = false;
+						break;
+					// To check session list, can remove later
+					case 9:
+						System.out.print("Enter Index to Check Session List: ");
+						Index index2 = staffManager.findIndex(sc.nextInt());
+						for (Session s: index2.getSessionList()) {
+							System.out.println("\nSession Type: " + s.getSessionType());
+							System.out.println("Venue: " + s.getVenue());
+							SimpleDateFormat sdf = new SimpleDateFormat("EEEE, h:mma");
+							System.out.println("Start Time: " + sdf.format(s.getSessionStart().getTime()));
+							System.out.println("End Time: " + sdf.format(s.getSessionEnd().getTime()));
+						}
 						break;
 					default:
 						System.out.println("Please choose an option from 1-8!");
