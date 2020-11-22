@@ -16,8 +16,8 @@ public class NotifManager {
 		
 	public static boolean sendEmail(String email, Student student, String courseCode) {
 		
-		final String sender_username = "tester_email";
-		final String sender_password = "password123";
+		final String sender_username = "cz2002email";
+		final String sender_password = "cz2002dummy";
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
