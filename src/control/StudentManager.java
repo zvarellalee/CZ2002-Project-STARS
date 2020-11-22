@@ -187,7 +187,6 @@ public class StudentManager extends Manager {
 		System.out.println("Course Code\tCourse Name \t\t\t\tIndex");
 		System.out.println("================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
-			course.getCourse().getCourseName();
 			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-35.35s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber());
 		}
 		System.out.println("");
