@@ -12,6 +12,7 @@ import java.util.Scanner;
 import database.Database;
 import entities.Course;
 import entities.Index;
+import entities.Session;
 import entities.Staff;
 import entities.Student;
 import control.StaffManager;
@@ -96,9 +97,9 @@ public class StaffUI implements UserUI {
 								int startMth = -1, startDay = -1, startHour = -1, startMin = -1, endMth = -1, endDay = -1, endHour = -1, endMin = -1;
 								
 								System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
-								accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
+								accessStart = inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
 								System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
-								accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
+								accessEnd = inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
 								
 								// Edit student access period
 								staffManager.editStudentAccessPeriod(accessStart, accessEnd, student);
@@ -146,6 +147,7 @@ public class StaffUI implements UserUI {
 							selection = sc.nextInt();
 							
 							if (selection == 1) {
+								// Add new course
 								System.out.print("\nEnter Course Code to add: ");
 								String courseCode = sc.next();
 								String clear = sc.nextLine();
@@ -158,6 +160,7 @@ public class StaffUI implements UserUI {
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
 								Course newCourse = staffManager.findCourse(courseCode);
+								// Add new index for the course
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
 								for (int i = 0; i < numIndex; i++) {
@@ -168,8 +171,24 @@ public class StaffUI implements UserUI {
 									int vacancies = sc.nextInt();
 									Index newIndex = new Index(index, vacancies);
 									newCourse.addIndex(newIndex);
+									
+									// Add new session for the index
+									System.out.print("\nEnter number of Sessions to insert into Index (" + index + ") : ");
+									int numSesh = sc.nextInt();
+									for (int j = 0; j < numSesh; j++) {
+										System.out.println("Adding Session (" + j+1 + "/" + numSesh + ")");
+										System.out.print("\nEnter Session Type: ");
+										String sessionType = sc.next();
+										System.out.print("\nEnter Venue: ");
+										String venue = sc.next();
+										Calendar sessionStart = Calendar.getInstance();
+										sessionStart = inputDate(sessionStart, sc);
+										Calendar sessionEnd = Calendar.getInstance();
+										sessionEnd = inputDate(sessionEnd, sc);
+										Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
+										newIndex.addSessionList(newSession);
+									}
 								}
-								System.out.println("New Indexes Successfully Added!\n");
 							}
 							else if (selection == 2) {
 								// Update Course Code
@@ -271,7 +290,7 @@ public class StaffUI implements UserUI {
 				System.out.print("Enter Day: ");
 				day = sc.nextInt();
 				if (day < 1 || day > 31) {
-					System.out.println("Please a valid date! Please try again.");
+					System.out.println("Please input a valid date! Please try again.");
 					continue;
 				}
 				// Input Hour
@@ -302,4 +321,40 @@ public class StaffUI implements UserUI {
 		return calendar;
 	}
 	
+	private static Calendar inputDate(Calendar calendar, Scanner sc) {
+		try {			
+			while (true) {
+				// Input Day
+				System.out.print("Enter Day of Week (0:Sunday - 6:Saturday): ");
+				int day = sc.nextInt();
+				if (day < 0 || day > 6) {
+					System.out.println("Please input a valid date! Please try again.");
+					continue;
+				}
+				// Input Hour
+				System.out.print("Enter Hour (24H format): ");
+				int hour = sc.nextInt();
+				if (hour < 0 || hour > 23) {
+					System.out.println("Please input a valid time! Please try again.");
+					continue;
+				}
+				// Input Minute
+				System.out.print("Enter Minute: ");
+				int min = sc.nextInt();
+				if (min < 0 || min > 59) {
+					System.out.println("Please enter a valid time! Please try again.");
+					continue;
+				}
+				
+				calendar.set(Calendar.DAY_OF_WEEK, day);
+				calendar.set(Calendar.HOUR_OF_DAY, hour);
+				calendar.set(Calendar.MINUTE, min);
+				return calendar;
+			}
+		}
+		catch (Exception InputMismatchException) {
+			System.out.println("Invalid input! Please try again.\n");
+		}
+		return calendar;
+	}
 }
