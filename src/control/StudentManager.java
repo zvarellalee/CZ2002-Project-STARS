@@ -1,6 +1,8 @@
 package control;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import database.Database;
 import entities.Course;
 import entities.Index;
@@ -20,7 +22,7 @@ public class StudentManager extends Manager {
 		return user;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("resource")
 	public void addCourse(String courseCode) {
 		Course course = null;
 		
@@ -125,9 +127,11 @@ public class StudentManager extends Manager {
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
 		// Add to Course Database
-//		int i = FileManager.getStudentIndex(user);
-//		FileManager.getStudentDB().set(i, user);
-//		FileManager.write("student.dat", FileManager.getStudentDB());
+		int i = FileManager.getStudentIndex(user);
+		List<Student> updatedStudents = FileManager.getStudentDB();
+		updatedStudents.set(i, user);
+		FileManager.setStudentDB(updatedStudents);
+		FileManager.write("student.dat", updatedStudents);
 		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");
 	}
 	
@@ -207,6 +211,7 @@ public class StudentManager extends Manager {
 		return courseExists;
 	}
 	
+	@SuppressWarnings("resource")
 	public boolean changeIndex(int currentIndex) {
 		// TODO: check if fail test cases 
 		// initialise index number does not exist
@@ -346,6 +351,7 @@ public class StudentManager extends Manager {
 		return indexExists;
 	}
 	
+	@SuppressWarnings("resource")
 	public boolean swapIndex(int oldIndex, String matricNumber) {
 		// TODO: check if fail test cases 
 		// initialise swap fail

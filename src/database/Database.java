@@ -74,6 +74,11 @@ public class Database {
 		studentList.get(1).setCourseList(reg2);
 		*/
 		
+		// Write to .dat files
+		FileManager.setCourseDB(courseList);
+		FileManager.setStudentDB(studentList);
+		FileManager.setStaffDB(staffList);
+		
 		FileManager.write("course.dat", courseList);
 		FileManager.write("student.dat", studentList);
 		FileManager.write("staff.dat", staffList);

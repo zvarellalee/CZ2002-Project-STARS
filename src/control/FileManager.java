@@ -6,15 +6,22 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-
 import entities.Course;
+import entities.Staff;
 import entities.Student;
 import java.util.ArrayList;
 
 public class FileManager {
-	private static List courses;
-	private static List students;
-	private static List staffs;
+	private static List<Course> courses;
+	private static List<Student> students;
+	private static List<Staff> staffs;
+	
+//	// Read in the .dat files upon Instantiation
+//	public FileManager() {
+//		courses = FileManager.read("course.dat");
+//		students = FileManager.read("student.dat");
+//		staffs = FileManager.read("staff.dat");
+//	}
 	
 	public static void write(String filename, List list) {
 		FileOutputStream fos = null;
@@ -47,28 +54,26 @@ public class FileManager {
 		return details;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static List getCourseDB() {
+	public static List<Course> getCourseDB() {
 		return courses;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static List getStudentDB() {
+	public static List<Student> getStudentDB() {
 		return students;
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static List getStaffDB() {
+	public static List<Staff> getStaffDB() {
 		return staffs;
 	}
 	
 	public static int getStudentIndex(Student student) {
-		for (int i = 0; i < FileManager.getStudentDB().size(); i++) {
-			if (FileManager.getStudentDB().get(i).equals(student)) {
+		for (int i = 0; i < students.size(); i++) {
+			if (students.get(i).equals(student)) {
 				return i;
 			}
 		}
 		System.out.println("Student Not Found.");
+		System.out.println(-1);
 		return -1;
 	}
 	
@@ -76,4 +81,15 @@ public class FileManager {
 		return 0;
 	}
 	
+	public static void setStudentDB(List<Student> updatedStudents) {
+		students = updatedStudents;
+	}
+
+	public static void setCourseDB(List<Course> updatedCourses) {
+		courses = updatedCourses;
+	}
+	
+	public static void setStaffDB(List<Staff> updatedStaffs) {
+		staffs = updatedStaffs;
+	}
 }

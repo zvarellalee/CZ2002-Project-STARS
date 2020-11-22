@@ -40,7 +40,7 @@ public class NotifManager {
 			
 			Transport.send(message);
 			
-			System.out.println("Email sent");
+			System.out.println("Email sent successfully");
 			status = true;
 			
 		}
