@@ -183,8 +183,7 @@ public class StudentManager extends Manager {
 				return;
 			}
 		}
-		// If course code is not found
-		System.out.println("Invalid Course Code! Please try again.");
+		// Exits if course code is not found
 		return;
 	}
 	
