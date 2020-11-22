@@ -9,6 +9,7 @@ package boundary;
 
 import java.util.Calendar;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 import database.Database;
 import entities.Course;
 import entities.Index;
@@ -145,8 +146,9 @@ public class StaffUI implements UserUI {
 							Calendar accessEnd = staffManager.checkStudentAccessEnd(student2);
 							
 							System.out.println("\n---Viewing " + student2.getFirstName() + "'s Access Start Period---");	
-							System.out.println("Access Start Time: " + accessStart.getTime().toGMTString());
-							System.out.println("Access End Time: " + accessEnd.getTime().toGMTString());
+							SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY, h:mm:ssa");
+							System.out.println("Access Start Time: " + sdf.format(accessStart.getTime()));
+							System.out.println("Access End Time: " + sdf.format(accessEnd.getTime()));
 						}
 						break;						
 					case 3:
