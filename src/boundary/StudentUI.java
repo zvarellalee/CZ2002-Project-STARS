@@ -1,21 +1,50 @@
-package boundary;
+/**
+ * User Interface for Student
+ * @author Stanley Ho
+ * @version 1.0
+ * @since 2020-11-20
+ */
 
+package boundary;
 import java.util.Scanner;
 import entities.Student;
 import control.StudentManager;
 
 public class StudentUI implements UserUI {
 	
+	/**
+	 * Stores which Student is using the UI
+	 */
 	private static Student user;
 	
+	/**
+	 * Gets the student object
+	 * @return Student Object
+	 */
 	public Student getStudent() {
 		return StudentUI.user;
 	}
 	
+	/**
+	 * Sets the current user to input Student
+	 * @param user Student
+	 */
 	public void setStudent(Student user) {
 		StudentUI.user = user;
 	}
 	
+//	// to test
+//	public static void main(String[] args) {
+//		Database.initialise();
+//		user = Database.studentList.get(0);
+//		StudentUI studentUI = new StudentUI();
+//		studentUI.setStudent(user);
+//		studentUI.showUI();
+//	}
+	
+	/**
+	 * Displays the Student User Interface
+	 */
 	public void showUI() {
 
 		StudentManager studentManager = new StudentManager(user);
