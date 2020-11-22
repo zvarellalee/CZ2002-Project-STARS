@@ -331,6 +331,7 @@ public class StaffUI implements UserUI {
 				calendar.set(Calendar.DAY_OF_MONTH, day);
 				calendar.set(Calendar.HOUR_OF_DAY, hour);
 				calendar.set(Calendar.MINUTE, min);
+				calendar.set(Calendar.SECOND, 0);
 				return calendar;
 			}
 		}
