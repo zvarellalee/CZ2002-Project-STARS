@@ -304,10 +304,12 @@ public class StaffUI implements UserUI {
 					mth = -1;
 					continue;
 				}
+				calendar.set(Calendar.MONTH, mth);
+				
 				// Input Day
 				System.out.print("Enter Day: ");
 				day = sc.nextInt();
-				if (day < 1 || day > 31) {
+				if (day < 1 || day > calendar.getActualMaximum(calendar.DAY_OF_MONTH)) {
 					System.out.println("Please a valid date! Please try again.");
 					continue;
 				}
@@ -326,7 +328,6 @@ public class StaffUI implements UserUI {
 					continue;
 				}
 				
-				calendar.set(Calendar.MONTH, mth);
 				calendar.set(Calendar.DAY_OF_MONTH, day);
 				calendar.set(Calendar.HOUR_OF_DAY, hour);
 				calendar.set(Calendar.MINUTE, min);
