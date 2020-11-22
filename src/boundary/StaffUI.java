@@ -90,18 +90,26 @@ public class StaffUI implements UserUI {
 						for (Student s : Database.studentList) {
 							if (s.getMatricNumber().equals(matric)) {
 								student = s;
-								
+								boolean invalid = true;
 								// Ask staff for access and end date and time
 								Calendar accessStart = Calendar.getInstance();
+								accessStart.setLenient(false);
 								Calendar accessEnd = Calendar.getInstance();
+								accessEnd.setLenient(false);
 								int startMth = -1, startDay = -1, startHour = -1, startMin = -1, endMth = -1, endDay = -1, endHour = -1, endMin = -1;
 								
-								System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
-								accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
-								System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
-								accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
+								while (invalid) {
+									System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
+									accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
+									System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
+									accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
 								
-								// Edit student access period
+									// Edit student access period
+									if (accessEnd.compareTo(accessStart) < 0) {
+										System.out.println("Invalid access period, try again.\n");
+									} else invalid = false;
+								}
+
 								staffManager.editStudentAccessPeriod(accessStart, accessEnd, student);
 								System.out.println("Student's access period successfully changed!\n");
 								found = true;
@@ -110,7 +118,7 @@ public class StaffUI implements UserUI {
 						}
 						// If student not found
 						if (found == false) {
-							System.out.println("Matriculation Number doesn not exist!\n");
+							System.out.println("Matriculation Number does not exist!\n");
 						}
 						break;
 					case 2:
