@@ -10,11 +10,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import entities.Student;
+
 public class NotifManager {
 	private static final String sender_email = "tester_email";
 	private static final String sender_password = "password123";
 		
-	public static boolean sendEmail(String email, String courseCode, String body){
+	public static boolean sendEmail(String email, Student student, String courseCode){
 		
 		
 		Properties props = new Properties();
@@ -35,8 +37,8 @@ public class NotifManager {
 			message.setFrom(new InternetAddress(sender_email));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
-			message.setSubject("Hello student");
-			message.setText("body" + courseCode);
+			message.setSubject("Course " + courseCode + " Registered");
+			message.setText("Hello " + student.getFirstName() + ", Course " + courseCode + " has been successfully registered and you are removed from the wait list.");
 			
 			Transport.send(message);
 			
