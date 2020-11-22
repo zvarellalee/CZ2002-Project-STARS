@@ -62,6 +62,7 @@ public class StudentUI implements UserUI {
 						break;
 					case 2:
 						// drop course 
+						studentManager.printRegistered(user);
 						System.out.println("Enter the Course Code that you wish to drop (Enter Q to exit): ");
 						courseCode = sc.next();
 						if (!courseCode.toUpperCase().equals("Q"))
