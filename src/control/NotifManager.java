@@ -13,11 +13,11 @@ import javax.mail.internet.MimeMessage;
 import entities.Student;
 
 public class NotifManager {
-	private static final String sender_email = "tester_email";
-	private static final String sender_password = "password123";
 		
 	public static boolean sendEmail(String email, Student student, String courseCode) {
 		
+		final String sender_email = "tester_email";
+		final String sender_password = "password123";
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -34,7 +34,7 @@ public class NotifManager {
 		boolean status = false;
 		try {
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(sender_email));
+			message.setFrom(new InternetAddress("from-email@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Course " + courseCode + " Registered");
