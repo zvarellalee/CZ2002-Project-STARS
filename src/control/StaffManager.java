@@ -40,6 +40,13 @@ public class StaffManager extends Manager{
 		student.setAccessStart(accessStart);
 		student.setAccessEnd(accessEnd);
 		FileManager.updateStudentDB(student);
+	}	
+
+	public Calendar checkStudentAccessStart(Student student) {
+		return student.getAccessStart();
+	}
+	public Calendar checkStudentAccessEnd(Student student) {
+		return student.getAccessEnd();
 	}
 	
 	/**
