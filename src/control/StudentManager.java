@@ -2,7 +2,7 @@
  * Manager for Student
  * @author Stanley Ho, Cheah Jing Feng
  * @version 1.0
- * @since 2020-11-20
+ * @since 2020-11-19
  */
 
 package control;
