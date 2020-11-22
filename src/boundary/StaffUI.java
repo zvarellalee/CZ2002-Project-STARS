@@ -12,7 +12,6 @@ import java.util.Scanner;
 import database.Database;
 import entities.Course;
 import entities.Index;
-import entities.Session;
 import entities.Staff;
 import entities.Student;
 import control.StaffManager;
@@ -66,12 +65,13 @@ public class StaffUI implements UserUI {
 				System.out.println("Welcome to STARS(Staff), " + user.getFirstName() + "!");
 				System.out.println("-----------------------------------------");
 				System.out.println("(1) Edit Student Access Period");
-				System.out.println("(2) Add a Student");
-				System.out.println("(3) Add/Update a Course");
-				System.out.println("(4) Check Vacancies for Index");
-				System.out.println("(5) Print Student List by Index");
-				System.out.println("(6) Print Student List by Course");
-				System.out.println("(7) Exit");
+				System.out.println("(2) Check Student Access Period");
+				System.out.println("(3) Add a Student");
+				System.out.println("(4) Add/Update a Course");
+				System.out.println("(5) Check Vacancies for Index");
+				System.out.println("(6) Print Student List by Index");
+				System.out.println("(7) Print Student List by Course");
+				System.out.println("(8) Exit");
 				System.out.println("-----------------------------------------");
 				System.out.print("Enter your choice: ");
 				
@@ -97,9 +97,9 @@ public class StaffUI implements UserUI {
 								int startMth = -1, startDay = -1, startHour = -1, startMin = -1, endMth = -1, endDay = -1, endHour = -1, endMin = -1;
 								
 								System.out.println("\n---Editing " + student.getFirstName() + " Access Start Period---");
-								accessStart = inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
+								accessStart = StaffUI.inputDate(startMth, startDay, startHour, startMin, accessStart, sc);
 								System.out.println("\n---Editing " + student.getFirstName() + " Access End Period---\n");
-								accessEnd = inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
+								accessEnd = StaffUI.inputDate(endMth, endDay, endHour, endMin, accessEnd, sc);
 								
 								// Edit student access period
 								staffManager.editStudentAccessPeriod(accessStart, accessEnd, student);
@@ -114,6 +114,34 @@ public class StaffUI implements UserUI {
 						}
 						break;
 					case 2:
+						// Choose which student to check access period
+						boolean found2 = false;
+						Student student2 = null;
+						
+						System.out.print("Enter Student's Matric Number to check access period: ");
+						String matric2 = sc.next();
+						// Find the student object using matriculation number
+						for (Student s : Database.studentList) {
+							if (s.getMatricNumber().equals(matric2)) {
+								student2 = s;
+								found2 = true;
+							}
+						}
+
+						// If student not found
+						if (found2 == false) {
+							System.out.println("Matriculation Number does not exist!\n");
+						} else {
+							// Return access start and end date and time
+							Calendar accessStart = staffManager.checkStudentAccessStart(student2);
+							Calendar accessEnd = staffManager.checkStudentAccessEnd(student2);
+							
+							System.out.println("\n---Viewing " + student2.getFirstName() + "'s Access Start Period---");	
+							System.out.println("Access Start Time: " + accessStart.getTime().toGMTString());
+							System.out.println("Access End Time: " + accessEnd.getTime().toGMTString());
+						}
+						break;						
+					case 3:
 						// Add a student
 						System.out.print("Enter New Student's First Name: ");
 						String firstName = sc.next();
@@ -136,7 +164,7 @@ public class StaffUI implements UserUI {
 								lastName, null, email, matricNumber, gender, nationality, 0);
 						staffManager.addStudent(newStudent);
 						break;
-					case 3:
+					case 4:
 						// Add/Update a course
 						int selection;
 						do {
@@ -147,7 +175,6 @@ public class StaffUI implements UserUI {
 							selection = sc.nextInt();
 							
 							if (selection == 1) {
-								// Add new course
 								System.out.print("\nEnter Course Code to add: ");
 								String courseCode = sc.next();
 								String clear = sc.nextLine();
@@ -160,7 +187,6 @@ public class StaffUI implements UserUI {
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
 								Course newCourse = staffManager.findCourse(courseCode);
-								// Add new index for the course
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
 								for (int i = 0; i < numIndex; i++) {
@@ -171,24 +197,8 @@ public class StaffUI implements UserUI {
 									int vacancies = sc.nextInt();
 									Index newIndex = new Index(index, vacancies);
 									newCourse.addIndex(newIndex);
-									
-									// Add new session for the index
-									System.out.print("\nEnter number of Sessions to insert into Index (" + index + ") : ");
-									int numSesh = sc.nextInt();
-									for (int j = 0; j < numSesh; j++) {
-										System.out.println("Adding Session (" + j+1 + "/" + numSesh + ")");
-										System.out.print("\nEnter Session Type: ");
-										String sessionType = sc.next();
-										System.out.print("\nEnter Venue: ");
-										String venue = sc.next();
-										Calendar sessionStart = Calendar.getInstance();
-										sessionStart = inputDate(sessionStart, sc);
-										Calendar sessionEnd = Calendar.getInstance();
-										sessionEnd = inputDate(sessionEnd, sc);
-										Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
-										newIndex.addSessionList(newSession);
-									}
 								}
+								System.out.println("New Indexes Successfully Added!\n");
 							}
 							else if (selection == 2) {
 								// Update Course Code
@@ -227,7 +237,7 @@ public class StaffUI implements UserUI {
 						}
 						while (selection != 3);
 						break;
-					case 4:
+					case 5:
 						// Check vacancies for index number
 						System.out.print("Enter index to check vacancy: ");
 						int index = sc.nextInt();
@@ -237,19 +247,19 @@ public class StaffUI implements UserUI {
 							continue;
 						System.out.println("Vacancies for index " + checkIndex.getIndexNumber() + ": " + checkIndex.getVacancies());
 						break;
-					case 5:
+					case 6:
 						// Print student list by index number
 						System.out.print("Enter index to display student list: ");
 						index = sc.nextInt();
 						staffManager.printStudentList(index);
 						break;
-					case 6:
+					case 7:
 						// Print student list by course code
 						System.out.print("Enter Course Code: ");
 						String courseCode = sc.next();
 						staffManager.printStudentList(courseCode);
 						break;
-					case 7:
+					case 8:
 						// Exits
 						run = false;
 						break;
@@ -290,7 +300,7 @@ public class StaffUI implements UserUI {
 				System.out.print("Enter Day: ");
 				day = sc.nextInt();
 				if (day < 1 || day > 31) {
-					System.out.println("Please input a valid date! Please try again.");
+					System.out.println("Please a valid date! Please try again.");
 					continue;
 				}
 				// Input Hour
@@ -321,40 +331,4 @@ public class StaffUI implements UserUI {
 		return calendar;
 	}
 	
-	private static Calendar inputDate(Calendar calendar, Scanner sc) {
-		try {			
-			while (true) {
-				// Input Day
-				System.out.print("Enter Day of Week (0:Sunday - 6:Saturday): ");
-				int day = sc.nextInt();
-				if (day < 0 || day > 6) {
-					System.out.println("Please input a valid date! Please try again.");
-					continue;
-				}
-				// Input Hour
-				System.out.print("Enter Hour (24H format): ");
-				int hour = sc.nextInt();
-				if (hour < 0 || hour > 23) {
-					System.out.println("Please input a valid time! Please try again.");
-					continue;
-				}
-				// Input Minute
-				System.out.print("Enter Minute: ");
-				int min = sc.nextInt();
-				if (min < 0 || min > 59) {
-					System.out.println("Please enter a valid time! Please try again.");
-					continue;
-				}
-				
-				calendar.set(Calendar.DAY_OF_WEEK, day);
-				calendar.set(Calendar.HOUR_OF_DAY, hour);
-				calendar.set(Calendar.MINUTE, min);
-				return calendar;
-			}
-		}
-		catch (Exception InputMismatchException) {
-			System.out.println("Invalid input! Please try again.\n");
-		}
-		return calendar;
-	}
 }
