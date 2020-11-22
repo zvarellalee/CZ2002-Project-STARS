@@ -1,6 +1,10 @@
 package entities;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
+import control.LoginManager;
 
 public class User implements Serializable{
 	private String username;
@@ -13,11 +17,17 @@ public class User implements Serializable{
 	
 	public User(String username, String password, boolean adminAccess, String firstName, String lastName, String salt, String email) {
 		this.username = username;
-		this.password = password;
+		try {
+			this.salt = LoginManager.generateSalt(password);
+			this.password = LoginManager.getHashedPassword(password,this.salt);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		this.adminAccess = adminAccess;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.salt = salt;
 		this.email = email;
 	}
 	public String getUsername() {
