@@ -223,18 +223,27 @@ public class StudentManager extends Manager {
 			return indexExists;
 		}
 		
-		// check if current index exists in student's list of registered courses
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
+		// if student has no registered courses
+		if (courses.isEmpty()) {
+			System.out.println("\nNo Courses Registered! Please register a course first.");
+			System.out.println("");
+			return indexExists;
+		}
+		
+		// check if current index exists in student's list of registered courses
+		boolean courseRegistered = false;
 		for (RegisteredCourse registered : courses) {
 			if (currentIndex == registered.getIndex().getIndexNumber()) {
+				courseRegistered = true;
 				break;
 			}
-			else {
-				selectedCurrentIndex = null;
-				selectedCurrentCourse = null;
-				System.out.println("\nIndex not registered! Please try again.");
-				System.out.println("");
-			}
+		}
+		if (!courseRegistered) {
+			selectedCurrentIndex = null;
+			selectedCurrentCourse = null;
+			System.out.println("\nIndex not registered! Please try again.");
+			System.out.println("");
 		}
 		
 		// if index already registered by student
