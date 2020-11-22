@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author 
+ * @version 1.0
+ * @since
+ */
+
 package control;
 
 import java.util.ArrayList;
@@ -9,36 +16,34 @@ import entities.Student;
 import java.util.Scanner;
 
 public class StudentManager extends Manager {
+	/**
+	 * Stores which Student is using the Manager
+	 */
 	private Student user;
 	
+	/**
+	 * Initializing the Student
+	 * @param user Student
+	 */
 	public StudentManager(Student user) {
 		this.user = user;
-		// Database.initialise(); // To remove
+		// Database.initialise(); // To test out the UI
 	}
 	
 	public Student getUser() {
 		return user;
 	}
 	
-
+	/**
+	 * Adds a Course with specified Index to Student's list of Registered Courses
+	 * @param courseCode Course Code
+	 */
 	@SuppressWarnings("resource")
 	public void addCourse(String courseCode) {
-		Course course = null;
+		Course course = findCourse(courseCode);
 		
-		boolean courseExists = false;
 		// Shows indexes in course and their vacancies
-		System.out.println("Index\tVacancies");
-		for (Course c : Database.courseList) {
-			if (c.getCourseCode().equals(courseCode)) {
-				courseExists = true;
-				course = c;
-				for (Index index : course.getIndexList()) {
-					System.out.print(index.getIndexNumber());
-					System.out.println("\t" + index.getVacancies());
-				}
-				break;
-			}
-		}
+		boolean courseExists = checkVacancies(courseCode);
 		// Exits if courseCode is not found
 		if (!courseExists) {
 			System.out.println("No course found! Returning back to main menu...");
@@ -171,6 +176,8 @@ public class StudentManager extends Manager {
 					
 					// Notify enrolled student
 					// TODO
+					// first argument supposed to be student's email but for test purposes, will use my email
+					NotifManager.sendEmail("sho023@e.ntu.edu.sg", waiting, courseCode);
 				}
 				return;
 			}
@@ -362,6 +369,11 @@ public class StudentManager extends Manager {
 					waiting.setCourseList(newCourseList);
 					// Update Student Database
 					FileManager.updateStudentDB(waiting);
+					
+					// Notify student on waitlist
+					// TODO
+					// first argument supposed to be student's email but for test purposes, will use my email
+					NotifManager.sendEmail("sho023@e.ntu.edu.sg", waiting, selectedCurrentCourse.getCourseCode());
 				}
 				// Update Course Database
 				FileManager.updateCourseDB(selectedCurrentCourse);
