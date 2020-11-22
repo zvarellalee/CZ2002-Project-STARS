@@ -154,12 +154,13 @@ public class StaffManager extends Manager{
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
-						studentList.add(s);
-						index.setStudentList(studentList);
-						
+				
 						rc.setOnWaitlist(false);
 						studentWaitlist.remove(s);
-						index.setWaitList(studentWaitList);
+						index.setWaitList(studentWaitlist);
+						
+						studentlist.add(s);
+						index.setStudentList(studentlist);
 						
 						vacancy--;
 					}
