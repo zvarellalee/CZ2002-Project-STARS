@@ -272,7 +272,7 @@ public class StaffUI implements UserUI {
 						run = false;
 						break;
 					default:
-						System.out.println("Please choose an option from 1-7!");
+						System.out.println("Please choose an option from 1-8!");
 						break;
 				}
 			}
