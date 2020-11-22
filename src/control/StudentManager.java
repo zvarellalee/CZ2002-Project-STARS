@@ -134,9 +134,9 @@ public class StudentManager extends Manager {
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
 		// Update Course Database
-		FileManager.updateCourseDB(course);
+		updateCourseDB(course);
 		// Update Student Database
-		FileManager.updateStudentDB(user);
+		updateStudentDB(user);
 		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");
 		printRegistered(user);
 	}
@@ -161,9 +161,9 @@ public class StudentManager extends Manager {
 				courses.remove(course); 
 				
 				// Update Course Database
-				FileManager.updateCourseDB(droppedCourse);
+				updateCourseDB(droppedCourse);
 				// Update Student Database
-				FileManager.updateStudentDB(user);
+				updateStudentDB(user);
 				System.out.println("Course Code " + courseCode + " successfully dropped.");
 				
 				// Increase vacancy by 1 if wait list is empty
@@ -180,7 +180,7 @@ public class StudentManager extends Manager {
 					newCourseList.add(newCourse);
 					waiting.setCourseList(newCourseList);
 					// Update Student Database
-					FileManager.updateStudentDB(waiting);
+					updateStudentDB(waiting);
 					
 					// Notify enrolled student
 					// TODO
@@ -389,7 +389,7 @@ public class StudentManager extends Manager {
 					newCourseList.add(newCourse);
 					waiting.setCourseList(newCourseList);
 					// Update Student Database
-					FileManager.updateStudentDB(waiting);
+					updateStudentDB(waiting);
 					
 					// Notify student on waitlist
 					// TODO
@@ -397,10 +397,10 @@ public class StudentManager extends Manager {
 					NotifManager.sendEmail("sho023@e.ntu.edu.sg", waiting, selectedCurrentCourse.getCourseCode());
 				}
 				// Update Course Database
-				FileManager.updateCourseDB(selectedCurrentCourse);
-				FileManager.updateCourseDB(selectedNewCourse);
+				updateCourseDB(selectedCurrentCourse);
+				updateCourseDB(selectedNewCourse);
 				// Update Student Database
-				FileManager.updateStudentDB(user);
+				updateStudentDB(user);
 				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCurrentCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
 				System.out.println("");
 				printRegistered(user);
@@ -587,11 +587,11 @@ public class StudentManager extends Manager {
 					}
 				}
 				// Update Course Database
-				FileManager.updateCourseDB(userCourse);
-				FileManager.updateCourseDB(peerCourse);
+				updateCourseDB(userCourse);
+				updateCourseDB(peerCourse);
 				// Update Student Database
-				FileManager.updateStudentDB(user);
-				FileManager.updateStudentDB(peer);
+				updateStudentDB(user);
+				updateStudentDB(peer);
 				System.out.println("\nIndex " + oldIndex + " from Course Code " + userCourse.getCourseCode() + " has been successfully swapped with " + peer.getMatricNumber() + "'s Index " + newIndex + ".");
 				System.out.println("");
 				printRegistered(user);
@@ -621,10 +621,8 @@ public class StudentManager extends Manager {
 	 */
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
-		for (Course c: FileManager.getCourseDB()) {
-			if (c.getIndexList().contains(index)) {
-				course = c;
-			}
+		if (getCourseDB().containsKey(index)) {
+				course = getCourseDB().get(index);
 		}
 		return course;
 	}
@@ -636,10 +634,8 @@ public class StudentManager extends Manager {
 	 */
 	private static Student getStudentFromMatricNumber(String matricNumber) {
 		Student student = null;
-		for (Student s: FileManager.getStudentDB()) {
-			if (s.getMatricNumber().equals(matricNumber)) {
-				student = s;
-			}
+		if (getStudentDB().containsKey(matricNumber)) {
+			student = getStudentDB().get(matricNumber);
 		}
 		return student;
 	}
