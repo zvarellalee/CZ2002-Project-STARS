@@ -1,3 +1,8 @@
+/**
+ * Main method body to call the login UI
+ * @version 1.0
+ * @since 2020-11-20
+ */
 package boundary;
 import database.*;
 import entities.*;
@@ -10,8 +15,8 @@ import control.*;
 public class Main {
 	public static void main(String[] args) {
 		Database.initialise();  // to remove
-		LoginUI login = new LoginUI();
-		login.displayLogin();
+		UserUI login = new LoginUI();
+		login.showUI();
 		
 		//UserUI staff = new StaffUI();
 		//staff.showUI();
