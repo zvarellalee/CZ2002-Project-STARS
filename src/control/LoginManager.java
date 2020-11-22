@@ -1,6 +1,5 @@
 /**
  * Manager for Login Input
- * @author Zachary Varella Lee Zheyu
  * @version 1.0
  * @since 2020-11-20
  */
