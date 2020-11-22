@@ -9,6 +9,7 @@ import control.*;
 
 public class Main {
 	public static void main(String[] args) {
+		Database.initialise();  // to remove
 		LoginUI login = new LoginUI();
 		login.displayLogin();
 		

@@ -13,7 +13,7 @@ public class StudentManager extends Manager {
 	
 	public StudentManager(Student user) {
 		this.user = user;
-		// Database.initialise(); // To test out the UI
+		// Database.initialise(); // To remove
 	}
 	
 	public Student getUser() {

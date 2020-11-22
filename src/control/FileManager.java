@@ -16,13 +16,6 @@ public class FileManager {
 	private static List<Student> students;
 	private static List<Staff> staffs;
 	
-//	// Read in the .dat files upon Instantiation
-//	public FileManager() {
-//		courses = FileManager.read("course.dat");
-//		students = FileManager.read("student.dat");
-//		staffs = FileManager.read("staff.dat");
-//	}
-	
 	public static void write(String filename, List list) {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;

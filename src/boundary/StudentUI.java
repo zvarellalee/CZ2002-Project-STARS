@@ -1,7 +1,7 @@
 package boundary;
 
 import java.util.Scanner;
-import database.Database;
+// import database.Database;
 import entities.Student;
 import control.StudentManager;
 
@@ -17,14 +17,14 @@ public class StudentUI implements UserUI {
 		StudentUI.user = user;
 	}
 	
-	// to test
-	public static void main(String[] args) {
-		Database.initialise();
-		user = Database.studentList.get(0);
-		StudentUI studentUI = new StudentUI();
-		studentUI.setStudent(user);
-		studentUI.showUI();
-	}
+//	// to test
+//	public static void main(String[] args) {
+//		Database.initialise();
+//		user = Database.studentList.get(0);
+//		StudentUI studentUI = new StudentUI();
+//		studentUI.setStudent(user);
+//		studentUI.showUI();
+//	}
 	
 	public void showUI() {
 
@@ -36,6 +36,7 @@ public class StudentUI implements UserUI {
 		
 		do {
 			try {
+				System.out.println();
 				System.out.println("-----------------------------------------");
 				System.out.println("Welcome to STARS(Student), " + user.getFirstName() + "!");
 				System.out.println("-----------------------------------------");
@@ -140,7 +141,6 @@ public class StudentUI implements UserUI {
 				}
 			}
 			catch (Exception InputMismatchException) {
-				System.out.println("LMAO");
 				sc.next();
 				System.out.println("Invalid input! Returning back to main menu...\n");
 			}

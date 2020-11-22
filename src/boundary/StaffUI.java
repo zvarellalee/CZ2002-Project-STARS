@@ -60,6 +60,7 @@ public class StaffUI implements UserUI {
 		
 		do {
 			try {
+				System.out.println();
 				System.out.println("-----------------------------------------");
 				System.out.println("Welcome to STARS(Staff), " + user.getFirstName() + "!");
 				System.out.println("-----------------------------------------");

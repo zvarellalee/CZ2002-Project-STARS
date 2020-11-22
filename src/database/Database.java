@@ -1,6 +1,7 @@
 package database;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import control.FileManager;
 import entities.Course;
@@ -12,21 +13,39 @@ public class Database {
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 	public static ArrayList<Staff> staffList = new ArrayList<Staff>();
 	public static ArrayList<Course> courseList = new ArrayList<Course>();
-	public static ArrayList<Index> indexList = new ArrayList<Index>();
 
-	public static void initialise() {
+	public static void initialise() {		
 		// Initialize students
 		Student carl = new Student("carl", "123", false, "Carl", 
-				"Butt", null, "test@lmao.com", "U123U", "Asexual", "Alien", 0);
+				"Cauliflower", null, "test@lmao.com", "U123U", "Male", "Chinese", 0);
 		Student stacey = new Student("stacey", "321", false, "Stacey", 
-				"Smiles", null, "test2@lmao.com", "U321U", "GenderFluid", "North Korean", 0);
+				"Smiles", null, "test2@lmao.com", "U321U", "Female", "Indian", 0);
+		
+		// Initialize access period
+		Calendar accessStart = Calendar.getInstance();
+		Calendar accessEnd = Calendar.getInstance();
+		
+		accessStart.set(Calendar.MONTH, 10);  // 0: Jan, 11: Dec
+		accessStart.set(Calendar.DAY_OF_MONTH, 15);
+		accessStart.set(Calendar.HOUR_OF_DAY, 9);
+		accessStart.set(Calendar.MINUTE, 30);
+		
+		accessEnd.set(Calendar.MONTH, 11);
+		accessEnd.set(Calendar.DAY_OF_MONTH, 25);
+		accessEnd.set(Calendar.HOUR_OF_DAY, 16);
+		accessEnd.set(Calendar.MINUTE, 30);
+		
+		carl.setAccessStart(accessStart);
+		carl.setAccessEnd(accessEnd);
+		stacey.setAccessStart(accessStart);
+		stacey.setAccessEnd(accessEnd);
 		
 		// Initialize staffs
 		Staff lokey = new Staff ("dustbin", "jkl", true, "Loke", "Dustbin", null, "a@test.com", "S666S");
 		Staff lala = new Staff ("lalala", "ghj", true, "Lala", "Lol", null, "b@test.com", "S888S");
 		
 		// Initialize courses
-		Course oodp = new Course("2002", "Obviously Oolong Dying Programme", "Weed Science", 3);
+		Course oodp = new Course("2002", "Obnoxious Oblong Drunk Police", "Weed Science", 3);
 		Course algo = new Course("2001", "Algorithms", "Computer Science", 3);
 		
 		// Initialize indexes
@@ -54,25 +73,6 @@ public class Database {
 		// Initialize courseList with test data
 		courseList.add(oodp);
 		courseList.add(algo);
-		
-		// Initialize indexList with test data
-		//indexList.add(12345);
-		//indexList.add(67890);
-		
-		// test cases used for case 5 and 6
-		/*
-		// carl registers oodp at index 1
-		RegisteredCourse registered1 = new RegisteredCourse(false, oodp, a, carl);
-		ArrayList<RegisteredCourse> reg = new ArrayList<RegisteredCourse>();
-		reg.add(registered1);
-		studentList.get(0).setCourseList(reg);
-		
-		// stacey registers algo at index 3
-		RegisteredCourse registered2 = new RegisteredCourse(false, algo, c, stacey);
-		ArrayList<RegisteredCourse> reg2 = new ArrayList<RegisteredCourse>();
-		reg2.add(registered2);
-		studentList.get(1).setCourseList(reg2);
-		*/
 		
 		// Write to .dat files
 		FileManager.setCourseDB(courseList);
