@@ -133,6 +133,7 @@ public class StudentManager extends Manager {
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
+		index.addStudentList(user);
 		// Update Course Database
 		updateCourseDB(course);
 		// Update Student Database
@@ -173,19 +174,21 @@ public class StudentManager extends Manager {
 				else {
 					// Add course for first student in the wait list
 					Student waiting = course.getIndex().getWaitList().get(0);
-//					StudentManager enrollUser = new StudentManager(waiting);
-//					enrollUser.addCourse(courseCode);
 					ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
 					RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, course.getIndex(), waiting);
 					newCourseList.add(newCourse);
 					waiting.setCourseList(newCourseList);
+					course.getIndex().addStudentList(waiting);
+					course.getIndex().removeWaitList(waiting);
+	
+					// Update Course Database
+					updateCourseDB(droppedCourse);
 					// Update Student Database
 					updateStudentDB(waiting);
 					
 					// Notify enrolled student
-					// TODO
-					// first argument supposed to be student's email but for test purposes, will use my email
-					NotifManager.sendEmail("sho023@e.ntu.edu.sg", waiting, courseCode);
+					// change first argument for testing
+					NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode);
 				}
 				return;
 			}
@@ -358,18 +361,14 @@ public class StudentManager extends Manager {
 				// decrease vacancy of newIndex by 1
 				selectedNewIndex.setVacancies(selectedNewIndex.getVacancies()-1);
 				// add student to studentList in newIndex
-				ArrayList<Student> newIndexStudentList = selectedNewIndex.getStudentList();
-				newIndexStudentList.add(user);
-				selectedNewIndex.setStudentList(newIndexStudentList);
+				selectedNewIndex.addStudentList(user);
 				// add index to  student's list of registered index
 				RegisteredCourse newRegisteredIndex = new RegisteredCourse(false, selectedNewCourse, selectedNewIndex, user);
 				courses.add(newRegisteredIndex);
 				
 				// drop student from currentIndex
 				// remove student from studentList in currentIndex
-				ArrayList<Student> currentIndexStudentList = selectedCurrentIndex.getStudentList();
-				currentIndexStudentList.remove(user);
-				selectedCurrentIndex.setStudentList(currentIndexStudentList);
+				selectedCurrentIndex.removeStudentList(user);
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : courses) {
 					if (registered.getIndex() == selectedCurrentIndex) {
@@ -388,13 +387,12 @@ public class StudentManager extends Manager {
 					RegisteredCourse newCourse = new RegisteredCourse(false, selectedCurrentCourse, selectedCurrentIndex, waiting);
 					newCourseList.add(newCourse);
 					waiting.setCourseList(newCourseList);
-					// Update Student Database
-					updateStudentDB(waiting);
+					selectedCurrentIndex.addStudentList(waiting);
+					selectedCurrentIndex.removeWaitList(waiting);
 					
 					// Notify student on waitlist
-					// TODO
-					// first argument supposed to be student's email but for test purposes, will use my email
-					NotifManager.sendEmail("sho023@e.ntu.edu.sg", waiting, selectedCurrentCourse.getCourseCode());
+					// change first argument for testing
+					NotifManager.sendEmail(waiting.getEmail(), waiting, selectedCurrentCourse.getCourseCode());
 				}
 				// Update Course Database
 				updateCourseDB(selectedCurrentCourse);
@@ -493,7 +491,7 @@ public class StudentManager extends Manager {
 					return canSwap;
 				}
 				
-								// check if peerIndex is in peer's list of registered courses
+				// check if peerIndex is in peer's list of registered courses
 				boolean peerCourseExists = false;
 				for (RegisteredCourse registered : peerRegCourses) {
 					// selected index exists in peer's registered courses
@@ -554,18 +552,14 @@ public class StudentManager extends Manager {
 			if (canSwap) {
 				// enroll user to peerIndex
 				// add user to studentList in peerIndex
-				ArrayList<Student> peerIndexStudentList = peerIndex.getStudentList();
-				peerIndexStudentList.add(user);
-				peerIndex.setStudentList(peerIndexStudentList);
+				peerIndex.addStudentList(user);
 				// add peer index to student's list of registered index
 				RegisteredCourse peerRegisteredIndex = new RegisteredCourse(false, peerCourse, peerIndex, user);
 				userRegCourses.add(peerRegisteredIndex);
 				
 				// drop user from currentIndex
 				// remove user from studentList in currentIndex
-				ArrayList<Student> currentIndexStudentList = userIndex.getStudentList();
-				currentIndexStudentList.remove(user);
-				userIndex.setStudentList(currentIndexStudentList);
+				userIndex.removeStudentList(user);
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : userRegCourses) {
 					if (registered.getIndex() == userIndex) {
@@ -575,11 +569,12 @@ public class StudentManager extends Manager {
 				
 				// enroll peer to currentIndex
 				// add peer to studentList in currentIndex
-				currentIndexStudentList.add(peer);
+				userIndex.addStudentList(peer);
 				// add user index to peer's list of registered index
 				RegisteredCourse userRegisteredIndex = new RegisteredCourse(false, userCourse, userIndex, peer);
 				peerRegCourses.add(userRegisteredIndex);
 				// drop peer from peerIndex
+				peerIndex.removeStudentList(peer);
 				// remove peerIndex from peer's list of registered index
 				for (RegisteredCourse registered : peerRegCourses) {
 					if (registered.getIndex() == userIndex) {
@@ -604,7 +599,7 @@ public class StudentManager extends Manager {
 	/**
 	 * Obtain an array list containing all indexes from a particular course
 	 * @param Course Object
-	 * @return ArrayList<Index> courseIndexes
+	 * @return courseIndexes ArrayList<Index> 
 	 */
 	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
 		ArrayList<Index> courseIndexes = new ArrayList<Index>();
@@ -622,7 +617,7 @@ public class StudentManager extends Manager {
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
 		if (getCourseDB().containsKey(index)) {
-				course = getCourseDB().get(index);
+			course = getCourseDB().get(index);
 		}
 		return course;
 	}
