@@ -15,7 +15,7 @@ import entities.Student;
 public class NotifManager {
 		
 	public static boolean sendEmail(String email, Student student, String courseCode) {
-		
+		//an actual email
 		final String sender_username = "cz2002email";
 		final String sender_password = "cz2002dummy";
 		
@@ -38,7 +38,7 @@ public class NotifManager {
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Course " + courseCode + " Registered");
-			message.setText("Hello " + student.getFirstName() + ", Course " + courseCode + " has been successfully registered and you are removed from the wait list.");
+			message.setText("Hello " + student.getFirstName() + ", Course " + courseCode + " has been successfully registered and you have been removed from the wait list.");
 			
 			Transport.send(message);
 			
