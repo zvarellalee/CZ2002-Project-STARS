@@ -36,9 +36,6 @@ public class Manager {
 		System.out.println("\nInvalid Index! Please try again.");
 		System.out.println("");
 		return null;
-	}
-	
-	public boolean sendEmail(String email, String courseCode, String body) {
-		return true;
-	}
+	}	
+
 }

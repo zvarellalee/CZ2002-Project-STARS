@@ -16,7 +16,7 @@ public class NotifManager {
 	private static final String sender_email = "tester_email";
 	private static final String sender_password = "password123";
 		
-	public static boolean sendEmail(String email, Student student, String courseCode){
+	public static boolean sendEmail(String email, Student student, String courseCode) {
 		
 		
 		Properties props = new Properties();
