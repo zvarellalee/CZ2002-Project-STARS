@@ -49,7 +49,7 @@ public class FileManager {
 	
 	public static int getStudentIndex(Student student) {
 		for (int i = 0; i < students.size(); i++) {
-			if (students.get(i).equals(student)) {
+			if (students.get(i).getMatricNumber().equals(student.getMatricNumber())) {
 				return i;
 			}
 		}

@@ -2,7 +2,6 @@ package database;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import control.FileManager;
 import entities.Course;
 import entities.Index;
