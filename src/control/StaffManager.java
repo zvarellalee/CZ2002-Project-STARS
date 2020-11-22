@@ -149,9 +149,9 @@ public class StaffManager extends Manager{
 	 * Adds Student to the Index's ArrayList of Students and Waitlist
 	 * @param indexNumber Index Number
 	 */
-	public void addStudentToIndex(int indexNumber) {
-		Course c = null;
-		Index index = findIndex(indexNumber);// might change
+	public void addStudentToIndex(int indexNumber, String courseCode) {
+		Course c = findCourse(courseCode);
+		Index index = findIndex(indexNumber);
 		int vacancy = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
@@ -167,9 +167,7 @@ public class StaffManager extends Manager{
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
-						
-						c = rc.getCourse(); // might change
-						
+												
 						rc.setOnWaitlist(false);
 						FileManager.updateStudentDB(s);
 						
@@ -178,6 +176,8 @@ public class StaffManager extends Manager{
 						
 						studentlist.add(s);
 						index.setStudentList(studentlist);
+						
+						NotifManager.sendEmail(s.getEmail(), s, courseCode);
 						
 						vacancy--;
 					}
