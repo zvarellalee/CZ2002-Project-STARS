@@ -143,19 +143,24 @@ public class StaffManager extends Manager{
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
 		
+		
 		if (vacancy <= 0) {
 			System.out.println("No vacancies");
 			return;
 		}
 		
 		for (Student s : studentWaitlist) {
-			if(vacancy > 0 || !studentWaitlist.isEmpty()) {
+			if(vacancy > 0 && !studentWaitlist.isEmpty()) {
 				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
 				for ( RegisteredCourse rc : registeredCourseList) {
 					if (rc.getIndex().equals(index)) {
-						Database.studentList.add(s);
+						studentList.add(s);
+						index.setStudentList(studentList);
+						
 						rc.setOnWaitlist(false);
 						studentWaitlist.remove(s);
+						index.setWaitList(studentWaitList);
+						
 						vacancy--;
 					}
 				}
