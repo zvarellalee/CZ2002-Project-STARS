@@ -617,8 +617,10 @@ public class StudentManager extends Manager {
 	 */
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
-		if (getCourseDB().containsKey(index)) {
-			course = getCourseDB().get(index);
+		for (Course c : getCourseDB().values()) {
+			if (c.getIndexList().contains(index)) {
+				course = c;
+			}
 		}
 		return course;
 	}
