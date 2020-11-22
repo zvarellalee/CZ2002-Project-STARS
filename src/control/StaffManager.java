@@ -8,10 +8,13 @@
 package control;
 
 import java.util.*;
+
+import boundary.StaffUI;
 import database.Database;
 import entities.Course;
 import entities.Index;
 import entities.RegisteredCourse;
+import entities.Session;
 import entities.Staff;
 import entities.Student;
 
@@ -241,6 +244,60 @@ public class StaffManager extends Manager{
 							+ student.getGender() + ",\t" + student.getNationality());
 		}
 		System.out.println();
+	}
+	
+	private static Calendar inputTime(int day, int hour, int min, Calendar calendar, Scanner sc) {
+		try {			
+			while (true) {
+				// Input Hour
+				System.out.print("Enter Hour (24H format): ");
+				hour = sc.nextInt();
+				if (hour < 0 || hour > 23) {
+					System.out.println("Please input a valid time! Please try again.");
+					continue;
+				}
+				// Input Minute
+				System.out.print("Enter Minute: ");
+				min = sc.nextInt();
+				if (min < 0 || min > 59) {
+					System.out.println("Please enter a valid time! Please try again.");
+					continue;
+				}
+				
+				calendar.set(Calendar.DAY_OF_WEEK, day);
+				calendar.set(Calendar.HOUR_OF_DAY, hour);
+				calendar.set(Calendar.MINUTE, min);
+				calendar.set(Calendar.SECOND, 0);
+				return calendar;
+			}
+		}
+		catch (Exception InputMismatchException) {
+			System.out.println("Invalid input! Please try again.\n");
+		}
+		return calendar;
+	}	
+	
+	public static Session inputSession(String sessionType, int j, Scanner sc) {
+		String venue;
+		Calendar sessionStart = Calendar.getInstance(), sessionEnd = Calendar.getInstance();
+		int sessionDay = -1, startHour = -1, startMin = -1, endHour = -1, endMin = -1;
+		System.out.print("\nEnter Venue for " + sessionType + " Session " + j + ": ");
+		sc.nextLine();
+		venue = sc.nextLine();
+		System.out.print("\nEnter Day of " + sessionType + " Session " + j + ": ");
+		sessionDay = sc.nextInt();
+		while (sessionDay < 1 || sessionDay > 7) {
+			System.out.println("Please a valid day of the week! Please try again.");
+			sessionDay = sc.nextInt();
+		}
+		sessionStart = inputTime(sessionDay, startHour, startMin, sessionStart, sc);
+		sessionEnd = inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
+		if (sessionEnd.compareTo(sessionStart) < 0) {
+			System.out.println("Invalid Session period! Please try again.\n");
+			sessionEnd = inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
+		}
+		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
+		return newSession;
 	}
 	
 }
