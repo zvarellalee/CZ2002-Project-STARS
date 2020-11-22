@@ -22,8 +22,8 @@ public class Staff extends User {
 	
 	/**
 	 * Initialising the Staff
-	 * @param username Username used to login to mySTARS
-	 * @param password Password used to login to mySTARS
+	 * @param username Username used to login into mySTARS
+	 * @param password Password used to login into mySTARS
 	 * @param adminAccess True as Staff has administrative rights
 	 * @param firstName First Name
 	 * @param lastName Last Name
