@@ -1,5 +1,8 @@
 /**
- * Student entity class for storing relevant student information
+ * Represents a student user that does not have 
+ * administrative rights.
+ * Each student can be enrolled into a 
+ * specific number of courses with specified index. 
  * @version 1.0
  * @since 2020-11-20
  */
@@ -9,33 +12,51 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Student extends User {
-	/** This is the student's matriculation number identifier */
+	/** 
+	 * This is the student's matriculation number 
+	 * which identifies the Student 
+	 */
 	private String matricNumber; 					// student's matric number, gender and nationality
-	/** Gender of student */
+	/** 
+	 * Gender of student 
+	 */
 	private String gender;
-	/** Nationality of student */
+	/** 
+	 * Nationality of student 
+	 */
 	private String nationality;	
-	/** Store the remaining AUs of the student to update when the student adds/drops a course */
+	/** 
+	 * Stores the total Number of Academic Units 
+	 * registered by a Student including courses
+	 * on wait list
+	 */
 	private int numAU;	
-	/** Start of STARS access period */
+	/** 
+	 * Start of STARS access period 
+	 */
 	private Calendar accessStart; 		
-	/** End of STARS access period */
+	/** 
+	 * End of STARS access period 
+	 */
 	private Calendar accessEnd;
-	/** list of courses Student is enrolled in or on waiting list for */
+	/*
+	 * List of registered courses that Student has 
+	 * enrolled in or is on wait list for 
+	 */
 	private ArrayList<RegisteredCourse> courseList; 
 	
 	/**
-	 * Constructor method for Student
-	 * @param String username
-	 * @param String password
-	 * @param boolean adminAccess
-	 * @param String firstName
-	 * @param String lastName
-	 * @param String email
-	 * @param String matricNumber
-	 * @param String gender
-	 * @param String nationality
-	 * @param numAU
+	 * Initialising the Student
+	 * @param username Username used to login into mySTARS
+	 * @param password Password used to login into mySTARS
+	 * @param adminAccess False as Student does not have administrative rights
+	 * @param firstName First Name
+	 * @param lastName Last Name
+	 * @param email Email Address
+	 * @param matricNumber Matriculation Number that identifies the Student
+	 * @param gender Gender
+	 * @param nationality Nationality
+	 * @param numAU Total Number of Academic Units registered by the Student 
 	 */
 	public Student(String username, String password, boolean adminAccess, String firstName, String lastName, 
 					 String email, String matricNumber, String gender, String nationality, int numAU) {
@@ -61,112 +82,121 @@ public class Student extends User {
 		courseList = new ArrayList<RegisteredCourse>();
 	}
 	
+	// ------ accessor methods ------
 	/**
-	 * Accessor method for matriculation number
-	 * @return String matricNumber
+	 * Gets the student's matriculation number
+	 * @return matricNumber
 	 */
 	public String getMatricNumber() {
 		return matricNumber;
 	}
 	
 	/**
-	 * Accessor method for gender
-	 * @return String gender
+	 * Gets the student's gender
+	 * @return gender
 	 */
 	public String getGender() {
 		return gender;
 	}
 	
 	/**
-	 * Accessor method for nationality
-	 * @return String nationality
+	 * Gets for student's nationality
+	 * @return nationality
 	 */
 	public String getNationality() {
 		return nationality;
 	}
 	
 	/** 
-	 * Accessor method for access start date
-	 * @return Calendar accessStart
+	 *Gets the student's access start date
+	 * @return accessStart
 	 */
 	public Calendar getAccessStart() {
 		return accessStart;
 	}
 	
 	/**
-	 * Accessor method for access end date
-	 * @return Calendar accessEnd
+	 * Gets the student's access end date
+	 * @return accessEnd
 	 */
 	public Calendar getAccessEnd() {
 		return accessEnd;
 	}
 	
 	/** 
-	 * Accessor method for course list
-	 * @return ArrayList courseList
+	 * Gets the student's list of registered courses that the 
+	 * student has enrolled in or is on wait list for
+	 * @return Array List of Registered Courses
 	 */
 	public ArrayList<RegisteredCourse> getCourseList() {
 		return courseList;
 	}
 	
 	/**
-	 * Accessor method for number of AUs
-	 * @return int numAU
+	 * Get the number of Academic Units the student has
+	 * registered for including courses on wait list
+	 * @return numAU
 	 */
 	public int getNumAU() {
 		return numAU;
 	}
 	
+	
+	// ------ mutator methods ------
 	/**
-	 * Mutator method for matriculation number
-	 * @param String matricNumber
+	 * Sets the student's matriculation number
+	 * @param matricNumber Student's matriculation number
 	 */
 	public void setMatricNumber(String matricNumber) {
 		this.matricNumber = matricNumber;
 	}
 	
 	/**
-	 * Mutator method for gender
-	 * @param String gender
+	 * Sets the student's gender
+	 * @param gender Student's gender
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
 	/**
-	 * Mutator method for nationality
-	 * @param String nationality
+	 * Sets the student's nationality
+	 * @param nationality Student's nationality
 	 */
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
 	
 	/**
-	 * Mutator method for access start date
-	 * @param Calendar accessStart
+	 * Sets the student's access start date
+	 * @param accessStart Student's access start date
 	 */
 	public void setAccessStart(Calendar accessStart) {
 		this.accessStart = accessStart;
 	}
 	
 	/**
-	 * Mutator method for access end date
-	 * @param Calendar accessEnd
+	 * Sets the student's access end date
+	 * @param accessEnd Student's access end date
 	 */
 	public void setAccessEnd(Calendar accessEnd) {
 		this.accessEnd = accessEnd;
 	}
 	
 	/**
-	 * Mutator method for setting course list
-	 * @param ArrayList courseList
+	 * Sets the list of registered courses that the student
+	 * has enrolled in or is on waitlist for
+	 * @param courseList Array List of Student's registered courses
 	 */
 	public void setCourseList(ArrayList<RegisteredCourse> courseList) {
 		this.courseList = courseList;
 	}
+	
 	/**
-	 * Mutator method for setting number of AUs
-	 * @param int au
+	 * Sets the number of Academic Units the student
+	 * has registered for including courses on the 
+	 * wait list
+	 * @param au Number of Academic Units
 	 */
 	public void setNumAU(int au) {
 		this.numAU = au;
