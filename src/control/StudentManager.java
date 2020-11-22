@@ -266,7 +266,6 @@ public class StudentManager extends Manager {
 					sc.next();
 					continue;
 				}
-				// cannot sc.close() here if not UI will have error
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
 					System.out.println("");
@@ -422,7 +421,6 @@ public class StudentManager extends Manager {
 					sc.next();
 					continue;
 				}
-				// cannot sc.close() here if not UI will have error
 				if (newIndex == 0) {
 					System.out.println("\nGoing back...");
 					System.out.println("");
@@ -430,21 +428,18 @@ public class StudentManager extends Manager {
 				}
 				
 				// check if peerIndex is in peer's list of registered courses
-				boolean peerCourseExists = true;
+				boolean peerCourseExists = false;
 				for (RegisteredCourse registered : peerRegCourses) {
 					// selected index exists in peer's registered courses
 					if (newIndex == registered.getIndex().getIndexNumber()) {
+						peerCourseExists = true;
 						break;
 					}
-					else {
-						// selected peerIndex does not exist in peer's registered courses
-						System.out.println("\nIndex not registered by peer! Please try again.");
-						System.out.println("");
-						peerCourseExists = false;
-					}
 				}
-				// if peer does not have selected index
+				// if peer does not have new index
 				if (!peerCourseExists) {
+					System.out.println("\nIndex not registered by peer! Please try again.");
+					System.out.println("");
 					continue;
 				}
 				
