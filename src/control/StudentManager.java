@@ -1,12 +1,11 @@
 /**
- * 
- * @author 
+ * Manager for Student
+ * @author Stanley Ho, Cheah Jing Feng
  * @version 1.0
- * @since
+ * @since 2020-11-20
  */
 
 package control;
-
 import java.util.ArrayList;
 import entities.Course;
 import entities.Index;
@@ -29,6 +28,10 @@ public class StudentManager extends Manager {
 		// Database.initialise(); // To remove
 	}
 	
+	/**
+	 * Gets the Student object
+	 * @return Student Object
+	 */
 	public Student getUser() {
 		return user;
 	}
@@ -138,6 +141,10 @@ public class StudentManager extends Manager {
 		printRegistered(user);
 	}
 	
+	/**
+	 * Drops a Course with specified Index from Student's list of Registered Courses
+	 * @param courseCode Course Code
+	 */
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
@@ -187,6 +194,10 @@ public class StudentManager extends Manager {
 		return;
 	}
 	
+	/**
+	 * Prints student's list of registered courses
+	 * @param user User
+	 */
 	public void printRegistered(Student user) {
 		// print course code, course name, index of registered courses
 		System.out.println("Courses Registered for " + user.getFirstName() + " " + user.getLastName() + " (" + user.getMatricNumber() + "):");
@@ -199,6 +210,11 @@ public class StudentManager extends Manager {
 		System.out.println("");
 	}
 	
+	/**
+	 * Check the number of vacancies for a particular course
+	 * @param courseCode Course Code
+	 * @return boolean courseExists
+	 */
 	public boolean checkVacancies(String courseCode) {
 		// initialise course does not exist
 		boolean courseExists = false;
@@ -226,6 +242,11 @@ public class StudentManager extends Manager {
 		return courseExists;
 	}
 	
+	/**
+	 * Change index from a user's registered course to another index
+	 * @param currentIndex Current Index
+	 * @return boolean indexExists
+	 */
 	@SuppressWarnings("resource")
 	public boolean changeIndex(int currentIndex) {
 		// TODO: check if fail test cases 
@@ -388,6 +409,12 @@ public class StudentManager extends Manager {
 		return indexExists;
 	}
 	
+	/**
+	 * Swap index from a user's registered course with another peer's registered index
+	 * @param oldIndex Old Index
+	 * @param matricNumber Matriculation Number
+	 * @return boolean canSwap
+	 */
 	@SuppressWarnings("resource")
 	public boolean swapIndex(int oldIndex, String matricNumber) {
 		// TODO: check if fail test cases 
@@ -574,6 +601,11 @@ public class StudentManager extends Manager {
 	}
 	
 	// --- helper methods---
+	/**
+	 * Obtain an array list containing all indexes from a particular course
+	 * @param Course Object
+	 * @return ArrayList<Index> courseIndexes
+	 */
 	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
 		ArrayList<Index> courseIndexes = new ArrayList<Index>();
 		for (Index id: course.getIndexList()) {
@@ -582,6 +614,11 @@ public class StudentManager extends Manager {
 		return courseIndexes;
 	}
 
+	/**
+	 * Obtain the Course object from the entered Index 
+	 * @param Index Object
+	 * @return Course Object
+	 */
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
 		for (Course c: FileManager.getCourseDB()) {
@@ -592,6 +629,11 @@ public class StudentManager extends Manager {
 		return course;
 	}
 	
+	/**
+	 * Obtain the Student object from the entered matriculation number
+	 * @param matricNumber Matriculation Number
+	 * @return Student Object
+	 */
 	private static Student getStudentFromMatricNumber(String matricNumber) {
 		Student student = null;
 		for (Student s: FileManager.getStudentDB()) {
