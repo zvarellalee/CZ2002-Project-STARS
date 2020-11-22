@@ -209,30 +209,27 @@ public class StaffUI implements UserUI {
 									Index newIndex = new Index(index, vacancies);
 									newCourse.addIndex(newIndex);
 									boolean done = false;
-									while(!done) {
-										System.out.print("\nEnter Number of Lecture Sessions for Index " + index + ": ");
-										int lectureCount = sc.nextInt();
-										while (lectureCount < 1) {
-											System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + index + ": ");
-											lectureCount = sc.nextInt();											
-										}
-										System.out.print("\nEnter Number of Tutorial Sessions for Index " + index + ": ");
-										int tutorialCount = sc.nextInt();
-										System.out.print("\nEnter Number of Laboratory Sessions for Index " + index + ": ");
-										int laboratoryCount = sc.nextInt();
-										for (int j = 1; j <= lectureCount; j++) {
-											Session newSession = StaffUI.inputSession("Lecture", j, sc);
-											newIndex.addSessionList(newSession);
-										}
-										for (int j = 1; j <= tutorialCount; j++) {
-											Session newSession = StaffUI.inputSession("Tutorial", j, sc);
-											newIndex.addSessionList(newSession);
-										}
-										for (int j = 1; j <= laboratoryCount; j++) {
-											Session newSession = StaffUI.inputSession("Laboratory", j, sc);
-											newIndex.addSessionList(newSession);
-										}
-										done = true;
+									System.out.print("\nEnter Number of Lecture Sessions for Index " + index + ": ");
+									int lectureCount = sc.nextInt();
+									while (lectureCount < 1) {
+										System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + index + ": ");
+										lectureCount = sc.nextInt();											
+									}
+									System.out.print("\nEnter Number of Tutorial Sessions for Index " + index + ": ");
+									int tutorialCount = sc.nextInt();
+									System.out.print("\nEnter Number of Laboratory Sessions for Index " + index + ": ");
+									int laboratoryCount = sc.nextInt();
+									for (int j = 1; j <= lectureCount; j++) {
+										Session newSession = StaffManager.inputSession("Lecture", j, sc);
+										newIndex.addSessionList(newSession);
+									}
+									for (int j = 1; j <= tutorialCount; j++) {
+										Session newSession = StaffManager.inputSession("Tutorial", j, sc);
+										newIndex.addSessionList(newSession);
+									}
+									for (int j = 1; j <= laboratoryCount; j++) {
+										Session newSession = StaffManager.inputSession("Laboratory", j, sc);
+										newIndex.addSessionList(newSession);
 									}
 								}
 								System.out.println("New Indexes Successfully Added!\n");
@@ -369,58 +366,4 @@ public class StaffUI implements UserUI {
 		}
 		return calendar;
 	}	
-
-	private static Calendar inputTime(int day, int hour, int min, Calendar calendar, Scanner sc) {
-		try {			
-			while (true) {
-				// Input Hour
-				System.out.print("Enter Hour (24H format): ");
-				hour = sc.nextInt();
-				if (hour < 0 || hour > 23) {
-					System.out.println("Please input a valid time! Please try again.");
-					continue;
-				}
-				// Input Minute
-				System.out.print("Enter Minute: ");
-				min = sc.nextInt();
-				if (min < 0 || min > 59) {
-					System.out.println("Please enter a valid time! Please try again.");
-					continue;
-				}
-				
-				calendar.set(Calendar.DAY_OF_WEEK, day);
-				calendar.set(Calendar.HOUR_OF_DAY, hour);
-				calendar.set(Calendar.MINUTE, min);
-				calendar.set(Calendar.SECOND, 0);
-				return calendar;
-			}
-		}
-		catch (Exception InputMismatchException) {
-			System.out.println("Invalid input! Please try again.\n");
-		}
-		return calendar;
-	}	
-	
-	private static Session inputSession(String sessionType, int j, Scanner sc) {
-		String venue;
-		Calendar sessionStart = Calendar.getInstance(), sessionEnd = Calendar.getInstance();
-		int sessionDay = -1, startHour = -1, startMin = -1, endHour = -1, endMin = -1;
-		System.out.print("\nEnter Venue for " + sessionType + " Session " + j + ": ");
-		sc.nextLine();
-		venue = sc.nextLine();
-		System.out.print("\nEnter Day of " + sessionType + " Session " + j + ": ");
-		sessionDay = sc.nextInt();
-		while (sessionDay < 1 || sessionDay > 7) {
-			System.out.println("Please a valid day of the week! Please try again.");
-			sessionDay = sc.nextInt();
-		}
-		sessionStart = StaffUI.inputTime(sessionDay, startHour, startMin, sessionStart, sc);
-		sessionEnd = StaffUI.inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
-		if (sessionEnd.compareTo(sessionStart) < 0) {
-			System.out.println("Invalid Session period! Please try again.\n");
-			sessionEnd = StaffUI.inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
-		}
-		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
-		return newSession;
-	}
 }
