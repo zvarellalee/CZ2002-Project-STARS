@@ -261,6 +261,7 @@ public class StudentManager extends Manager {
 		
 		// if current index does not exist in database
 		if (selectedCurrentIndex == null) {
+			System.out.println("Selected Index does not exist. Please try again!");
 			return indexExists;
 		}
 		
