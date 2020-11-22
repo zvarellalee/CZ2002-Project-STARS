@@ -59,7 +59,7 @@ public class FileManager {
 	
 	public static int getCourseIndex(Course course) {
 		for (int i = 0; i < courses.size(); i++) {
-			if (courses.get(i).equals(course)) {
+			if (courses.get(i).getCourseCode().equals(course.getCourseCode())) {
 				return i;
 			}
 		}
@@ -69,7 +69,7 @@ public class FileManager {
 	
 	public static int getStaffIndex(Staff staff) {
 		for (int i = 0; i < staffs.size(); i++) {
-			if (staffs.get(i).equals(staff)) {
+			if (staffs.get(i).getStaffID().equals(staff.getStaffID())) {
 				return i;
 			}
 		}
