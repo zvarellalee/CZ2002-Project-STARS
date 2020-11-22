@@ -28,7 +28,7 @@ public class NotifManager {
 		Session session = Session.getInstance(props,
 			new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(sender_email, sender_password);
+						return new PasswordAuthentication(sender_username, sender_password);
 					}
 				  });
 		boolean status = false;
@@ -47,7 +47,7 @@ public class NotifManager {
 			
 		}
 		catch (MessagingException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		return status;
 	}
