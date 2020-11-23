@@ -88,7 +88,6 @@ public class StudentManager extends Manager {
 					
 					// Check if there are any timetable clashes, exits if yes
 					if (ScheduleManager.willClash(index, user.getCourseList()) == true) {
-						System.out.println("New Index Clashes with your current indexes! Course " + courseCode + " not registered.");
 						System.out.println("Returning back to main menu...");
 						System.out.println("");
 						return;
@@ -100,7 +99,7 @@ public class StudentManager extends Manager {
 						System.out.println("Maximum AU exceeded! Course " + courseCode + " not registered.");
 						System.out.println("Returning back to main menu...");
 						System.out.println("");
-						return;
+				return;
 					}
 					// set new AU of student (even if need to be on waitlist)
 					user.setNumAU(newAU);
@@ -173,7 +172,7 @@ public class StudentManager extends Manager {
 				// Update Student Database
 				updateStudentDB(user);
 				
-				System.out.println("Course Code " + courseCode + " successfully dropped.");
+				System.out.println("Course Code " + courseCode + " successfully dropped.\n");
 				printRegistered(user);
 			
 				// Increase vacancy by 1 if wait list is empty
@@ -348,7 +347,6 @@ public class StudentManager extends Manager {
 				// if new index has vacancy
 				// check if new index clash with any other registered indexes, continue if yes
 				else if (ScheduleManager.willClash(selectedNewIndex, user.getCourseList()) == true) {
-					System.out.println("\nNew Index Clashes with your current indexes!");
 					System.out.println("Please select a new Index.");
 					continue;
 				}
@@ -549,7 +547,6 @@ public class StudentManager extends Manager {
 				
 				// check if peer's index clash with any other user's registered indexes, continue if yes
 				if (ScheduleManager.willClash(peerIndex, user.getCourseList()) == true) {
-					System.out.println("\nNew Index Clashes with your current indexes!");
 					System.out.println("Please select a new Index.");
 					System.out.println("");
 					continue;
@@ -557,7 +554,6 @@ public class StudentManager extends Manager {
 				
 				// check if user's index clash with any other peer's registered indexes, continue if yes
 				if (ScheduleManager.willClash(userIndex, peer.getCourseList()) == true) {
-					System.out.println("\nCurrent Index Clashes with your peers' indexes!");
 					System.out.println("Please select a new Index.");
 					System.out.println("");
 					continue;
