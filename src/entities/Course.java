@@ -113,7 +113,7 @@ public class Course implements Serializable{
 	}
 	
 	/**
-	 * Sets the Faculty offering the Course
+	 * Sets the Faculty
 	 * @param school Faculty
 	 */
 	public void setSchool(String school) {
@@ -138,7 +138,7 @@ public class Course implements Serializable{
 	
 	/**
 	 * Adds an Index to the array list of Indexes in the Course
-	 * @param Index Object
+	 * @param index Index
 	 */
 	public void addIndex(Index index) {
 		indexList.add(index);
@@ -146,7 +146,7 @@ public class Course implements Serializable{
 	
 	/**
 	 * Removes an Index from the array list of Indexes in the Course
-	 * @param Index Object
+	 * @param index Index
 	 */
 	public void removeIndex(Index index) {
 		if (indexList.contains(index)) {
