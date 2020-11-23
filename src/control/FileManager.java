@@ -16,8 +16,8 @@ import java.util.HashMap;
 public class FileManager {
 	/**
 	 * Write Map object to a specified file
-	 * @param String filename
-	 * @param Map map
+	 * @param filename Name of file to write to
+	 * @param map Map to output retrieved objects into
 	 */
 	public static void write(String filename, Map<?,?> map) {
 		FileOutputStream fos;
@@ -36,8 +36,8 @@ public class FileManager {
 	
 	/**
 	 * Read the Map object from a specified file
-	 * @param String filename
-	 * @return Map details
+	 * @param filename File name of serialized object to parse
+	 * @return details The map retrieved from file 
 	 */
 	public static Map read(String filename) {
 		Map details = null;
