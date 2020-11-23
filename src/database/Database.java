@@ -144,7 +144,7 @@ public class Database {
 		Course c5 = new Course("CZ2002", "Object Oriented Design & Programming", "SCSE", 3);
 		Course c6 = new Course("HW0188", "Engineering Communication I", "SOH", 2);
 		Course c7 = new Course("CZ3002", "Advanced Software Engineering", "SCSE", 3);
-		Course c8 = new Course("CZ3003", "Software System and Analysis", "SCSE", 3);
+		Course c8 = new Course("CZ3003", "Software System and Analysis Design", "SCSE", 3);
 		
 		// Indexes
 		Index i1 = new Index(1001, 2);
