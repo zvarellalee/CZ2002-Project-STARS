@@ -128,6 +128,21 @@ public class Manager {
 	}
 	
 	/**
+	 * Checks whether the index exists
+	 * @param index Index Number
+	 * @return boolean
+	 */
+	public boolean indexExists(int index) {
+		for (Course c : courseMap.values()) {
+			for (Index i : c.getIndexList())
+				if (i.getIndexNumber() == index) {
+					return true;
+				}
+		}
+		return false;
+	}
+	
+	/**
 	 * Updates a student in studentMap and writes to file
 	 * @param Student student
 	 */
