@@ -140,18 +140,6 @@ public class StaffManager extends Manager{
 	}
 	
 	/**
-	 * Prints the List of Courses with Course Code and Name
-	 */
-	public void printCourseList() {
-		System.out.println("Course Code : Course Name");
-		System.out.println("---------------------------------------------------");
-		for (Course course : getCourseDB().values()){
-			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
-			
-		}
-	}
-	
-	/**
 	 * Adds Student to the Index's ArrayList of Students and Waitlist
 	 * @param indexNumber Index Number
 	 */
