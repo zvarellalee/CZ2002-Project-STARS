@@ -177,6 +177,11 @@ public class StaffUI implements UserUI {
 							if (selection == 1) {
 								System.out.print("\nEnter Course Code to add: ");
 								String courseCode = sc.next();
+								// Error Handling
+								if (StaffManager.courseExists(courseCode)) {
+									System.out.println("Course already exist! Please add a new course.\n");
+									continue;
+								}
 								String clear = sc.nextLine();
 								System.out.print("\nEnter Course Name to add: ");
 								String courseName = sc.nextLine();
@@ -255,7 +260,7 @@ public class StaffUI implements UserUI {
 								if (iSelection == 1) {
 									System.out.print("Enter Index to add: ");
 									int index = sc.nextInt();
-									if (staffManager.indexExists(index)) {
+									if (StaffManager.indexExists(index)) {
 										System.out.println("Index already exist! Please add a new Index Number");
 										continue;
 									}
