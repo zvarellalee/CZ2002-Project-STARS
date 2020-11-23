@@ -227,15 +227,15 @@ public class StaffUI implements UserUI {
 									System.out.print("\nEnter Number of Laboratory Sessions for Index " + index + ": ");
 									int laboratoryCount = sc.nextInt();
 									for (int j = 1; j <= lectureCount; j++) {
-										Session newSession = StaffManager.inputSession("Lecture", j, sc);
+										Session newSession = StaffManager.inputSession("LEC", j, sc);
 										newIndex.addSessionList(newSession);
 									}
 									for (int j = 1; j <= tutorialCount; j++) {
-										Session newSession = StaffManager.inputSession("Tutorial", j, sc);
+										Session newSession = StaffManager.inputSession("TUT", j, sc);
 										newIndex.addSessionList(newSession);
 									}
 									for (int j = 1; j <= laboratoryCount; j++) {
-										Session newSession = StaffManager.inputSession("Laboratory", j, sc);
+										Session newSession = StaffManager.inputSession("LAB", j, sc);
 										newIndex.addSessionList(newSession);
 									}
 								}
@@ -243,7 +243,8 @@ public class StaffUI implements UserUI {
 							}
 							else if (selection == 2) {
 								// Update Course Code
-								System.out.print("Enter Course Code to update: ");
+								staffManager.printCourseList();
+								System.out.print("\nEnter Course Code to update: ");
 								String courseCode = sc.next().toUpperCase();
 								String clear = sc.nextLine();
 								Course course = staffManager.findCourse(courseCode);
@@ -313,25 +314,40 @@ public class StaffUI implements UserUI {
 						break;
 					case 6:	
 						// Check vacancies for all the indexes of course
+						staffManager.printCourseList();
 						System.out.print("Enter Course Code to check Vacancies: ");
 						String courseCode = sc.next();
 						staffManager.checkVacancies(courseCode);
 						break;
 					case 7:
 						// Print student list by index number
-						System.out.print("Enter index to display student list: ");
+						staffManager.printCourseList();
+						System.out.print("\nEnter Course Code: ");
+						courseCode = sc.next().toUpperCase();
+						Course course = staffManager.findCourse(courseCode);
+						if (course == null) break;
+						course.printIndexList();
+						System.out.print("\nEnter index to display student list: ");
 						int index = sc.nextInt();
 						staffManager.printStudentList(index);
 						break;
 					case 8:
 						// Print student list by course code
-						System.out.print("Enter Course Code: ");
+						staffManager.printCourseList();
+						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
 						staffManager.printStudentList(courseCode);
 						break;
 					// To check session list
 					case 9:
-						System.out.print("Enter Index to Check Session List: ");
+						// Print student list by index number
+						staffManager.printCourseList();
+						System.out.print("\nEnter Course Code: ");
+						courseCode = sc.next().toUpperCase();
+						course = staffManager.findCourse(courseCode);
+						if (course == null) break;
+						course.printIndexList();
+						System.out.print("\nEnter Index to Check Session List: ");
 						Index index2 = staffManager.findIndex(sc.nextInt());
 						for (Session s: index2.getSessionList()) {
 							System.out.println("\nSession Type: " + s.getSessionType());
