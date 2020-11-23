@@ -5,6 +5,7 @@
  */
 package control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import entities.Course;
 import entities.Index;
@@ -79,6 +80,51 @@ public class Manager {
 		System.out.println("\nInvalid Index! Please try again.");
 		System.out.println("");
 		return null;
+	}
+	
+	/**
+	 * Obtain an array list containing all indexes from a particular course
+	 * @param Course Object
+	 * @return courseIndexes ArrayList<Index> 
+	 */
+	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
+		ArrayList<Index> courseIndexes = new ArrayList<Index>();
+		for (Index id: course.getIndexList()) {
+			courseIndexes.add(id);
+		}
+		return courseIndexes;
+	}
+	
+	/**
+	 * Check the number of vacancies for a particular course
+	 * @param courseCode Course Code
+	 * @return boolean courseExists
+	 */
+	public boolean checkVacancies(String courseCode) {
+		// initialise course does not exist
+		boolean courseExists = false;
+		// find the course that student wants to check
+		Course selectedCurrentCourse = findCourse(courseCode);
+		
+		// if course code is found in database
+		if (selectedCurrentCourse != null) {
+			courseExists = true;
+			// get all indexes from course
+			ArrayList<Index> courseIndexes = getAllIndexesFromCourse(selectedCurrentCourse);
+			
+			System.out.println("\nCourse Code: " + selectedCurrentCourse.getCourseCode());
+			System.out.println("Course Name: " + selectedCurrentCourse.getCourseName());
+
+			// print all the indexes and their respective vacancies and waitLists
+			System.out.println("================================================================");
+			System.out.println("Index\t\tVacancy\t\tWaitlist");
+			System.out.println("================================================================");
+			for (Index index: courseIndexes) {
+				System.out.println(index.getIndexNumber() + "\t\t" + index.getVacancies() + "\t\t" + index.getWaitListSize());
+			}
+			System.out.println("");
+		}
+		return courseExists;
 	}
 	
 	/**

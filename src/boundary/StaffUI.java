@@ -64,7 +64,8 @@ public class StaffUI implements UserUI {
 				System.out.println("(5) Check Vacancies for Index");
 				System.out.println("(6) Print Student List by Index");
 				System.out.println("(7) Print Student List by Course");
-				System.out.println("(8) Exit");
+				System.out.println("(8) Check Session List of Index");
+				System.out.println("(9) Exit");
 				System.out.println("-----------------------------------------");
 				System.out.print("Enter your choice: ");
 				
@@ -234,7 +235,7 @@ public class StaffUI implements UserUI {
 								}
 								staffManager.updateCourseCode(course, courseCode);
 								//Update Course Name
-								System.out.print("Enter Course Name to update: ");
+								System.out.print("\nEnter Course Name to update: ");
 								String courseName = sc.nextLine();
 								staffManager.updateCourseName(course, courseName);
 								// Update Faculty
@@ -243,7 +244,9 @@ public class StaffUI implements UserUI {
 								staffManager.updateCourseSchool(course, school);
 								
 								// Update Index Number
-								System.out.print("\nDo you want to Add/Update an index?");
+								System.out.println("\n--Displaying Indexes in Updated Course--");
+								staffManager.checkVacancies(courseCode);
+								System.out.println("\nDo you want to Add/Update an index?");
 								System.out.println("(1) Add");
 								System.out.println("(2) Update");
 								System.out.println("(3) Back");
@@ -305,12 +308,8 @@ public class StaffUI implements UserUI {
 						String courseCode = sc.next();
 						staffManager.printStudentList(courseCode);
 						break;
+					// To check session list
 					case 8:
-						// Exits
-						run = false;
-						break;
-					// To check session list, can remove later
-					case 9:
 						System.out.print("Enter Index to Check Session List: ");
 						Index index2 = staffManager.findIndex(sc.nextInt());
 						for (Session s: index2.getSessionList()) {
@@ -320,6 +319,10 @@ public class StaffUI implements UserUI {
 							System.out.println("Start Time: " + sdf.format(s.getSessionStart().getTime()));
 							System.out.println("End Time: " + sdf.format(s.getSessionEnd().getTime()));
 						}
+						break;
+					case 9:
+						// Exits
+						run = false;
 						break;
 					default:
 						System.out.println("Please choose an option from 1-8!");
