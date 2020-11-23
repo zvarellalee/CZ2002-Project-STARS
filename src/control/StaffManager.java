@@ -204,7 +204,7 @@ public class StaffManager extends Manager{
 		
 		for (Index index : courseIndex) {
 			for (Student student : index.getStudentList()) {
-				System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
+				System.out.println(student.getFirstName() + " " + student.getLastName() + ",\t"
 								+ student.getGender() + ",\t" + student.getNationality());
 			}
 		}
