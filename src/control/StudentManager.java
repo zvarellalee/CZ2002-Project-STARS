@@ -210,7 +210,7 @@ public class StudentManager extends Manager {
 		System.out.println("====================================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
 			String onWaitList = course.getOnWaitlist() ? "Y" : "N";
-			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-35.35s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + onWaitList);
+			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + onWaitList);
 		}
 		System.out.println("");
 	}
