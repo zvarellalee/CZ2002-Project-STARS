@@ -61,11 +61,12 @@ public class StaffUI implements UserUI {
 				System.out.println("(2) Check Student Access Period");
 				System.out.println("(3) Add a Student");
 				System.out.println("(4) Add/Update a Course");
-				System.out.println("(5) Check Vacancies for Index");
-				System.out.println("(6) Print Student List by Index");
-				System.out.println("(7) Print Student List by Course");
-				System.out.println("(8) Check Session List of Index");
-				System.out.println("(9) Exit");
+				System.out.println("(5) Check Vacancies Available");
+				System.out.println("(6) View Available Courses");
+				System.out.println("(7) Print Student List by Index");
+				System.out.println("(8) Print Student List by Course");
+				System.out.println("(9) Check Session List of Index");
+				System.out.println("(0) Exit");
 				System.out.println("-----------------------------------------");
 				System.out.print("Enter your choice: ");
 				
@@ -177,11 +178,6 @@ public class StaffUI implements UserUI {
 							if (selection == 1) {
 								System.out.print("\nEnter Course Code to add: ");
 								String courseCode = sc.next();
-								// Error Handling
-								if (StaffManager.courseExists(courseCode)) {
-									System.out.println("Course already exist! Please add a new course.\n");
-									continue;
-								}
 								String clear = sc.nextLine();
 								System.out.print("\nEnter Course Name to add: ");
 								String courseName = sc.nextLine();
@@ -260,7 +256,7 @@ public class StaffUI implements UserUI {
 								if (iSelection == 1) {
 									System.out.print("Enter Index to add: ");
 									int index = sc.nextInt();
-									if (StaffManager.indexExists(index)) {
+									if (staffManager.indexExists(index)) {
 										System.out.println("Index already exist! Please add a new Index Number");
 										continue;
 									}
@@ -296,6 +292,9 @@ public class StaffUI implements UserUI {
 						while (selection != 3);
 						break;
 					case 5:
+						staffManager.printCourseList();
+						break;
+					case 6:						
 						// Check vacancies for index number
 						System.out.print("Enter index to check vacancy: ");
 						int index = sc.nextInt();
@@ -305,20 +304,20 @@ public class StaffUI implements UserUI {
 							continue;
 						System.out.println("Vacancies for index " + checkIndex.getIndexNumber() + ": " + checkIndex.getVacancies());
 						break;
-					case 6:
+					case 7:
 						// Print student list by index number
 						System.out.print("Enter index to display student list: ");
 						index = sc.nextInt();
 						staffManager.printStudentList(index);
 						break;
-					case 7:
+					case 8:
 						// Print student list by course code
 						System.out.print("Enter Course Code: ");
 						String courseCode = sc.next();
 						staffManager.printStudentList(courseCode);
 						break;
 					// To check session list
-					case 8:
+					case 9:
 						System.out.print("Enter Index to Check Session List: ");
 						Index index2 = staffManager.findIndex(sc.nextInt());
 						for (Session s: index2.getSessionList()) {
@@ -329,7 +328,7 @@ public class StaffUI implements UserUI {
 							System.out.println("End Time: " + sdf.format(s.getSessionEnd().getTime()));
 						}
 						break;
-					case 9:
+					case 10:
 						// Exits
 						run = false;
 						break;
