@@ -96,6 +96,18 @@ public class Manager {
 	}
 	
 	/**
+	 * Prints the List of Courses with Course Code and Name
+	 */
+	public void printCourseList() {
+		System.out.println("\nCourse Code : Course Name");
+		System.out.println("---------------------------------------------------");
+		for (Course course : getCourseDB().values()){
+			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
+			
+		}
+	}
+	
+	/**
 	 * Check the number of vacancies for a particular course
 	 * @param courseCode Course Code
 	 * @return boolean courseExists
