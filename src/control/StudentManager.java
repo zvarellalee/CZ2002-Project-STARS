@@ -205,11 +205,12 @@ public class StudentManager extends Manager {
 	public void printRegistered(Student user) {
 		// print course code, course name, index of registered courses
 		System.out.println("Courses Registered for " + user.getFirstName() + " " + user.getLastName() + " (" + user.getMatricNumber() + "):");
-		System.out.println("================================================================");
-		System.out.println("Course Code\tCourse Name \t\t\t\tIndex");
-		System.out.println("================================================================");
+		System.out.println("====================================================================================");
+		System.out.println("Course Code\tCourse Name \t\t\t\tIndex\tAU\tOn Waitlist");
+		System.out.println("====================================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
-			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-35.35s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber());
+			String onWaitList = course.getOnWaitlist() ? "Y" : "N";
+			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-35.35s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + onWaitList);
 		}
 		System.out.println("");
 	}
