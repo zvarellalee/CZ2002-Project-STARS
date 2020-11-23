@@ -108,11 +108,10 @@ public class StaffManager extends Manager{
 	 * Prints out the List of Students with their Matriculation Number and Full Name
 	 */
 	private void printStudentList() {
-		System.out.println("Matriculation Number         Full Name");
+		System.out.printf("%-20s%-20s\n", "Matriculation Number", "Full Name");
 		System.out.println("---------------------------------------------------");
 		for (Student student : getStudentDB().values()){
-			System.out.print(student.getMatricNumber() + "\t");
-			System.out.println(student.getFirstName() + " " + student.getLastName()); 		
+			System.out.printf("%-20s%-20s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());	
 		}
 	}
 	
@@ -198,14 +197,13 @@ public class StaffManager extends Manager{
 			return;
 	
 		System.out.println("Course Code: " + courseCode);
-		System.out.println("Name\tGender\tNationality");
+		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
 		
 		ArrayList<Index> courseIndex = course.getIndexList();
 		
 		for (Index index : courseIndex) {
 			for (Student student : index.getStudentList()) {
-				System.out.println(student.getFirstName() + " " + student.getLastName() + ",\t"
-								+ student.getGender() + ",\t" + student.getNationality());
+				System.out.printf("%-20s%-20s%-20s\n", student.getFirstName() + " " + student.getLastName(), student.getGender(), student.getNationality());
 			}
 		}
 		System.out.println();
@@ -222,11 +220,10 @@ public class StaffManager extends Manager{
 			return;
 		
 		System.out.println("Index Number: " + indexNumber);
-		System.out.println("Name\tGender\tNationality");
+		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
 		
 		for (Student student : index.getStudentList()) {
-			System.out.print(student.getFirstName() + " " + student.getLastName() + ",\t"
-							+ student.getGender() + ",\t" + student.getNationality());
+			System.out.printf("%-20s%-20s%-20s\n", student.getFirstName() + " " + student.getLastName(), student.getGender(), student.getNationality());
 		}
 		System.out.println();
 	}
