@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class Session implements Serializable{
 	/**
 	 * Stores the type of Session such as
-	 * LEC, TUT or LAB
+	 * LEC (Lecture), TUT (Tutorial) or LAB (Lab).
 	 */
 	private String sessionType; // type of session
 	/**
