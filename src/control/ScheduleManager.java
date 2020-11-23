@@ -9,7 +9,7 @@ import entities.Session;
 public class ScheduleManager {
 	// Compares whether the 2 session clashes
 	private static boolean isOverlapping(Calendar sessionStart, Calendar sessionEnd, Calendar session2Start, Calendar session2End) {
-	    return sessionStart.before(session2End) && session2Start.before(session2End);
+	    return sessionStart.before(session2End) && session2Start.before(sessionEnd);
 	}
 	
 	// Check whether the 2 indexes clashes
