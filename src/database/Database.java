@@ -135,7 +135,7 @@ public class Database {
 		// Courses
 		Course c0 = new Course("MA2007", "Thermodynamics", "MAE", 4);
 		Course c1 = new Course("CZ2001", "Algorithms", "SCSE", 3);
-		Course c2 = new Course("EG001", "Engineers and Society", "SCSE", 3);
+		Course c2 = new Course("EG0001", "Engineers and Society", "SCSE", 3);
 		Course c3 = new Course("AAA18D", "Life Drawing", "NIE", 3);
 		Course c4 = new Course("CZ3004", "Multidisplinary Project", "SCSE", 4);
 		Course c5 = new Course("CZ2002", "Object Oriented Design & Programming", "SCSE", 3);
@@ -156,22 +156,23 @@ public class Database {
 		Index i10 = new Index(1010, 2);
 		Index i11 = new Index(1011, 2);
 		
-		Session se1 = new Session("Lecture","Home",inputTime(2,13,0),inputTime(2,15,0));
-		Session se1a = new Session("Tutorial", "LHN-TR17", inputTime(1,12,0),inputTime(1,13,0));
-		Session se2 = new Session("Lecture", "LT1A", inputTime(4,13,0),inputTime(4,14,0));
-		Session se2a = new Session("Lab", "HWLAB1", inputTime(1,13,30), inputTime(1,15,30));
-		Session se3 = new Session("Lecture","LT1A",inputTime(4,13,0),inputTime(4,14,0));
-		Session se3a = new Session("Lab", "HWLAB2", inputTime(5,13,30),inputTime(5,16,30));
-		Session se4 = new Session("Lecture", "LT19",inputTime(6,8,0),inputTime(6,10,0));
-		Session se5 = new Session("Tutorial", "NIE2-01-TR201", inputTime(1,14,0), inputTime(1,15,0));
-		Session se6 = new Session("Lab","SPL",inputTime(2,10,0),inputTime(2,13,0));
-		Session se7 = new Session("Lecture","LT1A",inputTime(6,11,0),inputTime(6,12,0));
-		Session se8 = new Session("Lecture","LHN-TR15",inputTime(1,14,0),inputTime(1,15,0));
-		Session se9 = new Session("Lecture","LHS-TR7",inputTime(3,8,0),inputTime(3,10,0));
-		Session se9a = new Session("Lab","SWLAB3",inputTime(5,13,30),inputTime(5,15,30));
-		Session se10 = new Session("Lecture","LT2A",inputTime(1,8,0),inputTime(1,10,0));
-		Session se10a = new Session("Lab","HWLAB1",inputTime(5,9,0),inputTime(5,10,0));
-		Session se11 = new Session("Lecture","LT19",inputTime(4,11,0),inputTime(4,13,0));
+		Session se1 = new Session("LEC","Home",inputTime(2,13,0),inputTime(2,15,0));
+		Session se1a = new Session("TUT", "LHN-TR17", inputTime(1,12,0),inputTime(1,13,0));
+		Session se2 = new Session("LEC", "LT1A", inputTime(3,13,0),inputTime(3,14,0));
+		Session se2a = new Session("LAB", "HWLAB1", inputTime(1,13,30), inputTime(1,15,30));
+		Session se3 = new Session("LEC","LT1A",inputTime(3,13,0),inputTime(3,14,0));
+		Session se3a = new Session("LAB", "HWLAB2", inputTime(4,14,30),inputTime(4,16,30));
+		Session se4 = new Session("LEC", "LT19",inputTime(5,8,0),inputTime(5,10,0));
+		Session se5 = new Session("TUT", "NIE2-01-TR201", inputTime(6,17,0), inputTime(6,19,0));
+		Session se6 = new Session("LAB","SPL",inputTime(4,10,0),inputTime(4,13,0));
+		Session se7 = new Session("LEC","LT1A",inputTime(5,11,0),inputTime(5,12,0));
+		Session se8 = new Session("LEC","LHN-TR15",inputTime(1,14,0),inputTime(1,15,0));
+		Session se9 = new Session("LEC","LHS-TR7",inputTime(2,8,0),inputTime(2,10,0));
+		Session se9a = new Session("LAB","SWLAB3",inputTime(4,13,30),inputTime(4,15,30));
+		Session se10 = new Session("LEC","LT2A",inputTime(2,8,0),inputTime(2,10,0));
+		Session se10a = new Session("LAB","HWLAB1",inputTime(4,9,0),inputTime(4,10,0));
+		Session se11 = new Session("LEC","LT19",inputTime(3,11,0),inputTime(3,13,0));
+		
 		// add sessions to index
 		i1.addSessionList(se1);
 		i1.addSessionList(se1a);
@@ -222,7 +223,7 @@ public class Database {
 	
 	private static Calendar inputTime(int day, int hour, int min) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.DAY_OF_WEEK, day);
+		calendar.set(Calendar.DAY_OF_WEEK, day + 1);
 		calendar.set(Calendar.HOUR_OF_DAY, hour);
 		calendar.set(Calendar.MINUTE, min);
 		calendar.set(Calendar.SECOND, 0);
