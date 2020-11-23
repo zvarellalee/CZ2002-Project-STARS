@@ -172,8 +172,8 @@ public class StaffManager extends Manager{
 						studentlist.add(s);
 						index.setStudentList(studentlist);
 						
-						NotifManager.sendEmail(s.getEmail(), s, courseCode);
-						
+						NotifManager.sendEmail(s.getEmail(), s, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
+												
 						vacancy--;
 					}
 				}
