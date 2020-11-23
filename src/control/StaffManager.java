@@ -261,6 +261,7 @@ public class StaffManager extends Manager{
 				calendar.set(Calendar.HOUR_OF_DAY, hour);
 				calendar.set(Calendar.MINUTE, min);
 				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
 				return calendar;
 			}
 		}
