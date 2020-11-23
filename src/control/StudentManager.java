@@ -167,18 +167,26 @@ public class StudentManager extends Manager {
 				printRegistered(user);
 				
 				// Increase vacancy by 1 if wait list is empty
-				if (droppedIndex.getWaitList().isEmpty()) {
-					droppedIndex.setVacancies(droppedIndex.getVacancies() + 1);
-				}
-				else {
-					// Add course for first student in the wait list
-					Student waiting = course.getIndex().getWaitList().get(0);
-					ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
-					RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, course.getIndex(), waiting);
-					newCourseList.add(newCourse);
-					waiting.setCourseList(newCourseList);
-					droppedIndex.addStudentList(waiting);
-					droppedIndex.removeWaitList(waiting);
+				Index reference = findIndex(course.getIndex().getIndexNumber());
+                if (reference.getWaitList().isEmpty()) { 
+                    System.out.println(reference.getWaitList().size());
+                    course.getIndex().setVacancies(course.getIndex().getVacancies() + 1);
+                }
+                else {
+                    System.out.println("test");
+                    // Add course for first student in the wait list
+                    Student waiting = reference.getWaitList().get(0);
+                    ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
+                    RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, reference, waiting);
+                    for (RegisteredCourse old: newCourseList) {
+                        if (old.getIndex().getIndexNumber() == reference.getIndexNumber()) {
+                            newCourseList.remove(old);
+                            newCourseList.add(newCourse);
+                        }
+                    }
+                    waiting.setCourseList(newCourseList);
+                    reference.addStudentList(waiting);
+                    reference.removeWaitList(waiting);
 	
 					// Update Course Database
 					updateCourseDB(droppedCourse);
