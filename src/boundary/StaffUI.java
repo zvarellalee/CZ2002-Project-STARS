@@ -10,7 +10,6 @@ package boundary;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
-import database.Database;
 import entities.Course;
 import entities.Index;
 import entities.Session;
@@ -242,20 +241,44 @@ public class StaffUI implements UserUI {
 								System.out.print("Enter Faculty to update: ");
 								String school = sc.nextLine();
 								staffManager.updateCourseSchool(course, school);
+								
 								// Update Index Number
-								System.out.print("Enter Index to update: ");
-								int index = sc.nextInt();
-								Index updatedIndex = staffManager.findIndex(index);
-								// Error Handling
-								if (updatedIndex == null) {
+								System.out.print("\nDo you want to Add/Update an index?");
+								System.out.println("(1) Add");
+								System.out.println("(2) Update");
+								System.out.println("(3) Back");
+								int iSelection = sc.nextInt();
+								
+								if (iSelection == 1) {
+									System.out.print("Enter Index to add: ");
+									int index = sc.nextInt();
+									// Update Vacancies
+									System.out.print("Enter new Vacancy to Index " + index + ": ");
+									int vacancy = sc.nextInt();
+									Index newIndex = new Index(index, vacancy);
+									course.addIndex(newIndex);
+									System.out.println("Index " + index + " Successfully added to Course " + courseCode + "!\n");
+								}
+								else if (iSelection == 2) {
+									System.out.print("Enter Index to update: ");
+									int index = sc.nextInt();
+									Index updatedIndex = staffManager.findIndex(index);
+									// Error Handling
+									if (updatedIndex == null) {
+										continue;
+									}
+									// Update Vacancies
+									System.out.print("Enter new Vacancy to Index " + index + ": ");
+									int vacancy = sc.nextInt();
+									updatedIndex.setVacancies(vacancy);
+									System.out.println("Course " + course.getCourseCode() + " Successfully Updated!\n");
+								}
+								else if (iSelection == 3) {
 									continue;
 								}
-								// Update Vacancies
-								System.out.print("Enter new Vacancy to Index " + index + ": ");
-								int vacancy = sc.nextInt();
-								updatedIndex.setVacancies(vacancy);
-								
-								System.out.println("Course " + course.getCourseCode() + " Successfully Updated!\n");
+								else {
+									System.out.println("Invalid selection! Please try again.");
+								}
 							}
 						}
 						while (selection != 3);
