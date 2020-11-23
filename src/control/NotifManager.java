@@ -1,3 +1,4 @@
+  
 /**
  * Notification Manager for handling of emails
  * @version 1.0
@@ -27,7 +28,7 @@ public class NotifManager {
 	 * @return boolean
 	 */
 	public static boolean sendEmail(String email, Student student, String courseCode, String messageBody) {
-		final String sender_username = "cz2005email";
+		final String sender_username = "cz2002email@gmail.com";
 		final String sender_password = "OODPplaceholder";
 		
 		Properties props = new Properties();
