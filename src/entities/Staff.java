@@ -11,10 +11,6 @@ package entities;
 
 public class Staff extends User {
 	/** 
-	 * Name of Staff
-	 */
-	private String name;
-	/** 
 	 * Staff Identifier
 	 */
 	private String staffID;
@@ -33,14 +29,6 @@ public class Staff extends User {
 	public Staff (String username, String password, boolean adminAccess, String firstName, String lastName, String email, String staffID) {
 		super(username, password, adminAccess, firstName, lastName, email);
 		this.staffID = staffID;
-	}
-	
-	/**
-	 * Gets the Name of Staff
-	 * @return Name of Staff
-	 */
-	public String getName() {
-		return name;
 	}
 	
 	/**
