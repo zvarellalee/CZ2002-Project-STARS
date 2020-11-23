@@ -142,6 +142,7 @@ public class StaffManager extends Manager{
 	/**
 	 * Adds Student to the Index's ArrayList of Students and Waitlist
 	 * @param indexNumber Index Number
+	 * @param courseCode Course Code
 	 */
 	public void addStudentToIndex(int indexNumber, String courseCode) {
 		Course c = findCourse(courseCode);
