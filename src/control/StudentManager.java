@@ -190,6 +190,7 @@ public class StudentManager extends Manager {
 						if (old.getIndex().getIndexNumber() == droppedIndex.getIndexNumber()) {
 							newCourseList.remove(old);
 							newCourseList.add(newCourse);
+							break;
 						}
 					}
 					waiting.setCourseList(newCourseList);
@@ -370,11 +371,10 @@ public class StudentManager extends Manager {
 				// remove student from studentList in currentIndex
 				selectedCurrentIndex.removeStudentList(user);
 				// remove index from student's list of registered index
-				RegisteredCourse droppedRegistered;
 				for (RegisteredCourse registered : courses) {
 					if (registered.getIndex() == selectedCurrentIndex) {
-						droppedRegistered = registered;
-						courses.remove(droppedRegistered);
+						courses.remove(registered);
+						break;
 					}
 				}
 				// if currentIndex waitlist is empty 
