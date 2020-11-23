@@ -5,10 +5,12 @@
  */
 package control;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import entities.Course;
 import entities.Index;
+import entities.Session;
 import entities.Staff;
 import entities.Student;
 
@@ -95,7 +97,6 @@ public class Manager {
 		}
 		return courseIndexes;
 	}
-	
 	/**
 	 * Prints the List of Courses with Course Code and Name
 	 */
@@ -107,6 +108,22 @@ public class Manager {
 			System.out.println(course.getCourseCode() + "\t\t" + course.getCourseName());
 		}
 		System.out.println("");
+	}
+	
+	/**
+	 * Prints the List of Sessions in the Index
+	 * @param index Object
+	 */
+	public void printSessions (Index index ){
+		for (Session s: index.getSessionList()) {
+			System.out.println("\nSession Type: " + s.getSessionType());
+			System.out.println("Venue: " + s.getVenue());
+			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+			System.out.println("Day: " + sdf.format(s.getSessionStart().getTime()));
+			System.out.println("Start Time: " + sdf2.format(s.getSessionStart().getTime()));
+			System.out.println("End Time: " + sdf2.format(s.getSessionEnd().getTime()));
+		}
 	}
 	
 	/**
