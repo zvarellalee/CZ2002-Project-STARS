@@ -26,6 +26,7 @@ public class StudentManager extends Manager {
 	 * @param user Student
 	 */
 	public StudentManager(Student user) {
+		super();
 		this.user = user;
 		// Database.initialise(); // To remove
 	}
@@ -114,9 +115,10 @@ public class StudentManager extends Manager {
 					else {
 						System.out.println("Index " + choice + " has 0 vacancy left.");
 						System.out.println("You have been put on the waitlist.");
+						System.out.println("");
 						// Enqueue student in the wait list of the index
 						index.addWaitList(user);
-						
+						System.out.println(index.getWaitListSize());
 						onWaitList = true;
 						userinput = false;
 						break;
@@ -137,17 +139,23 @@ public class StudentManager extends Manager {
 		user.setCourseList(newCourseList);
 		if (!onWaitList) {
 			index.addStudentList(user);
+			System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + " (" +course.getCourseCode() + ")" + " successfully added!\n");
 		}
+		System.out.println("Size of waitlist" +index.getWaitListSize());
 		updateCourseDB(course);
 		// Update Student Database
 		updateStudentDB(user);
-		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + " (" +course.getCourseCode() + ")" + " successfully added!\n");
 		printRegistered(user);
 	}
 	
+	/**
+	 * Drops a Course with specified Index from Student's list of Registered Courses
+	 * @param courseCode Course Code
+	 */
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
+		
 		for (RegisteredCourse course : courses) {
 			if (course.getCourse().getCourseCode().equals(courseCode)) {
 				Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
@@ -165,28 +173,25 @@ public class StudentManager extends Manager {
 				
 				System.out.println("Course Code " + courseCode + " successfully dropped.");
 				printRegistered(user);
-				
+			
 				// Increase vacancy by 1 if wait list is empty
-				Index reference = findIndex(course.getIndex().getIndexNumber());
-                if (reference.getWaitList().isEmpty()) { 
-                    System.out.println(reference.getWaitList().size());
-                    course.getIndex().setVacancies(course.getIndex().getVacancies() + 1);
-                }
-                else {
-                    System.out.println("test");
-                    // Add course for first student in the wait list
-                    Student waiting = reference.getWaitList().get(0);
-                    ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
-                    RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, reference, waiting);
-                    for (RegisteredCourse old: newCourseList) {
-                        if (old.getIndex().getIndexNumber() == reference.getIndexNumber()) {
-                            newCourseList.remove(old);
-                            newCourseList.add(newCourse);
-                        }
-                    }
-                    waiting.setCourseList(newCourseList);
-                    reference.addStudentList(waiting);
-                    reference.removeWaitList(waiting);
+				if (droppedIndex.getWaitList().isEmpty()) {
+					droppedIndex.setVacancies(droppedIndex.getVacancies() + 1);
+				}
+				else {
+					// Add course for first student in the wait list
+					Student waiting = droppedIndex.getWaitList().get(0);
+					ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
+					RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, droppedIndex, waiting);
+					for (RegisteredCourse old : newCourseList) {
+						if (old.getIndex().getIndexNumber() == droppedIndex.getIndexNumber()) {
+							newCourseList.remove(old);
+							newCourseList.add(newCourse);
+						}
+					}
+					waiting.setCourseList(newCourseList);
+					droppedIndex.addStudentList(waiting);
+					droppedIndex.removeWaitList(waiting);
 	
 					// Update Course Database
 					updateCourseDB(droppedCourse);
