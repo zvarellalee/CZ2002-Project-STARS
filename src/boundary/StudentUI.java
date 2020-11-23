@@ -89,6 +89,7 @@ public class StudentUI implements UserUI {
 						boolean courseExists = false;
 						// loop user to re-enter courseCode if course does not exist
 						do {
+							studentManager.printCourseList();
 							System.out.print("Enter the Course Code that you wish to check (Enter Q to exit): ");
 							courseCode = sc.next().toUpperCase();
 							if (courseCode.toUpperCase().equals("Q")) {
