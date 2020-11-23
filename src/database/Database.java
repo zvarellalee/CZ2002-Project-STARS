@@ -142,14 +142,14 @@ public class Database {
 		Course c3 = new Course("AAA18D", "Life Drawing", "NIE", 3);
 		Course c4 = new Course("CZ3004", "Multidisplinary Project", "SCSE", 4);
 		Course c5 = new Course("CZ2002", "Object Oriented Design & Programming", "SCSE", 3);
-		Course c6 = new Course("HW0188", "Engineering Communication I", "SOH", 3);
+		Course c6 = new Course("HW0188", "Engineering Communication I", "SOH", 2);
 		Course c7 = new Course("CZ3002", "Advanced Software Engineering", "SCSE", 3);
 		Course c8 = new Course("CZ3003", "Software System and Analysis", "SCSE", 3);
 		
 		// Indexes
 		Index i1 = new Index(1001, 2);
 		Index i2 = new Index(1002, 1);
-		Index i3 = new Index(1003, 1);
+		Index i3 = new Index(1003, 2);
 		Index i4 = new Index(1004, 3);
 		Index i5 = new Index(1005, 3);
 		Index i6 = new Index(1006, 1);
@@ -232,6 +232,5 @@ public class Database {
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 		return calendar;
-		
 	}	
 }
