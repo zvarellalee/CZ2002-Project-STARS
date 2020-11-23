@@ -156,7 +156,10 @@ public class StudentManager extends Manager {
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
 		
+		if (droppedCourse == null) return; // return if droppedCourse is not found
+		
 		for (RegisteredCourse course : courses) {
+			System.out.println(course.getCourse().getCourseCode());
 			if (course.getCourse().getCourseCode().equals(courseCode)) {
 				Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
 				// Remove Student from the studentList in Index
@@ -204,12 +207,9 @@ public class StudentManager extends Manager {
 				}
 				return;
 			}
-			// Exits if course is not registered by student
-			System.out.println("Course " + courseCode + " not registered! Please try again.");
-			System.out.println("Returning back to main menu...");
-			return;
 		}
-		// Exits if course code is not found
+		// Exits if course code is not registered
+		System.out.println("Course " + courseCode + " not registered! Please try again.");
 		System.out.println("Returning back to main menu...");
 		return;
 	}
