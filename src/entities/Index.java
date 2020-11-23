@@ -120,7 +120,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Adds a student to the Array List of Students enrolled in the Index
-	 * @param Student Object
+	 * @param student Student to add to the student list
 	 */
 	public void addStudentList(Student student) { 
 		studentList.add(student);
@@ -128,7 +128,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a student from the Array List of Students enrolled in the Index
-	 * @param Student Object
+	 * @param student Student to remove from the student list
 	 */
 	public void removeStudentList(Student student) {
 		if (studentList.contains(student))
@@ -146,7 +146,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Adds a student to the wait list 
-	 * @param waitList Array List of Students on the wait list
+	 * @param student Student to be added to the wait list
 	 */
 	public void addWaitList(Student student) { 
 		waitList.add(student);
@@ -154,7 +154,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a student from the wait list 
-	 * @param waitList Array List of Students on the wait list
+	 * @param student Student to be removed from the wait list
 	 */
 	public void removeWaitList(Student student) {
 		if (waitList.contains(student))
@@ -172,7 +172,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Adds a session to the sessionList
-	 * @param sessionList Array List of Sessions in the Index
+	 * @param session Session to be added to the session list
 	 */
 	public void addSessionList(Session session) { 
 		sessionList.add(session);
@@ -180,7 +180,7 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a session from the sessionList
-	 * @param sessionList Array List of Sessions in the Index
+	 * @param session to be removed from the session list
 	 */
 	public void removeSessionList(Session session) {
 		if (sessionList.contains(session))
