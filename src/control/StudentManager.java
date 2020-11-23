@@ -159,7 +159,6 @@ public class StudentManager extends Manager {
 		if (droppedCourse == null) return; // return if droppedCourse is not found
 		
 		for (RegisteredCourse course : courses) {
-			System.out.println(course.getCourse().getCourseCode());
 			if (course.getCourse().getCourseCode().equals(courseCode)) {
 				Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
 				// Remove Student from the studentList in Index
@@ -196,7 +195,7 @@ public class StudentManager extends Manager {
 					waiting.setCourseList(newCourseList);
 					droppedIndex.addStudentList(waiting);
 					droppedIndex.removeWaitList(waiting);
-	
+
 					// Update Student Database
 					updateStudentDB(waiting);
 					
@@ -206,7 +205,6 @@ public class StudentManager extends Manager {
 				}
 				// Update Course Database
 				updateCourseDB(droppedCourse);
-				
 				return;
 			}
 		}
@@ -251,7 +249,7 @@ public class StudentManager extends Manager {
 	 * @return boolean indexExists
 	 */
 	@SuppressWarnings("resource")
-		public boolean changeIndex(int currentIndex) {
+	public boolean changeIndex(int currentIndex) {
 		// TODO: check if fail test cases 
 		// initialise index number does not exist
 		boolean indexExists = false;
@@ -392,6 +390,7 @@ public class StudentManager extends Manager {
 						if (old.getIndex().getIndexNumber() == selectedCurrentIndex.getIndexNumber()) {
 							newCourseList.remove(old);
 							newCourseList.add(newCourse);
+							break;
 						}
 					}
 					waiting.setCourseList(newCourseList);
@@ -581,6 +580,7 @@ public class StudentManager extends Manager {
 				for (RegisteredCourse registered : userRegCourses) {
 					if (registered.getIndex().getIndexNumber() == oldIndex) {
 						userRegCourses.remove(registered);
+						break;
 					}
 				}
 				
@@ -596,6 +596,7 @@ public class StudentManager extends Manager {
 				for (RegisteredCourse registered : peerRegCourses) {
 					if (registered.getIndex().getIndexNumber() == newIndex) {
 						peerRegCourses.remove(registered);
+						break;
 					}
 				}
 				
