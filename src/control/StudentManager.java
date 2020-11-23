@@ -2,14 +2,16 @@
  * Manager for Student
  * @author Stanley Ho, Cheah Jing Feng
  * @version 1.0
- * @since 2020-11-19
+ * @since 2020-11-20
  */
 
 package control;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import entities.Course;
 import entities.Index;
 import entities.RegisteredCourse;
+import entities.Session;
 import entities.Student;
 import java.util.Scanner;
 
@@ -42,7 +44,6 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public void addCourse(String courseCode) {
-		
 		// Shows indexes in course and their vacancies
 		boolean courseExists = checkVacancies(courseCode);
 		// Exits if courseCode is not found
@@ -139,7 +140,7 @@ public class StudentManager extends Manager {
 		updateCourseDB(course);
 		// Update Student Database
 		updateStudentDB(user);
-		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + "(" +course.getCourseCode() + ")" + " successfully added!\n");
+		System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + " (" +course.getCourseCode() + ")" + " successfully added!\n");
 		printRegistered(user);
 	}
 	
@@ -189,7 +190,7 @@ public class StudentManager extends Manager {
 					
 					// Notify enrolled student
 					// change first argument for testing
-					NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode);
+					NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
 				}
 				return;
 			}
@@ -205,16 +206,28 @@ public class StudentManager extends Manager {
 	public void printRegistered(Student user) {
 		// print course code, course name, index of registered courses
 		System.out.println("Courses Registered for " + user.getFirstName() + " " + user.getLastName() + " (" + user.getMatricNumber() + "):");
-		System.out.println("====================================================================================");
-		System.out.println("Course Code\tCourse Name \t\t\t\tIndex\tAU\tOn Waitlist");
-		System.out.println("====================================================================================");
+		System.out.println("==============================================================================================================================================");
+		System.out.println("Course Code\tCourse Name\t\t\t\tIndex\tAU\tStatus\t\tSession Type\tDay\tTime\t\tVenue");
+		System.out.println("==============================================================================================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
-			String onWaitList = course.getOnWaitlist() ? "Y" : "N";
-			System.out.println(course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + onWaitList);
-		}
+			String status = course.getOnWaitlist() ?  "On Waitlist": "Registered";
+			String line = course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + status + "\t";
+			System.out.print(line);
+			int whitespaceSize = line.length();
+			String whitespace = " ";
+			whitespace = String.format("%1$" + whitespaceSize + "s", whitespace);
+			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+			for (Session session: course.getIndex().getSessionList())
+			{
+				System.out.println(session.getSessionType() + "\t\t" + sdf.format(session.getSessionStart().getTime()) + "\t" + sdf2.format(session.getSessionStart().getTime()) + "-" + sdf2.format(session.getSessionEnd().getTime()) + "\t" + session.getVenue());
+				System.out.print(whitespace + "\t\t\t\t");
+			}
+			System.out.println("");
+		} 
 		System.out.println("");
 	}
-		
+	
 	/**
 	 * Change index from a user's registered course to another index
 	 * @param currentIndex Current Index
@@ -222,6 +235,7 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public boolean changeIndex(int currentIndex) {
+		// TODO: check if fail test cases 
 		// initialise index number does not exist
 		boolean indexExists = false;
 		// find the course which student wants to change currentIndex
@@ -361,8 +375,7 @@ public class StudentManager extends Manager {
 					selectedCurrentIndex.removeWaitList(waiting);
 					
 					// Notify student on waitlist
-					// change first argument for testing
-					NotifManager.sendEmail(waiting.getEmail(), waiting, selectedCurrentCourse.getCourseCode());
+					NotifManager.sendEmail(waiting.getEmail(), waiting, selectedCurrentCourse.getCourseCode(), "Course " + selectedCurrentCourse.getCourseCode() + " has been successfully registered and you have been removed from the waitlist.");
 				}
 				// Update Course Database
 				updateCourseDB(selectedCurrentCourse);
@@ -385,6 +398,7 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public boolean swapIndex(int oldIndex, String matricNumber) {
+		// TODO: check if fail test cases 
 		// initialise swap fail
 		boolean canSwap = false;
 		// find the peer to change student's currentIndex to peer's newIndex     
