@@ -293,7 +293,9 @@ public class StaffManager extends Manager{
 			System.out.println("Please a valid day of the week! Please try again.");
 			sessionDay = sc.nextInt();
 		}
+		System.out.println("Entering Session Start Time: ");
 		sessionStart = inputTime(sessionDay, startHour, startMin, sessionStart, sc);
+		System.out.println("Entering Session End Time: ");
 		sessionEnd = inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
 		if (sessionEnd.compareTo(sessionStart) < 0) {
 			System.out.println("Invalid Session period! Please try again.\n");
