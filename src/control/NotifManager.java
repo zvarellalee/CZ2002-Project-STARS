@@ -24,7 +24,7 @@ public class NotifManager {
 	 * @param student Student to email
 	 * @param courseCode code of course that has been registered
 	 * @param messageBody Message to include in the body
-	 * @return
+	 * @return boolean
 	 */
 	public static boolean sendEmail(String email, Student student, String courseCode, String messageBody) {
 		final String sender_username = "username";
