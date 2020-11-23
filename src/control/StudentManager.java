@@ -196,8 +196,6 @@ public class StudentManager extends Manager {
 					droppedIndex.addStudentList(waiting);
 					droppedIndex.removeWaitList(waiting);
 	
-					// Update Course Database
-					updateCourseDB(droppedCourse);
 					// Update Student Database
 					updateStudentDB(waiting);
 					
@@ -205,6 +203,9 @@ public class StudentManager extends Manager {
 					// change first argument for testing
 					NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
 				}
+				// Update Course Database
+				updateCourseDB(droppedCourse);
+				
 				return;
 			}
 		}
