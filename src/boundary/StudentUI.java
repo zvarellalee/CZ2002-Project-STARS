@@ -65,6 +65,7 @@ public class StudentUI implements UserUI {
 				switch(choice) {
 					case 1:
 						// add course 
+						studentManager.printCourseList();
 						System.out.println("Enter the Course Code that you wish to add  (Enter Q to exit): ");
 						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
