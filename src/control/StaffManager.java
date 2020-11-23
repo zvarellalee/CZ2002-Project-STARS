@@ -1,16 +1,13 @@
 /**
- * 
- * @author 
+ * Manager for Staff
  * @version 1.0
- * @since
+ * @since 2020-11-19
  */
 
 package control;
 
 import java.util.*;
 
-import boundary.StaffUI;
-import database.Database;
 import entities.Course;
 import entities.Index;
 import entities.RegisteredCourse;
@@ -45,9 +42,18 @@ public class StaffManager extends Manager{
 		updateStudentDB(student);
 	}	
 
+	/**
+	 * @param student Student
+	 * @return Calendar Object with access start period
+	 */
 	public Calendar checkStudentAccessStart(Student student) {
 		return student.getAccessStart();
 	}
+	
+	/**
+	 * @param student Student
+	 * @return Calendar Object with access end period
+	 */
 	public Calendar checkStudentAccessEnd(Student student) {
 		return student.getAccessEnd();
 	}
@@ -236,6 +242,14 @@ public class StaffManager extends Manager{
 		System.out.println();
 	}
 	
+	/**
+	 * @param day Day
+	 * @param hour Hour
+	 * @param min Minute
+	 * @param calendar Calendar
+	 * @param sc Scanner
+	 * @return Calendar Object using input day and time
+	 */
 	private static Calendar inputTime(int day, int hour, int min, Calendar calendar, Scanner sc) {
 		try {			
 			while (true) {
@@ -267,6 +281,12 @@ public class StaffManager extends Manager{
 		return calendar;
 	}	
 	
+	/**
+	 * @param sessionType Session Type (Tutorial/Lab)
+	 * @param j Session number
+	 * @param sc Scanner
+	 * @return Session
+	 */
 	public static Session inputSession(String sessionType, int j, Scanner sc) {
 		String venue;
 		Calendar sessionStart = Calendar.getInstance(), sessionEnd = Calendar.getInstance();

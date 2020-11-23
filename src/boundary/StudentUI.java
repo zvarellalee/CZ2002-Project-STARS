@@ -33,15 +33,6 @@ public class StudentUI implements UserUI {
 		StudentUI.user = user;
 	}
 	
-//	// to test
-//	public static void main(String[] args) {
-//		Database.initialise();
-//		user = Database.studentList.get(0);
-//		StudentUI studentUI = new StudentUI();
-//		studentUI.setStudent(user);
-//		studentUI.showUI();
-//	}
-	
 	/**
 	 * Displays the Student User Interface
 	 */

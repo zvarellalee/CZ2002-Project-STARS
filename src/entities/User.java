@@ -3,7 +3,7 @@
  * relevant information stored in this class.
  * Each user can either be a staff or student user
  * where staff has administrative rights.
- * @author 
+ * @author Cheah Jing Feng
  * @version 1.0
  * @since 2020-11-20
  */
