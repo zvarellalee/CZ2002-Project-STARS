@@ -5,7 +5,6 @@
  */
 package control;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import entities.Course;
 import entities.Index;
@@ -66,8 +65,8 @@ public class Manager {
 	
 	/**
 	 * Finds the Index Object using the Index Number
-	 * @param Index Index Number
-	 * @return Index Object
+	 * @param index index number to search for
+	 * @return Index Found index
 	 */
 	public Index findIndex(int index) {
 		// Finds the Index object from index number
@@ -83,68 +82,8 @@ public class Manager {
 	}
 	
 	/**
-	 * Obtain an array list containing all indexes from a particular course
-	 * @param Course Object
-	 * @return courseIndexes ArrayList<Index> 
-	 */
-	private ArrayList<Index> getAllIndexesFromCourse(Course course) {
-		ArrayList<Index> courseIndexes = new ArrayList<Index>();
-		for (Index id: course.getIndexList()) {
-			courseIndexes.add(id);
-		}
-		return courseIndexes;
-	}
-	
-	/**
-	 * Check the number of vacancies for a particular course
-	 * @param courseCode Course Code
-	 * @return boolean courseExists
-	 */
-	public boolean checkVacancies(String courseCode) {
-		// initialise course does not exist
-		boolean courseExists = false;
-		// find the course that student wants to check
-		Course selectedCurrentCourse = findCourse(courseCode);
-		
-		// if course code is found in database
-		if (selectedCurrentCourse != null) {
-			courseExists = true;
-			// get all indexes from course
-			ArrayList<Index> courseIndexes = getAllIndexesFromCourse(selectedCurrentCourse);
-			
-			System.out.println("\nCourse Code: " + selectedCurrentCourse.getCourseCode());
-			System.out.println("Course Name: " + selectedCurrentCourse.getCourseName());
-
-			// print all the indexes and their respective vacancies and waitLists
-			System.out.println("================================================================");
-			System.out.println("Index\t\tVacancy\t\tWaitlist");
-			System.out.println("================================================================");
-			for (Index index: courseIndexes) {
-				System.out.println(index.getIndexNumber() + "\t\t" + index.getVacancies() + "\t\t" + index.getWaitListSize());
-			}
-			System.out.println("");
-		}
-		return courseExists;
-	}
-	
-	/**
-	 * Checks whether the index exists
-	 * @param index Index Number
-	 * @return boolean
-	 */
-	public boolean indexExists(int index) {
-		for (Course c : courseMap.values()) {
-			for (Index i : c.getIndexList())
-				if (i.getIndexNumber() == index) {
-					return true;
-				}
-		}
-		return false;
-	}
-	
-	/**
 	 * Updates a student in studentMap and writes to file
-	 * @param Student student
+	 * @param student Student to update in the database
 	 */
 	public static void updateStudentDB(Student student) {
 		studentMap.put(student.getMatricNumber(), student);
@@ -153,7 +92,7 @@ public class Manager {
 	
 	/**
 	 * Updates a course in courseMap and writes to file
-	 * @param Course course
+	 * @param course Course to update in the database
 	 */
 	public static void updateCourseDB(Course course) {
 		courseMap.put(course.getCourseCode(), course);
@@ -162,7 +101,7 @@ public class Manager {
 	
 	/**
 	 * Updates a staff in staffMap and writes to file
-	 * @param Staff staff
+	 * @param staff Staff to update in the database
 	 */
 	public static void updateStaffDB(Staff staff) {
 		staffMap.put(staff.getStaffID(), staff);
