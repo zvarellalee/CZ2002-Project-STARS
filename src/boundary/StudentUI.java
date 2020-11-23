@@ -53,11 +53,10 @@ public class StudentUI implements UserUI {
 				System.out.println("(1) Add Course");
 				System.out.println("(2) Drop Course");
 				System.out.println("(3) Check/Print Courses Registered ");
-				System.out.println("(4) Check Vacancies Available");
-				System.out.println("(5) View Available Courses");				
-				System.out.println("(6) Change Index Number of Course");
-				System.out.println("(7) Swap Index Number with Another Student");
-				System.out.println("(8) Exit");
+				System.out.println("(4) Check Vacancies Available");		
+				System.out.println("(5) Change Index Number of Course");
+				System.out.println("(6) Swap Index Number with Another Student");
+				System.out.println("(7) Exit");
 				System.out.println("-----------------------------------------");
 				System.out.print("Enter your choice: ");
 				
@@ -67,7 +66,7 @@ public class StudentUI implements UserUI {
 					case 1:
 						// add course 
 						System.out.println("Enter the Course Code that you wish to add  (Enter Q to exit): ");
-						courseCode = sc.next();
+						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
 							studentManager.addCourse(courseCode);
 						break;
@@ -75,7 +74,7 @@ public class StudentUI implements UserUI {
 						// drop course 
 						studentManager.printRegistered(user);
 						System.out.println("Enter the Course Code that you wish to drop (Enter Q to exit): ");
-						courseCode = sc.next();
+						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
 							studentManager.dropCourse(courseCode);
 						break;
@@ -90,7 +89,7 @@ public class StudentUI implements UserUI {
 						// loop user to re-enter courseCode if course does not exist
 						do {
 							System.out.print("Enter the Course Code that you wish to check (Enter Q to exit): ");
-							courseCode = sc.next();
+							courseCode = sc.next().toUpperCase();
 							if (courseCode.toUpperCase().equals("Q")) {
 								System.out.println("\nReturning back to main menu...");
 								System.out.println("");
@@ -100,9 +99,6 @@ public class StudentUI implements UserUI {
 						} while(!courseExists);
 						break;
 					case 5:
-						studentManager.printCourseList();
-						break;
-					case 6:
 						// change index number
 						// initialise index number does not exist
 						boolean indexExists = false;
@@ -121,7 +117,7 @@ public class StudentUI implements UserUI {
 							indexExists = studentManager.changeIndex(currentIndex);
 						} while (!indexExists);
 						break;
-					case 7:
+					case 6:
 						// TODO
 						boolean canSwap = false;
 						// let student input old index to change index
@@ -137,7 +133,7 @@ public class StudentUI implements UserUI {
 								break;	
 							}
 							System.out.print("Enter your peer's matric number whose Index you want to swap with (Enter Q to exit): ");
-							String matricNumber = sc.next();
+							String matricNumber = sc.next().toUpperCase();
 							if (matricNumber == "Q") {
 								System.out.println("\nReturning back to main menu...");
 								System.out.println("");
@@ -146,7 +142,7 @@ public class StudentUI implements UserUI {
 							canSwap = studentManager.swapIndex(oldIndex, matricNumber);
 						} while (!canSwap);
 						break;
-					case 8:
+					case 7:
 						// exit
 						run = false;
 						break;
