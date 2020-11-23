@@ -26,6 +26,7 @@ public class StaffManager extends Manager{
 	 * @param user Staff
 	 */
 	public StaffManager(Staff user) {
+		super();
 		this.user = user;
 		// Database.initialise(); // To test out the UI
 	}
@@ -108,10 +109,11 @@ public class StaffManager extends Manager{
 	 * Prints out the List of Students with their Matriculation Number and Full Name
 	 */
 	private void printStudentList() {
+		System.out.println("================================================================");
 		System.out.printf("%-20s%-20s\n", "Matriculation Number", "Full Name");
-		System.out.println("---------------------------------------------------");
+		System.out.println("================================================================");
 		for (Student student : getStudentDB().values()){
-			System.out.printf("%-20s%-20s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());	
+			System.out.printf("%-20s%-20s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
 		}
 	}
 	
@@ -197,7 +199,10 @@ public class StaffManager extends Manager{
 			return;
 	
 		System.out.println("Course Code: " + courseCode);
+		System.out.println("================================================================");
 		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
+		System.out.println("================================================================");
+		
 		
 		ArrayList<Index> courseIndex = course.getIndexList();
 		
@@ -218,9 +223,10 @@ public class StaffManager extends Manager{
 		Index index = findIndex(indexNumber);
 		if (index == null)
 			return;
-		
 		System.out.println("Index Number: " + indexNumber);
+		System.out.println("================================================================");
 		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
+		System.out.println("================================================================");
 		
 		for (Student student : index.getStudentList()) {
 			System.out.printf("%-20s%-20s%-20s\n", student.getFirstName() + " " + student.getLastName(), student.getGender(), student.getNationality());
