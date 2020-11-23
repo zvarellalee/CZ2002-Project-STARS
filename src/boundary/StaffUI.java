@@ -178,6 +178,11 @@ public class StaffUI implements UserUI {
 							if (selection == 1) {
 								System.out.print("\nEnter Course Code to add: ");
 								String courseCode = sc.next();
+								// Error Handling
+								if (StaffManager.courseExists(courseCode)) {
+									System.out.println("Course already exist! Please add a new course.\n");
+									continue;
+								}
 								String clear = sc.nextLine();
 								System.out.print("\nEnter Course Name to add: ");
 								String courseName = sc.nextLine();
@@ -187,9 +192,18 @@ public class StaffUI implements UserUI {
 								int au = sc.nextInt();
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
+								System.out.println("Course " + courseCode + " successfully added!");
 								Course newCourse = staffManager.findCourse(courseCode);
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
+								// Error Handling
+								if (numIndex == 0)
+									continue;
+								else if (numIndex < 0) {
+									System.out.println("Please provide a valid input!\n");
+									continue;
+								}
+								// Adding of Indexes
 								for (int i = 0; i < numIndex; i++) {
 									System.out.println("Adding Index (" + (i+1) + "/" + numIndex + ")");
 									System.out.print("\nEnter Index Number: ");
@@ -256,7 +270,7 @@ public class StaffUI implements UserUI {
 								if (iSelection == 1) {
 									System.out.print("Enter Index to add: ");
 									int index = sc.nextInt();
-									if (staffManager.indexExists(index)) {
+									if (StaffManager.indexExists(index)) {
 										System.out.println("Index already exist! Please add a new Index Number");
 										continue;
 									}
@@ -294,7 +308,7 @@ public class StaffUI implements UserUI {
 					case 5:
 						staffManager.printCourseList();
 						break;
-					case 6:						
+					case 6:	
 						// Check vacancies for index number
 						System.out.print("Enter index to check vacancy: ");
 						int index = sc.nextInt();
@@ -328,7 +342,7 @@ public class StaffUI implements UserUI {
 							System.out.println("End Time: " + sdf.format(s.getSessionEnd().getTime()));
 						}
 						break;
-					case 10:
+					case 0:
 						// Exits
 						run = false;
 						break;
