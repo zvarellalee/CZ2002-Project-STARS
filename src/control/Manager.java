@@ -58,7 +58,7 @@ public class Manager {
 	 * @return Course Object
 	 */
 	public Course findCourse(String courseCode) {
-		if (courseExists(courseCode)) 
+		if (courseExists(courseCode.toUpperCase())) 
 			return courseMap.get(courseCode);
 		System.out.println("\nInvalid Course Code! Please try again.");
 		System.out.println("");
