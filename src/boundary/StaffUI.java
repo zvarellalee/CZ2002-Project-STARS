@@ -80,7 +80,7 @@ public class StaffUI implements UserUI {
 						boolean found = false;
 						
 						System.out.print("Enter Student's Matric Number to edit access period: ");
-						matric = sc.next();
+						matric = sc.next().toUpperCase();
 						// Find the student object using matriculation number
 						if (Manager.getStudentDB().containsKey(matric)) {
 							student = Manager.getStudentDB().get(matric);
@@ -121,7 +121,7 @@ public class StaffUI implements UserUI {
 						Student student2 = null;
 						
 						System.out.print("Enter Student's Matric Number to check access period: ");
-						String matric2 = sc.next();
+						String matric2 = sc.next().toUpperCase();
 						// Find the student object using matriculation number
 						if (Manager.getStudentDB().containsKey(matric2)) {
 							student2 = Manager.getStudentDB().get(matric2);
@@ -155,7 +155,7 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter New Student's Email: ");
 						String email = sc.next();
 						System.out.print("Enter New Student's Matriculation Number: ");
-						String matricNumber = sc.next();
+						String matricNumber = sc.next().toUpperCase();
 						System.out.print("Enter New Student's Gender: ");
 						String gender = sc.next();
 						System.out.print("Enter New Student's Nationality: ");
@@ -177,7 +177,7 @@ public class StaffUI implements UserUI {
 							
 							if (selection == 1) {
 								System.out.print("\nEnter Course Code to add: ");
-								String courseCode = sc.next();
+								String courseCode = sc.next().toUpperCase();
 								// Error Handling
 								if (StaffManager.courseExists(courseCode)) {
 									System.out.println("Course already exist! Please add a new course.\n");
@@ -243,7 +243,7 @@ public class StaffUI implements UserUI {
 							else if (selection == 2) {
 								// Update Course Code
 								System.out.print("Enter Course Code to update: ");
-								String courseCode = sc.next();
+								String courseCode = sc.next().toUpperCase();
 								String clear = sc.nextLine();
 								Course course = staffManager.findCourse(courseCode);
 								// Error Handling
@@ -329,7 +329,7 @@ public class StaffUI implements UserUI {
 					case 8:
 						// Print student list by course code
 						System.out.print("Enter Course Code: ");
-						String courseCode = sc.next();
+						String courseCode = sc.next().toUpperCase();
 						staffManager.printStudentList(courseCode);
 						break;
 					// To check session list
