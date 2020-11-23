@@ -59,8 +59,8 @@ public class LoginManager{
 	
 	/**
 	 * Check if the user has entered the correct username/password
-	 * @param String username
-	 * @param String password
+	 * @param username Username of user
+	 * @param password Password of user
 	 * @return boolean
 	 */
 	public boolean authenticate(String username, String password) {
@@ -108,18 +108,17 @@ public class LoginManager{
 	
 	/**
 	 * Generate a new salt for a given password
-	 * @param String password
-	 * @return String salt
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException 
+	 ****************************************************************************************
+	 *    Title: Java SHA-512 Hash With Salt Example
+	 *    Author: Ramesh Fadatare
+	 *    Availability: https://www.javaguides.net/2020/02/java-sha-512-hash-with-salt-example.html
+	 *
+	 ***************************************************************************************
+	 * @param password User's unhashed password
+	 * @return salt Generated salt
+	 * @throws NoSuchAlgorithmException Specified Hashing Algorithm not found
+	 * @throws UnsupportedEncodingException Byte encoding not supported
 	 */
-	
-	/***************************************************************************************
-	*    Title: Java SHA-512 Hash With Salt Example
-	*    Author: Ramesh Fadatare
-	*    Availability: https://www.javaguides.net/2020/02/java-sha-512-hash-with-salt-example.html
-	*
-	***************************************************************************************/
 	public static String generateSalt(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
 		byte[] salt = new byte[16];
@@ -130,18 +129,18 @@ public class LoginManager{
 	
 	/**
 	 * generate the hashed password from a given salt
-	 * @param String passwordToHash
-	 * @param String salt
-	 * @return String password
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException 
-	 */
-	/***************************************************************************************
-	*    Title: Java SHA-512 Hash With Salt Example
-	*    Author: Ramesh Fadatare
-	*    Availability: https://www.javaguides.net/2020/02/java-sha-512-hash-with-salt-example.html
-	*
-	***************************************************************************************/
+	 * ***************************************************************************************
+	 *    Title: Java SHA-512 Hash With Salt Example
+	 *    Author: Ramesh Fadatare
+	 *    Availability: https://www.javaguides.net/2020/02/java-sha-512-hash-with-salt-example.html
+	 *
+	 ***************************************************************************************
+	 * @param passwordToHash Password to be hashed
+	 * @param salt Specified user's salt
+	 * @return password Hashed Password
+	 * @throws NoSuchAlgorithmException Specified Hashing Algorithm not found
+	 * @throws UnsupportedEncodingException Byte encoding not supported
+	*/
 	public static String getHashedPassword(String passwordToHash, String salt) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		String password = null; 
 		MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
@@ -160,8 +159,8 @@ public class LoginManager{
 	
 	/**
 	 * Check if the student access period contains the current date
-	 * @param Student stud
-	 * @return boolean
+	 * @param stud Student
+	 * @return boolean 
 	 */
 	private static boolean checkAccessPeriod(Student stud) {
 		// Check current time
