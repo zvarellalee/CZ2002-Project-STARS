@@ -31,6 +31,15 @@ public class LoginManager{
 	}
 	
 	/**
+	 * Refresh the user array if new users are added in the same application session
+	 */
+	private void refresh() {
+		users.clear();
+		users.addAll((Collection<User>)FileManager.read("student.dat").values());
+		users.addAll((Collection<User>) FileManager.read("staff.dat").values());
+	}
+	
+	/**
 	 * Method to start the respective staff or student UI for a particular user
 	 * @param User user
 	 */
@@ -55,9 +64,10 @@ public class LoginManager{
 	 * @return boolean
 	 */
 	public boolean authenticate(String username, String password) {
+		refresh();
 		User currUser = null;
 		for (User user: users) {
-			if (user.getUsername().contentEquals(username)) { // find the correct user given the username
+			if (user.getUsername().toLowerCase().contentEquals(username.toLowerCase())) { // find the correct user given the username
 				currUser = user;
 			}
 		}
