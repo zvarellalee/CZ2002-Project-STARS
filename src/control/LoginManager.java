@@ -168,7 +168,8 @@ public class LoginManager{
 
 		// Check if accessed time is before access period
 		if (currentTime.compareTo(stud.getAccessStart()) < 0) {
-			System.out.println("You are not allowed to access yet! Access Period is " + stud.getAccessStart().getTime());
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY, h:mma");
+			System.out.println("You are not allowed to access yet! Access Period is " + sdf.format(stud.getAccessStart().getTime()));
 			return false;
 		// Check if accessed time is after access period
 		} else if (currentTime.compareTo(stud.getAccessEnd()) > 0) {
