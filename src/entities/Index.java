@@ -186,22 +186,5 @@ public class Index implements Serializable {
 		if (sessionList.contains(session))
 			sessionList.remove(session);
 	} 
-	
-	/**
-	 * Adds a Session to the array list of Sessions in the Course
-	 * @param Session Object
-	 */
-	public void addSession(Session session) {
-		sessionList.add(session);
-	}
-	
-	/**
-	 * Removes an Session from the array list of Sessions in the Course
-	 * @param Session Object
-	 */
-	public void removeSession(Session session) {
-		if (sessionList.contains(session)) {
-			sessionList.remove(session);
-		}
-	}
+
 }
