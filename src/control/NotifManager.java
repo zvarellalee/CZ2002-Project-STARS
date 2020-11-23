@@ -1,3 +1,8 @@
+/**
+ * Notification Manager for handling of emails
+ * @version 1.0
+ * @since 2020-11-20
+ */
 package control;
 
 import java.util.Properties;
@@ -13,8 +18,15 @@ import javax.mail.internet.MimeMessage;
 import entities.Student;
 
 public class NotifManager {
-		
-	public static boolean sendEmail(String email, Student student, String courseCode) {
+	/**
+	 * Sends an email to the specified email regarding successful course registration
+	 * @param email Student's email
+	 * @param student Student to email
+	 * @param courseCode code of course that has been registered
+	 * @param messageBody Message to include in the body
+	 * @return
+	 */
+	public static boolean sendEmail(String email, Student student, String courseCode, String messageBody) {
 		final String sender_username = "username";
 		final String sender_password = "password";
 		
@@ -37,7 +49,7 @@ public class NotifManager {
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Course " + courseCode + " Registered");
-			message.setText("Hello " + student.getFirstName() + ", Course " + courseCode + " has been successfully registered and you have been removed from the wait list.");
+			message.setText("Hello " + student.getFirstName() + "! " + messageBody);
 			
 			Transport.send(message);
 			
