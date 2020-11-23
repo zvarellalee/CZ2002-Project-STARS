@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /* Each course refers to a particular module from a particular school.*/
 
 
-public class Course implements Serializable{
+public class Course implements Serializable {
 	/**
 	 * Stores the Course Code of the Course 
 	 * Each Course is identified using the courseCode
@@ -158,8 +158,11 @@ public class Course implements Serializable{
 	 * Print the index list of a course
 	 */
 	public void printIndexList() {
-		System.out.println(courseCode + " " + courseName + " Indexes:");
-		System.out.println("-----------------------------------------");
+		System.out.println("Course Code: " + courseCode);
+		System.out.println("Course Name: " + courseName);
+		System.out.println("================================================================");
+		System.out.println("Indexes");
+		System.out.println("================================================================");
 		for (Index i: indexList) {
 			System.out.println(i.getIndexNumber());
 		}
