@@ -169,6 +169,7 @@ public class StudentManager extends Manager {
 				// Update Student Database
 				updateStudentDB(user);
 				System.out.println("Course Code " + courseCode + " successfully dropped.");
+				printRegistered(user);
 				
 				// Increase vacancy by 1 if wait list is empty
 				if (course.getIndex().getWaitList().isEmpty()) {
