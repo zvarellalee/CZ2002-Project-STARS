@@ -192,13 +192,15 @@ public class StaffUI implements UserUI {
 								int au = sc.nextInt();
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
-								System.out.println("Course " + courseCode + " successfully added!");
+								System.out.println("\nCourse " + courseCode + " successfully added!");
 								Course newCourse = staffManager.findCourse(courseCode);
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
 								// Error Handling
-								if (numIndex == 0)
+								if (numIndex == 0) {
+									System.out.println("Course " + courseCode + " will have 0 indexes.");
 									continue;
+								}
 								else if (numIndex < 0) {
 									System.out.println("Please provide a valid input!\n");
 									continue;
