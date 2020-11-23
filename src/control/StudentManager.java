@@ -59,11 +59,11 @@ public class StudentManager extends Manager {
 		boolean userinput = true;
 		boolean onWaitList = false;
 		Index index = null;
+		Scanner sc = new Scanner(System.in);
 		
 		while(userinput) {
 			int choice = -1;
 			System.out.print("\nEnter an Index to enroll in: ");
-			Scanner sc = new Scanner(System.in);
 			try {
 				choice = sc.nextInt();
 			}
@@ -99,8 +99,35 @@ public class StudentManager extends Manager {
 						System.out.println("Maximum AU exceeded! Course " + courseCode + " not registered.");
 						System.out.println("Returning back to main menu...");
 						System.out.println("");
-				return;
+						return;
 					}
+					
+					// confirm whether want to add course
+					printSessions(index);
+					System.out.println("\nConfirm to add course? (Y/N)");
+					String confirm;
+					try {
+						confirm = sc.next().toUpperCase();
+					}
+					catch (Exception InputMismatchException) {  // Error handling
+						System.out.println("Invalid Input!");
+						System.out.println("Returning back to main menu...");
+						sc.next();
+						return;
+					}
+					if (confirm.equals("N")) {
+						System.out.println("Course " + courseCode + " not added.");
+						System.out.println("Returning back to main menu...");
+						return;
+					}
+						
+					else if (!confirm.equals("Y")) {
+						System.out.println("Please confirm by entering Y/N.");
+						System.out.println("Course " + courseCode + " not added.");
+						System.out.println("Returning back to main menu...");
+						return;
+					}
+					
 					// set new AU of student (even if need to be on waitlist)
 					user.setNumAU(newAU);
 					
@@ -117,7 +144,6 @@ public class StudentManager extends Manager {
 						System.out.println("");
 						// Enqueue student in the wait list of the index
 						index.addWaitList(user);
-						System.out.println(index.getWaitListSize());
 						onWaitList = true;
 						userinput = false;
 						break;
@@ -130,7 +156,7 @@ public class StudentManager extends Manager {
 				System.out.println("");
 			}
 		}
-		
+			
 		// Enroll student in the index
 		ArrayList<RegisteredCourse> newCourseList = user.getCourseList();
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
@@ -140,7 +166,6 @@ public class StudentManager extends Manager {
 			index.addStudentList(user);
 			System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + " (" +course.getCourseCode() + ")" + " successfully added!\n");
 		}
-		System.out.println("Size of waitlist" +index.getWaitListSize());
 		updateCourseDB(course);
 		// Update Student Database
 		updateStudentDB(user);
@@ -151,6 +176,7 @@ public class StudentManager extends Manager {
 	 * Drops a Course with specified Index from Student's list of Registered Courses
 	 * @param courseCode Course Code
 	 */
+	@SuppressWarnings("resource")
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
@@ -158,53 +184,82 @@ public class StudentManager extends Manager {
 		if (droppedCourse == null) return; // return if droppedCourse is not found
 		
 		for (RegisteredCourse course : courses) {
-			if (course.getCourse().getCourseCode().equals(courseCode)) {
-				Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
-				// Remove Student from the studentList in Index
-				droppedIndex.removeStudentList(user);
-				// Update Student's number of AUs
-				user.setNumAU(user.getNumAU() - droppedCourse.getAU());
-				// Remove course from student's list of registered courses
-				courses.remove(course); 
-				
-				// Update Course Database
-				updateCourseDB(droppedCourse);
-				// Update Student Database
-				updateStudentDB(user);
-				
-				System.out.println("Course Code " + courseCode + " successfully dropped.\n");
-				printRegistered(user);
-			
-				// Increase vacancy by 1 if wait list is empty
-				if (droppedIndex.getWaitList().isEmpty()) {
-					droppedIndex.setVacancies(droppedIndex.getVacancies() + 1);
-				}
-				else {
-					// Add course for first student in the wait list
-					Student waiting = droppedIndex.getWaitList().get(0);
-					ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
-					RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, droppedIndex, waiting);
-					for (RegisteredCourse old : newCourseList) {
-						if (old.getIndex().getIndexNumber() == droppedIndex.getIndexNumber()) {
-							newCourseList.remove(old);
-							newCourseList.add(newCourse);
-							break;
-						}
-					}
-					waiting.setCourseList(newCourseList);
-					droppedIndex.addStudentList(waiting);
-					droppedIndex.removeWaitList(waiting);
-
-					// Update Student Database
-					updateStudentDB(waiting);
+			if (!course.getOnWaitlist()) {
+				if (course.getCourse().getCourseCode().equals(courseCode)) {
+					Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
+					// Remove Student from the studentList in Index
+					droppedIndex.removeStudentList(user);
+					// Update Student's number of AUs
+					user.setNumAU(user.getNumAU() - droppedCourse.getAU());
+					// Remove course from student's list of registered courses
+					courses.remove(course); 
 					
-					// Notify enrolled student
-					// change first argument for testing
-					NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
+					// Update Course Database
+					updateCourseDB(droppedCourse);
+					// Update Student Database
+					updateStudentDB(user);
+					
+					// confirm whether want to drop course
+					printSessions(droppedIndex);
+					System.out.println("\nConfirm to drop course? (Y/N)");
+					Scanner sc = new Scanner(System.in);
+					String confirm;
+					try {
+						confirm = sc.next().toUpperCase();
+					}
+					catch (Exception InputMismatchException) {  // Error handling
+						System.out.println("Invalid Input!");
+						System.out.println("Returning back to main menu...");
+						sc.next();
+						return;
+					}
+					if (confirm.equals("N")) {
+						System.out.println("Course " + courseCode + " not dropped.");
+						System.out.println("Returning back to main menu...");
+						return;
+					}
+						
+					else if (!confirm.equals("Y")) {
+						System.out.println("Please confirm by entering Y/N.");
+						System.out.println("Course " + courseCode + " not dropped.");
+						System.out.println("Returning back to main menu...");
+						return;
+					}
+					
+					System.out.println("Course Code " + courseCode + " successfully dropped.\n");
+					printRegistered(user);
+				
+					// Increase vacancy by 1 if wait list is empty
+					if (droppedIndex.getWaitList().isEmpty()) {
+						droppedIndex.setVacancies(droppedIndex.getVacancies() + 1);
+					}
+					else {
+						// Add course for first student in the wait list
+						Student waiting = droppedIndex.getWaitList().get(0);
+						ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
+						RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, droppedIndex, waiting);
+						for (RegisteredCourse old : newCourseList) {
+							if (old.getIndex().getIndexNumber() == droppedIndex.getIndexNumber()) {
+								newCourseList.remove(old);
+								newCourseList.add(newCourse);
+								break;
+							}
+						}
+						waiting.setCourseList(newCourseList);
+						droppedIndex.addStudentList(waiting);
+						droppedIndex.removeWaitList(waiting);
+	
+						// Update Student Database
+						updateStudentDB(waiting);
+						
+						// Notify enrolled student
+						// change first argument for testing
+						NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
+					}
+					// Update Course Database
+					updateCourseDB(droppedCourse);
+					return;
 				}
-				// Update Course Database
-				updateCourseDB(droppedCourse);
-				return;
 			}
 		}
 		// Exits if course code is not registered
@@ -274,9 +329,12 @@ public class StudentManager extends Manager {
 		// check if current index exists in student's list of registered courses
 		boolean courseRegistered = false;
 		for (RegisteredCourse registered : courses) {
-			if (currentIndex == registered.getIndex().getIndexNumber()) {
-				courseRegistered = true;
-				break;
+			// check if current index is on the wait list
+			if (!registered.getOnWaitlist()) {
+				if (currentIndex == registered.getIndex().getIndexNumber()) {
+					courseRegistered = true;
+					break;
+				}
 			}
 		}
 		if (!courseRegistered) {
@@ -286,6 +344,7 @@ public class StudentManager extends Manager {
 			System.out.println("");
 		}
 		
+		Scanner sc = new Scanner(System.in);
 		// if index already registered by student
 		if (selectedCurrentCourse != null) {
 			int newIndex = 0;
@@ -297,9 +356,8 @@ public class StudentManager extends Manager {
 			
 				// let student input new index to change to
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
-				Scanner sc = new Scanner(System.in);
 				try {
-				newIndex = sc.nextInt();
+					newIndex = sc.nextInt();
 				}
 				catch (Exception InputMismatchException) {  // Error handling
 					System.out.println("Invalid Input! Please try again.");
@@ -354,6 +412,33 @@ public class StudentManager extends Manager {
 			} while (!indexExists);
 			
 			if (indexExists) {
+				// confirm whether want to change index
+				System.out.println("\nCurrent Index: ");
+				printSessions(selectedCurrentIndex);
+				System.out.println("\nNew Index: ");
+				printSessions(selectedNewIndex);
+				System.out.println("\nConfirm to change Index? (Y/N)");
+				String confirm;
+				try {
+					confirm = sc.next().toUpperCase();
+				}
+				catch (Exception InputMismatchException) {  // Error handling
+					System.out.println("Invalid Input! Pleaes try again.");
+					sc.next();
+					return false;
+				}
+				if (confirm.equals("N")) {
+					System.out.println("Index " + currentIndex + " not swapped with peer's new Index "+ newIndex);
+					System.out.println("Please try again.");
+					return false;
+				}
+					
+				else if (!confirm.equals("Y")) {
+					System.out.println("Please confirm by entering Y/N.");
+					System.out.println("Index " + currentIndex + " not swapped with peer's new Index "+ newIndex);
+					System.out.println("Please try again.");
+					return false;
+				}
 				// enroll student to newIndex
 				// decrease vacancy of newIndex by 1
 				selectedNewIndex.setVacancies(selectedNewIndex.getVacancies()-1);
@@ -465,9 +550,12 @@ public class StudentManager extends Manager {
 		// check if current index exists in student's list of registered courses
 		boolean courseRegistered = false;
 		for (RegisteredCourse registered : userRegCourses) {
-			if (oldIndex == registered.getIndex().getIndexNumber()) {
-				courseRegistered = true;
-				break;
+			// check if current index is on the wait list
+			if (!registered.getOnWaitlist()) {
+				if (oldIndex == registered.getIndex().getIndexNumber()) {
+					courseRegistered = true;
+					break;
+				}
 			}
 		}
 		if (!courseRegistered) {
@@ -477,6 +565,7 @@ public class StudentManager extends Manager {
 			System.out.println("");
 		}
 		
+		Scanner sc = new Scanner(System.in);
 		// if index already registered by user
 		if (userCourse != null) {
 			int newIndex = 0;
@@ -485,7 +574,7 @@ public class StudentManager extends Manager {
 			do {
 				// let user input new index to change to
 				System.out.print("Enter the new Index you want to change to (Enter 0 to go back): ");
-				Scanner sc = new Scanner(System.in);
+				
 				try {
 					newIndex = sc.nextInt();
 				} 
@@ -503,10 +592,12 @@ public class StudentManager extends Manager {
 				// check if peerIndex is in peer's list of registered courses
 				boolean peerCourseExists = false;
 				for (RegisteredCourse registered : peerRegCourses) {
-					// selected index exists in peer's registered courses
-					if (newIndex == registered.getIndex().getIndexNumber()) {
-						peerCourseExists = true;
-						break;
+					// check if selected index is on peer's waitlist
+					if (!registered.getOnWaitlist()) {
+						if (newIndex == registered.getIndex().getIndexNumber()) {
+							peerCourseExists = true;
+							break;
+						}
 					}
 				}
 				
@@ -562,6 +653,34 @@ public class StudentManager extends Manager {
 			} while (!canSwap);
 			
 			if (canSwap) {
+				// confirm whether want to swap
+				System.out.println("\nCurrent Index: ");
+				printSessions(userIndex);
+				System.out.println("\nNew Index: ");
+				printSessions(peerIndex);
+				System.out.println("\nConfirm to swap Index with peer? (Y/N)");
+				String confirm;
+				try {
+					confirm = sc.next().toUpperCase();
+				}
+				catch (Exception InputMismatchException) {  // Error handling
+					System.out.println("Invalid Input! Pleaes try again.");
+					sc.next();
+					return false;
+				}
+				if (confirm.equals("N")) {
+					System.out.println("Index " + oldIndex + " not swapped with peer's new Index "+ newIndex);
+					System.out.println("Please try again.");
+					return false;
+				}
+					
+				else if (!confirm.equals("Y")) {
+					System.out.println("Please confirm by entering Y/N.");
+					System.out.println("Index " + oldIndex + " not swapped with peer's new Index "+ newIndex);
+					System.out.println("Please try again.");
+					return false;
+				}
+				
 				// enroll user to peerIndex
 				// add user to studentList in peerIndex
 				peerIndex.addStudentList(user);
