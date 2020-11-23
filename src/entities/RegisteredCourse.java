@@ -9,7 +9,7 @@ package entities;
 
 import java.io.Serializable;
 
-public class RegisteredCourse implements Serializable {
+public class RegisteredCourse implements Serializable{
 	/**
 	 * Stores the boolean value of whether
 	 * this course is currently on the wait list.
@@ -30,7 +30,7 @@ public class RegisteredCourse implements Serializable {
 	
 	/**
 	 * Initializing the Registered Course
-	 * @param onWaitList Whether the registered course is on wait list
+	 * @param onWaitlist Whether the registered course is on wait list
 	 * @param course Course
 	 * @param index Index
 	 * @param student Student
@@ -46,7 +46,7 @@ public class RegisteredCourse implements Serializable {
 	
 	//get methods
 	/**
-	 * Gets the boolean value of whether the registered index is in the wait list
+	 * Gets the boolean value of whether the registered index is on the wait list
 	 * @return onWaitList 
 	 */
 	public boolean getOnWaitlist() {
@@ -80,10 +80,10 @@ public class RegisteredCourse implements Serializable {
 	
 	//set methods
 	/**
-	 * Sets the boolean value of whether the registered index is in the wait list
-	 * @param onWaitlist
+	 * Sets the boolean value of whether the registered index is on the wait list
+	 * @param onWaitlist Whether the registered index is on the wait list
 	 */
-	public void setOnWaitlist(boolean onWaitlist ) {
+	public void setOnWaitlist(boolean onWaitlist) {
 		this.onWaitlist = onWaitlist;
 	}
 	
