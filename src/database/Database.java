@@ -1,10 +1,7 @@
 package database;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Scanner;
-
 import control.FileManager;
 import entities.Course;
 import entities.Index;
@@ -198,7 +195,7 @@ public class Database {
 		c1.addIndex(i2);
 		c1.addIndex(i3);
 		c2.addIndex(i4);
-		c2.addindex(i11);
+		c2.addIndex(i11);
 		c3.addIndex(i5);
 		c4.addIndex(i6);
 		c5.addIndex(i7);
@@ -230,6 +227,5 @@ public class Database {
 		calendar.set(Calendar.MINUTE, min);
 		calendar.set(Calendar.SECOND, 0);
 		return calendar;
-		
 	}	
 }
