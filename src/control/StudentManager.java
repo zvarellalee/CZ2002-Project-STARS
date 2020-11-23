@@ -42,15 +42,16 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public void addCourse(String courseCode) {
-		Course course = findCourse(courseCode);
 		
 		// Shows indexes in course and their vacancies
 		boolean courseExists = checkVacancies(courseCode);
 		// Exits if courseCode is not found
 		if (!courseExists) {
-			System.out.println("No course found! Returning back to main menu...");
+			System.out.println("Returning back to main menu...");
 			return;
 		}
+		
+		Course course = findCourse(courseCode);
 		
 		// Student inputs index
 		boolean userinput = true;
