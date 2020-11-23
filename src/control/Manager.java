@@ -117,7 +117,7 @@ public class Manager {
 		// initialise course does not exist
 		boolean courseExists = false;
 		// find the course that student wants to check
-		Course selectedCurrentCourse = findCourse(courseCode);
+		Course selectedCurrentCourse = findCourse(courseCode.toUpperCase());
 		
 		// if course code is found in database
 		if (selectedCurrentCourse != null) {
