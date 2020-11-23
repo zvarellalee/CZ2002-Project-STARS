@@ -41,7 +41,7 @@ public class Staff extends User {
 	
 	/**
 	 * Sets the Staff Identifier
-	 * @param staffID
+	 * @param staffID New Staff ID
 	 */
 	public void setStaffID(String staffID) {
 		this.staffID = staffID;
