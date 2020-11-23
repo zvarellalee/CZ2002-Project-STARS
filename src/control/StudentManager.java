@@ -145,35 +145,30 @@ public class StudentManager extends Manager {
 		printRegistered(user);
 	}
 	
-	/**
-	 * Drops a Course with specified Index from Student's list of Registered Courses
-	 * @param courseCode Course Code
-	 */
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
 		for (RegisteredCourse course : courses) {
 			if (course.getCourse().getCourseCode().equals(courseCode)) {
+				Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
 				// Remove Student from the studentList in Index
-				ArrayList<Student> updated = course.getIndex().getStudentList();
-				updated.remove(user);
-				course.getIndex().setStudentList(updated);
+				droppedIndex.removeStudentList(user);
 				// Update Student's number of AUs
 				user.setNumAU(user.getNumAU() - droppedCourse.getAU());
 				// Remove course from student's list of registered courses
 				courses.remove(course); 
-		
 				
 				// Update Course Database
 				updateCourseDB(droppedCourse);
 				// Update Student Database
 				updateStudentDB(user);
+				
 				System.out.println("Course Code " + courseCode + " successfully dropped.");
 				printRegistered(user);
 				
 				// Increase vacancy by 1 if wait list is empty
-				if (course.getIndex().getWaitList().isEmpty()) {
-					course.getIndex().setVacancies(course.getIndex().getVacancies() + 1);
+				if (droppedIndex.getWaitList().isEmpty()) {
+					droppedIndex.setVacancies(droppedIndex.getVacancies() + 1);
 				}
 				else {
 					// Add course for first student in the wait list
@@ -182,8 +177,8 @@ public class StudentManager extends Manager {
 					RegisteredCourse newCourse = new RegisteredCourse(false, droppedCourse, course.getIndex(), waiting);
 					newCourseList.add(newCourse);
 					waiting.setCourseList(newCourseList);
-					course.getIndex().addStudentList(waiting);
-					course.getIndex().removeWaitList(waiting);
+					droppedIndex.addStudentList(waiting);
+					droppedIndex.removeWaitList(waiting);
 	
 					// Update Course Database
 					updateCourseDB(droppedCourse);
