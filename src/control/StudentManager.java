@@ -135,7 +135,9 @@ public class StudentManager extends Manager {
 		RegisteredCourse newCourse = new RegisteredCourse(onWaitList, course, index, user);
 		newCourseList.add(newCourse);
 		user.setCourseList(newCourseList);
-		index.addStudentList(user);
+		if (!onWaitList) {
+			index.addStudentList(user);
+		}
 		// Update Course Database
 		updateCourseDB(course);
 		// Update Student Database
