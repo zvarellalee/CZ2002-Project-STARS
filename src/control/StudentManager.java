@@ -249,7 +249,7 @@ public class StudentManager extends Manager {
 	 * @return boolean indexExists
 	 */
 	@SuppressWarnings("resource")
-	public boolean changeIndex(int currentIndex) {
+		public boolean changeIndex(int currentIndex) {
 		// TODO: check if fail test cases 
 		// initialise index number does not exist
 		boolean indexExists = false;
@@ -369,9 +369,11 @@ public class StudentManager extends Manager {
 				// remove student from studentList in currentIndex
 				selectedCurrentIndex.removeStudentList(user);
 				// remove index from student's list of registered index
+				RegisteredCourse droppedRegistered;
 				for (RegisteredCourse registered : courses) {
 					if (registered.getIndex() == selectedCurrentIndex) {
-						courses.remove(registered);
+						droppedRegistered = registered;
+						courses.remove(droppedRegistered);
 					}
 				}
 				// if currentIndex waitlist is empty 
@@ -380,16 +382,27 @@ public class StudentManager extends Manager {
 					selectedCurrentIndex.setVacancies(selectedCurrentIndex.getVacancies() + 1);
 				}
 				else {
+					
 					// Add course for first student in the wait list
 					Student waiting = selectedCurrentIndex.getWaitList().get(0);
 					ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
 					RegisteredCourse newCourse = new RegisteredCourse(false, selectedCurrentCourse, selectedCurrentIndex, waiting);
-					newCourseList.add(newCourse);
+					for (RegisteredCourse old : newCourseList) {
+						if (old.getIndex().getIndexNumber() == selectedCurrentIndex.getIndexNumber()) {
+							newCourseList.remove(old);
+							newCourseList.add(newCourse);
+						}
+					}
 					waiting.setCourseList(newCourseList);
 					selectedCurrentIndex.addStudentList(waiting);
 					selectedCurrentIndex.removeWaitList(waiting);
+	
+					// Update Course Database
+					updateCourseDB(selectedCurrentCourse);
+					// Update Student Database
+					updateStudentDB(waiting);
 					
-					// Notify student on waitlist
+					// Notify enrolled student
 					NotifManager.sendEmail(waiting.getEmail(), waiting, selectedCurrentCourse.getCourseCode(), "Course " + selectedCurrentCourse.getCourseCode() + " has been successfully registered and you have been removed from the waitlist.");
 				}
 				// Update Course Database
