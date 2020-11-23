@@ -58,7 +58,8 @@ public class Manager {
 	 * @return Course Object
 	 */
 	public Course findCourse(String courseCode) {
-		if (courseMap.containsKey(courseCode)) return courseMap.get(courseCode);
+		if (courseExists(courseCode)) 
+			return courseMap.get(courseCode);
 		System.out.println("\nInvalid Course Code! Please try again.");
 		System.out.println("");
 		return null;
@@ -144,7 +145,7 @@ public class Manager {
 	 * @param index Index Number
 	 * @return boolean
 	 */
-	public boolean indexExists(int index) {
+	public static boolean indexExists(int index) {
 		for (Course c : courseMap.values()) {
 			for (Index i : c.getIndexList())
 				if (i.getIndexNumber() == index) {
@@ -152,6 +153,14 @@ public class Manager {
 				}
 		}
 		return false;
+	}
+	
+	
+	public static boolean courseExists(String course) {
+		if (courseMap.containsKey(course))
+				return true;
+		else
+			return false;
 	}
 	
 	/**
