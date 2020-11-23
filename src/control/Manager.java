@@ -100,12 +100,13 @@ public class Manager {
 	 * Prints the List of Courses with Course Code and Name
 	 */
 	public void printCourseList() {
-		System.out.println("\nCourse Code : Course Name");
-		System.out.println("---------------------------------------------------");
+		System.out.println("================================================================");
+		System.out.println("Course Code\tCourse Name");
+		System.out.println("================================================================");
 		for (Course course : getCourseDB().values()){
-			System.out.println(course.getCourseCode() + ":" + course.getCourseName());
-			
+			System.out.println(course.getCourseCode() + "\t\t" + course.getCourseName());
 		}
+		System.out.println("");
 	}
 	
 	/**
