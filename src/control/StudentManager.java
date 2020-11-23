@@ -87,7 +87,7 @@ public class StudentManager extends Manager {
 					
 					// Check if there are any timetable clashes, exits if yes
 					if (ScheduleManager.willClash(index, user.getCourseList()) == true) {
-						System.out.println("New Index Clashes with your current indexes!");
+						System.out.println("New Index Clashes with your current indexes! Course " + courseCode + " not registered.");
 						System.out.println("Returning back to main menu...");
 						System.out.println("");
 						return;
@@ -96,7 +96,7 @@ public class StudentManager extends Manager {
 					// Check number of AUs of student, add course AU to student's AUs 
 					int newAU = user.getNumAU() + course.getAU();
 					if (newAU > 21) {
-						System.out.println("Maximum AU exceeded!");
+						System.out.println("Maximum AU exceeded! Course " + courseCode + " not registered.");
 						System.out.println("Returning back to main menu...");
 						System.out.println("");
 						return;
@@ -138,7 +138,6 @@ public class StudentManager extends Manager {
 		if (!onWaitList) {
 			index.addStudentList(user);
 		}
-		// Update Course Database
 		updateCourseDB(course);
 		// Update Student Database
 		updateStudentDB(user);
@@ -153,7 +152,6 @@ public class StudentManager extends Manager {
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		Course droppedCourse = findCourse(courseCode);
-		
 		for (RegisteredCourse course : courses) {
 			if (course.getCourse().getCourseCode().equals(courseCode)) {
 				// Remove Student from the studentList in Index
@@ -164,6 +162,7 @@ public class StudentManager extends Manager {
 				user.setNumAU(user.getNumAU() - droppedCourse.getAU());
 				// Remove course from student's list of registered courses
 				courses.remove(course); 
+		
 				
 				// Update Course Database
 				updateCourseDB(droppedCourse);
@@ -196,8 +195,13 @@ public class StudentManager extends Manager {
 				}
 				return;
 			}
+			// Exits if course is not registered by student
+			System.out.println("Course " + courseCode + " not registered! Please try again.");
+			System.out.println("Returning back to main menu...");
+			return;
 		}
 		// Exits if course code is not found
+		System.out.println("Returning back to main menu...");
 		return;
 	}
 	
@@ -215,7 +219,7 @@ public class StudentManager extends Manager {
 			String status = course.getOnWaitlist() ?  "On Waitlist": "Registered";
 			String line = course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + status + "\t";
 			System.out.print(line);
-			int whitespaceSize = line.length();
+			int whitespaceSize = line.length() -1;
 			String whitespace = " ";
 			whitespace = String.format("%1$" + whitespaceSize + "s", whitespace);
 			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
@@ -227,7 +231,7 @@ public class StudentManager extends Manager {
 			}
 			System.out.println("");
 		} 
-		System.out.println("");
+		System.out.println("Total number of AUs registered (including on waitlist): " + user.getNumAU());
 	}
 	
 	/**
@@ -490,6 +494,11 @@ public class StudentManager extends Manager {
 				peerIndex = findIndex(newIndex);
 				peerCourse = getCourseFromIndex(peerIndex);
 				
+				// if new index does not exist in database
+				if (peerIndex == null) {
+					continue;
+				}
+				
 				//check if input index is the same as current index
 				if (newIndex == userIndex.getIndexNumber()) {
 					// continue if user tries to change to same index
@@ -547,7 +556,7 @@ public class StudentManager extends Manager {
 				userIndex.removeStudentList(user);
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : userRegCourses) {
-					if (registered.getIndex() == userIndex) {
+					if (registered.getIndex().getIndexNumber() == oldIndex) {
 						userRegCourses.remove(registered);
 					}
 				}
@@ -562,10 +571,11 @@ public class StudentManager extends Manager {
 				peerIndex.removeStudentList(peer);
 				// remove peerIndex from peer's list of registered index
 				for (RegisteredCourse registered : peerRegCourses) {
-					if (registered.getIndex() == userIndex) {
-						userRegCourses.remove(registered);
+					if (registered.getIndex().getIndexNumber() == newIndex) {
+						peerRegCourses.remove(registered);
 					}
 				}
+				
 				// Update Course Database
 				updateCourseDB(userCourse);
 				updateCourseDB(peerCourse);
