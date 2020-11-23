@@ -255,6 +255,10 @@ public class StaffUI implements UserUI {
 								if (iSelection == 1) {
 									System.out.print("Enter Index to add: ");
 									int index = sc.nextInt();
+									if (staffManager.indexExists(index)) {
+										System.out.println("Index already exist! Please add a new Index Number");
+										continue;
+									}
 									// Update Vacancies
 									System.out.print("Enter new Vacancy to Index " + index + ": ");
 									int vacancy = sc.nextInt();

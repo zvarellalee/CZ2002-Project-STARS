@@ -220,7 +220,7 @@ public class StaffManager extends Manager{
 			}
 		}
 		System.out.println();
-	}	
+	}
 	
 	/**
 	 * Prints the List of Students enrolled in the Index
