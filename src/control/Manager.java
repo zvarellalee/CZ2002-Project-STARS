@@ -157,6 +157,11 @@ public class Manager {
 	}
 	
 	
+	/**
+	 * Checks whether the course exists
+	 * @param course Course
+	 * @return boolean
+	 */
 	public static boolean courseExists(String course) {
 		if (courseMap.containsKey(course))
 				return true;
