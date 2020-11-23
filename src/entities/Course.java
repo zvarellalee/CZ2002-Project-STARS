@@ -153,4 +153,15 @@ public class Course implements Serializable{
 			indexList.remove(index);
 		}
 	}
+	
+	/**
+	 * Print the index list of a course
+	 */
+	public void printIndexList() {
+		System.out.println(courseCode + " " + courseName + " Indexes:");
+		System.out.println("-----------------------------------------");
+		for (Index i: indexList) {
+			System.out.println(i.getIndexNumber());
+		}
+	}
 }
