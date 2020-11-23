@@ -54,9 +54,10 @@ public class StudentUI implements UserUI {
 				System.out.println("(2) Drop Course");
 				System.out.println("(3) Check/Print Courses Registered ");
 				System.out.println("(4) Check Vacancies Available");
-				System.out.println("(5) Change Index Number of Course");
-				System.out.println("(6) Swap Index Number with Another Student");
-				System.out.println("(7) Exit");
+				System.out.println("(5) View Available Courses");				
+				System.out.println("(6) Change Index Number of Course");
+				System.out.println("(7) Swap Index Number with Another Student");
+				System.out.println("(8) Exit");
 				System.out.println("-----------------------------------------");
 				System.out.print("Enter your choice: ");
 				
@@ -99,6 +100,9 @@ public class StudentUI implements UserUI {
 						} while(!courseExists);
 						break;
 					case 5:
+						studentManager.printCourseList();
+						break;
+					case 6:
 						// change index number
 						// initialise index number does not exist
 						boolean indexExists = false;
@@ -117,7 +121,7 @@ public class StudentUI implements UserUI {
 							indexExists = studentManager.changeIndex(currentIndex);
 						} while (!indexExists);
 						break;
-					case 6:
+					case 7:
 						// TODO
 						boolean canSwap = false;
 						// let student input old index to change index
@@ -142,7 +146,7 @@ public class StudentUI implements UserUI {
 							canSwap = studentManager.swapIndex(oldIndex, matricNumber);
 						} while (!canSwap);
 						break;
-					case 7:
+					case 8:
 						// exit
 						run = false;
 						break;
