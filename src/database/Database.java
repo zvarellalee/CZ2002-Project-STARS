@@ -1,7 +1,10 @@
 package database;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Scanner;
+
 import control.FileManager;
 import entities.Course;
 import entities.Index;
@@ -173,22 +176,22 @@ public class Database {
 		Session se10a = new Session("Lab","HWLAB1",inputTime(5,9,0),inputTime(5,10,0));
 		Session se11 = new Session("Lecture","LT19",inputTime(4,11,0),inputTime(4,13,0));
 		// add sessions to index
-		i1.addSession(se1);
-		i1.addSession(se1a);
-		i2.addSession(se2);
-		i2.addSession(se2a);
-		i3.addSession(se3);
-		i3.addSession(se3a);
-		i4.addSession(se4);
-		i5.addSession(se5);
-		i6.addSession(se6);
-		i7.addSession(se7);
-		i8.addSession(se8);
-		i9.addSession(se9);
-		i9.addSession(se9a);
-		i10.addSession(se10);
-		i10.addSession(se10a);
-		i11.addSession(se11);
+		i1.addSessionList(se1);
+		i1.addSessionList(se1a);
+		i2.addSessionList(se2);
+		i2.addSessionList(se2a);
+		i3.addSessionList(se3);
+		i3.addSessionList(se3a);
+		i4.addSessionList(se4);
+		i5.addSessionList(se5);
+		i6.addSessionList(se6);
+		i7.addSessionList(se7);
+		i8.addSessionList(se8);
+		i9.addSessionList(se9);
+		i9.addSessionList(se9a);
+		i10.addSessionList(se10);
+		i10.addSessionList(se10a);
+		i11.addSessionList(se11);
 		
 		// add indexes to course
 		c0.addIndex(i1);
@@ -227,5 +230,6 @@ public class Database {
 		calendar.set(Calendar.MINUTE, min);
 		calendar.set(Calendar.SECOND, 0);
 		return calendar;
+		
 	}	
 }
