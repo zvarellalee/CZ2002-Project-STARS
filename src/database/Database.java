@@ -157,6 +157,7 @@ public class Database {
 		Index i8 = new Index(1008, 3);
 		Index i9 = new Index(1009, 3);
 		Index i10 = new Index(1010, 2);
+		Index i11 = new Index(1011, 2);
 		
 		Session se1 = new Session("Lecture","Home",inputTime(2,13,0),inputTime(2,15,0));
 		Session se1a = new Session("Tutorial", "LHN-TR17", inputTime(1,12,0),inputTime(1,13,0));
@@ -173,7 +174,7 @@ public class Database {
 		Session se9a = new Session("Lab","SWLAB3",inputTime(5,13,30),inputTime(5,15,30));
 		Session se10 = new Session("Lecture","LT2A",inputTime(1,8,0),inputTime(1,10,0));
 		Session se10a = new Session("Lab","HWLAB1",inputTime(5,9,0),inputTime(5,10,0));
-		
+		Session se11 = new Session("Lecture","LT19",inputTime(4,11,0),inputTime(4,13,0));
 		// add sessions to index
 		i1.addSession(se1);
 		i1.addSession(se1a);
@@ -190,12 +191,14 @@ public class Database {
 		i9.addSession(se9a);
 		i10.addSession(se10);
 		i10.addSession(se10a);
+		i11.addSession(se11);
 		
 		// add indexes to course
 		c0.addIndex(i1);
 		c1.addIndex(i2);
 		c1.addIndex(i3);
 		c2.addIndex(i4);
+		c2.addindex(i11);
 		c3.addIndex(i5);
 		c4.addIndex(i6);
 		c5.addIndex(i7);
