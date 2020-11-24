@@ -6,13 +6,11 @@
  */
 
 package control;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import entities.Course;
 import entities.Database;
 import entities.Index;
 import entities.RegisteredCourse;
-import entities.Session;
 import entities.Student;
 import java.util.Scanner;
 
