@@ -13,10 +13,8 @@ import java.text.SimpleDateFormat;
 import entities.Course;
 import entities.Database;
 import entities.Index;
-import entities.Session;
 import entities.Staff;
 import entities.Student;
-import control.Manager;
 import control.PrintManager;
 import control.StaffManager;
 
