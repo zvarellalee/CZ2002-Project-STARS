@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import entities.Course;
 import entities.Database;
 import entities.Index;
+
 import entities.Staff;
 import entities.Student;
 import control.PrintManager;
@@ -302,6 +303,11 @@ public class StaffUI implements UserUI {
 									Index updatedIndex = Database.findIndex(index);
 									// Error Handling
 									if (updatedIndex == null) {
+										continue;
+									}
+									
+									if (!StaffManager.getCourseFromIndex(updatedIndex).equals(course)) {
+										System.out.println("Index to be updated is from another course! Please try again.");
 										continue;
 									}
 									// Update Vacancies
