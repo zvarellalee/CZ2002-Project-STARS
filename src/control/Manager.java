@@ -7,7 +7,6 @@ package control;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import entities.*;
 
 public class Manager {
@@ -98,4 +97,3 @@ public class Manager {
 			return false;
 	}
 }	
-
