@@ -337,7 +337,7 @@ public class StaffUI implements UserUI {
 						courseCode = sc.next().toUpperCase();
 						Course course = staffManager.findCourse(courseCode);
 						if (course == null) break;
-						course.printIndexList();
+						staffManager.printIndexList(course);
 						System.out.print("\nEnter index to display student list: ");
 						int index = sc.nextInt();
 						staffManager.printStudentList(index);
@@ -357,7 +357,7 @@ public class StaffUI implements UserUI {
 						courseCode = sc.next().toUpperCase();
 						course = staffManager.findCourse(courseCode);
 						if (course == null) break;
-						course.printIndexList();
+						staffManager.printIndexList(course);
 						System.out.print("\nEnter Index to Check Session List: ");
 						Index index2 = staffManager.findIndex(sc.nextInt());
 						staffManager.printSessions(index2);
