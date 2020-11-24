@@ -6,13 +6,11 @@
  */
 
 package control;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import entities.Course;
 import entities.Database;
 import entities.Index;
 import entities.RegisteredCourse;
-import entities.Session;
 import entities.Student;
 import java.util.Scanner;
 
@@ -104,7 +102,7 @@ public class StudentManager extends Manager {
 					}
 					
 					// confirm whether want to add course
-					printSessions(index);
+					PrintManager.printSessions(index);
 					System.out.println("\nConfirm to add course? (Y/N)");
 					String confirm;
 					try {
@@ -170,6 +168,7 @@ public class StudentManager extends Manager {
 		Database.updateCourseDB(course);
 		// Update Student Database
 		Database.updateStudentDB(user);
+		PrintManager.printRegistered(user);
 	}
 	
 	/**
@@ -200,7 +199,7 @@ public class StudentManager extends Manager {
 					Database.updateStudentDB(user);
 					
 					// confirm whether want to drop course
-					printSessions(droppedIndex);
+					PrintManager.printSessions(droppedIndex);
 					System.out.println("\nConfirm to drop course? (Y/N)");
 					Scanner sc = new Scanner(System.in);
 					String confirm;
@@ -227,6 +226,7 @@ public class StudentManager extends Manager {
 					}
 					
 					System.out.println("Course Code " + courseCode + " successfully dropped.\n");
+					PrintManager.printRegistered(user);
 				
 					// Increase vacancy by 1 if wait list is empty
 					if (droppedIndex.getWaitList().isEmpty()) {
@@ -382,9 +382,9 @@ public class StudentManager extends Manager {
 			if (indexExists) {
 				// confirm whether want to change index
 				System.out.println("\nCurrent Index: ");
-				printSessions(selectedCurrentIndex);
+				PrintManager.printSessions(selectedCurrentIndex);
 				System.out.println("\nNew Index: ");
-				printSessions(selectedNewIndex);
+				PrintManager.printSessions(selectedNewIndex);
 				System.out.println("\nConfirm to change Index? (Y/N)");
 				String confirm;
 				try {
@@ -462,6 +462,8 @@ public class StudentManager extends Manager {
 				// Update Student Database
 				Database.updateStudentDB(user);
 				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCurrentCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
+				System.out.println("");
+				PrintManager.printRegistered(user);
 			}
 		}
 		return indexExists;
@@ -620,9 +622,9 @@ public class StudentManager extends Manager {
 			if (canSwap) {
 				// confirm whether want to swap
 				System.out.println("\nCurrent Index: ");
-				printSessions(userIndex);
+				PrintManager.printSessions(userIndex);
 				System.out.println("\nNew Index: ");
-				printSessions(peerIndex);
+				PrintManager.printSessions(peerIndex);
 				System.out.println("\nConfirm to swap Index with peer? (Y/N)");
 				String confirm;
 				try {
@@ -688,37 +690,9 @@ public class StudentManager extends Manager {
 				Database.updateStudentDB(peer);
 				System.out.println("\nIndex " + oldIndex + " from Course Code " + userCourse.getCourseCode() + " has been successfully swapped with " + peer.getMatricNumber() + "'s Index " + newIndex + ".");
 				System.out.println("");
+				PrintManager.printRegistered(user);
 			}
 		}
 		return canSwap;
-	}
-	
-	// --- helper methods---
-	/**
-	 * Obtain the Course object from the entered Index 
-	 * @param Index Object
-	 * @return Course Object
-	 */
-	private static Course getCourseFromIndex(Index index) {
-		Course course = null;
-		for (Course c : Database.getCourseDB().values()) {
-			if (c.getIndexList().contains(index)) {
-				course = c;
-			}
-		}
-		return course;
-	}
-	
-	/**
-	 * Obtain the Student object from the entered matriculation number
-	 * @param matricNumber Matriculation Number
-	 * @return Student Object
-	 */
-	private static Student getStudentFromMatricNumber(String matricNumber) {
-		Student student = null;
-		if (Database.getStudentDB().containsKey(matricNumber)) {
-			student = Database.getStudentDB().get(matricNumber);
-		}
-		return student;
 	}
 }
