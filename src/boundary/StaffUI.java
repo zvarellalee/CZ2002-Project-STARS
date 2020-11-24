@@ -160,12 +160,6 @@ public class StaffUI implements UserUI {
 								System.out.println("Invalid Characters in Student's Last Name!\n");
 								continue;
 							}
-							System.out.print("Enter New Student's Gender: ");
-							gender = sc.next();
-							if (validateString(gender) == false) {
-								System.out.println("Invalid Characters in Student's Gender!\n");
-								continue;
-							}
 							System.out.print("Enter New Student's Nationality: ");
 							nationality = sc.next();
 							if (validateString(nationality) == false) {
@@ -175,6 +169,21 @@ public class StaffUI implements UserUI {
 							flag = false;
 						}
 						while (flag);
+						flag = true;
+						do {
+							System.out.print("Enter New Student's Gender: ");
+							gender = sc.next();
+							if (validateString(gender) == false) {
+								System.out.println("Invalid Characters in Student's Gender!\n");
+								continue;
+							}
+							if (!(gender.equals("Male") || gender.equals("Female"))) {
+								System.out.println("Please input a valid gender! (Male/Female)\n");
+								continue;
+							}
+							flag = false;
+						}
+						while(flag);
 						System.out.print("Enter New Student's Username: ");
 						String username = sc.next();
 						System.out.print("Enter New Student's Default Password: ");
