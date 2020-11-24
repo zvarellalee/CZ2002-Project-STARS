@@ -8,14 +8,9 @@ package control;
 
 import java.util.*;
 
-import entities.Course;
-import entities.Index;
-import entities.RegisteredCourse;
-import entities.Session;
-import entities.Staff;
-import entities.Student;
+import entities.*;
 
-public class StaffManager extends Manager {
+public class StaffManager extends Manager{
 	/**
 	 * Stores which Staff is using the Manager
 	 */
@@ -28,6 +23,7 @@ public class StaffManager extends Manager {
 	public StaffManager(Staff user) {
 		super();
 		this.user = user;
+		// Database.initialise(); // To test out the UI
 	}
 	
 	/**
@@ -39,7 +35,7 @@ public class StaffManager extends Manager {
 	public void editStudentAccessPeriod(Calendar accessStart, Calendar accessEnd, Student student) {
 		student.setAccessStart(accessStart);
 		student.setAccessEnd(accessEnd);
-		updateStudentDB(student);
+		Database.updateStudentDB(student);
 	}	
 
 	/**
@@ -65,7 +61,7 @@ public class StaffManager extends Manager {
 	 */
 	public void updateCourseCode(Course course, String courseCode) {
 		course.setCourseCode(courseCode);
-		updateCourseDB(course);
+		Database.updateCourseDB(course);
 	}
 	
 	/**
@@ -75,7 +71,7 @@ public class StaffManager extends Manager {
 	 */
 	public void updateCourseName(Course course, String courseName) {
 		course.setCourseName(courseName);
-		updateCourseDB(course);
+		Database.updateCourseDB(course);
 	}
 	
 	/**
@@ -85,7 +81,7 @@ public class StaffManager extends Manager {
 	 */
 	public void updateCourseSchool(Course course, String courseSchool) {
 		course.setSchool(courseSchool);
-		updateCourseDB(course);
+		Database.updateCourseDB(course);
 	}
 	
 	/**
@@ -94,14 +90,14 @@ public class StaffManager extends Manager {
 	 */
 	public void addStudent(Student student) {
 		
-		if (getStudentDB().containsKey(student.getMatricNumber())) {
+		if (Database.getStudentDB().containsKey(student.getMatricNumber())) {
 			System.out.println("Student already exists");
 			return;
 		}
 		
-		updateStudentDB(student);
+		Database.updateStudentDB(student);
         
-		printStudentList();
+		PrintManager.printStudentList();
 	}
 	
 
@@ -113,7 +109,7 @@ public class StaffManager extends Manager {
 	 * @param AU Number of AUs
 	 */
 	public void addCourse(String courseCode, String courseName, String school, int AU) {
-		if (getCourseDB().containsKey(courseCode)) {
+		if (Database.getCourseDB().containsKey(courseCode)) {
 			System.out.println("Course "+ courseCode +" already exists");
 			return;
 		}
@@ -122,9 +118,9 @@ public class StaffManager extends Manager {
 		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		
-        updateCourseDB(newCourse); 
+        Database.updateCourseDB(newCourse); 
 		
-		printCourseList();
+		PrintManager.printCourseList();
 	}
 	
 	/**
@@ -133,8 +129,8 @@ public class StaffManager extends Manager {
 	 * @param courseCode Course Code
 	 */
 	public void addStudentToIndex(int indexNumber, String courseCode) {
-		Course c = findCourse(courseCode);
-		Index index = findIndex(indexNumber);
+		Course c = Database.findCourse(courseCode);
+		Index index = Database.findIndex(indexNumber);
 		int vacancy = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
@@ -152,7 +148,7 @@ public class StaffManager extends Manager {
 					if (rc.getIndex().equals(index)) {
 												
 						rc.setOnWaitlist(false);
-						updateStudentDB(s);
+						Database.updateStudentDB(s);
 						
 						studentWaitlist.remove(s);
 						index.setWaitList(studentWaitlist);
@@ -171,12 +167,10 @@ public class StaffManager extends Manager {
 		
 		index.setVacancies(vacancy);
 		
-		updateCourseDB(c);
+		Database.updateCourseDB(c);
 	}
-	
-	
+
 	/**
-	 * Obtain Calendar Object by inputting time
 	 * @param day Day
 	 * @param hour Hour
 	 * @param min Minute
@@ -217,7 +211,6 @@ public class StaffManager extends Manager {
 	}	
 	
 	/**
-	 * Adds a Session
 	 * @param sessionType Session Type (Tutorial/Lab)
 	 * @param j Session number
 	 * @param sc Scanner
@@ -247,7 +240,6 @@ public class StaffManager extends Manager {
 		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
 		return newSession;
 	}
-	
 	
 	/**
 	 * Add Sessions for a new Index

@@ -9,6 +9,7 @@ package control;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import entities.Course;
+import entities.Database;
 import entities.Index;
 import entities.RegisteredCourse;
 import entities.Session;
@@ -28,6 +29,7 @@ public class StudentManager extends Manager {
 	public StudentManager(Student user) {
 		super();
 		this.user = user;
+		// Database.initialise(); // To remove
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public class StudentManager extends Manager {
 			return;
 		}
 		
-		Course course = findCourse(courseCode);
+		Course course = Database.findCourse(courseCode);
 		
 		// Student inputs index
 		boolean userinput = true;
@@ -165,10 +167,10 @@ public class StudentManager extends Manager {
 			index.addStudentList(user);
 			System.out.println("Index " + index.getIndexNumber() + " of Course Name " + course.getCourseName() + " (" +course.getCourseCode() + ")" + " successfully added!\n");
 		}
-		updateCourseDB(course);
+		Database.updateCourseDB(course);
 		// Update Student Database
-		updateStudentDB(user);
-		printRegistered(user);
+		Database.updateStudentDB(user);
+		PrintManager.printRegistered(user);
 	}
 	
 	/**
@@ -178,14 +180,14 @@ public class StudentManager extends Manager {
 	@SuppressWarnings("resource")
 	public void dropCourse(String courseCode) {	
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
-		Course droppedCourse = findCourse(courseCode);
+		Course droppedCourse = Database.findCourse(courseCode);
 		
 		if (droppedCourse == null) return; // return if droppedCourse is not found
 		
 		for (RegisteredCourse course : courses) {
 			if (!course.getOnWaitlist()) {
 				if (course.getCourse().getCourseCode().equals(courseCode)) {
-					Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
+					Index droppedIndex = Database.findIndex(course.getIndex().getIndexNumber());
 					// Remove Student from the studentList in Index
 					droppedIndex.removeStudentList(user.getMatricNumber());
 					// Update Student's number of AUs
@@ -194,9 +196,9 @@ public class StudentManager extends Manager {
 					courses.remove(course); 
 					
 					// Update Course Database
-					updateCourseDB(droppedCourse);
+					Database.updateCourseDB(droppedCourse);
 					// Update Student Database
-					updateStudentDB(user);
+					Database.updateStudentDB(user);
 					
 					// confirm whether want to drop course
 					printSessions(droppedIndex);
@@ -226,7 +228,7 @@ public class StudentManager extends Manager {
 					}
 					
 					System.out.println("Course Code " + courseCode + " successfully dropped.\n");
-					printRegistered(user);
+					PrintManager.printRegistered(user);
 				
 					// Increase vacancy by 1 if wait list is empty
 					if (droppedIndex.getWaitList().isEmpty()) {
@@ -249,14 +251,14 @@ public class StudentManager extends Manager {
 						droppedIndex.removeWaitList(waiting.getMatricNumber());
 	
 						// Update Student Database
-						updateStudentDB(waiting);
+						Database.updateStudentDB(waiting);
 						
 						// Notify enrolled student
 						// change first argument for testing
 						NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
 					}
 					// Update Course Database
-					updateCourseDB(droppedCourse);
+					Database.updateCourseDB(droppedCourse);
 					return;
 				}
 			}
@@ -265,35 +267,6 @@ public class StudentManager extends Manager {
 		System.out.println("Course " + courseCode + " not registered! Please try again.");
 		System.out.println("Returning back to main menu...");
 		return;
-	}
-	
-	/**
-	 * Prints student's list of registered courses
-	 * @param user User
-	 */
-	public void printRegistered(Student user) {
-		// print course code, course name, index of registered courses
-		System.out.println("Courses Registered for " + user.getFirstName() + " " + user.getLastName() + " (" + user.getMatricNumber() + "):");
-		System.out.println("==============================================================================================================================================");
-		System.out.println("Course Code\tCourse Name\t\t\t\tIndex\tAU\tStatus\t\tSession Type\tDay\tTime\t\tVenue");
-		System.out.println("==============================================================================================================================================");
-		for(RegisteredCourse course: user.getCourseList()) {
-			String status = course.getOnWaitlist() ?  "On Waitlist": "Registered";
-			String line = course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + status + "\t";
-			System.out.print(line);
-			int whitespaceSize = line.length() -1;
-			String whitespace = " ";
-			whitespace = String.format("%1$" + whitespaceSize + "s", whitespace);
-			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
-			for (Session session: course.getIndex().getSessionList())
-			{
-				System.out.println(session.getSessionType() + "\t\t" + sdf.format(session.getSessionStart().getTime()) + "\t" + sdf2.format(session.getSessionStart().getTime()) + "-" + sdf2.format(session.getSessionEnd().getTime()) + "\t" + session.getVenue());
-				System.out.print(whitespace + "\t\t\t\t");
-			}
-			System.out.println("");
-		} 
-		System.out.println("Total number of AUs registered (including on waitlist): " + user.getNumAU());
 	}
 	
 	/**
@@ -306,7 +279,7 @@ public class StudentManager extends Manager {
 		// initialise index number does not exist
 		boolean indexExists = false;
 		// find the course which student wants to change currentIndex
-		Index selectedCurrentIndex = findIndex(currentIndex);
+		Index selectedCurrentIndex = Database.findIndex(currentIndex);
 		Course selectedCurrentCourse = getCourseFromIndex(selectedCurrentIndex);
 		
 		// if current index does not exist in database
@@ -369,7 +342,7 @@ public class StudentManager extends Manager {
 				}
 				
 				// get new index and course based on student's input
-				selectedNewIndex = findIndex(newIndex);
+				selectedNewIndex = Database.findIndex(newIndex);
 				selectedNewCourse = getCourseFromIndex(selectedNewIndex);
 				
 				// if new index does not exist in database
@@ -478,21 +451,21 @@ public class StudentManager extends Manager {
 					selectedCurrentIndex.removeWaitList(waiting.getMatricNumber());
 	
 					// Update Course Database
-					updateCourseDB(selectedCurrentCourse);
+					Database.updateCourseDB(selectedCurrentCourse);
 					// Update Student Database
-					updateStudentDB(waiting);
+					Database.updateStudentDB(waiting);
 					
 					// Notify enrolled student
 					NotifManager.sendEmail(waiting.getEmail(), waiting, selectedCurrentCourse.getCourseCode(), "Course " + selectedCurrentCourse.getCourseCode() + " has been successfully registered and you have been removed from the waitlist.");
 				}
 				// Update Course Database
-				updateCourseDB(selectedCurrentCourse);
-				updateCourseDB(selectedNewCourse);
+				Database.updateCourseDB(selectedCurrentCourse);
+				Database.updateCourseDB(selectedNewCourse);
 				// Update Student Database
-				updateStudentDB(user);
+				Database.updateStudentDB(user);
 				System.out.println("\nIndex " + currentIndex + " from Course Code " + selectedCurrentCourse.getCourseCode() + " has been successfully changed to new Index " + newIndex + ".");
 				System.out.println("");
-				printRegistered(user);
+				PrintManager.printRegistered(user);
 			}
 		}
 		return indexExists;
@@ -511,7 +484,7 @@ public class StudentManager extends Manager {
 		// find the peer to change student's currentIndex to peer's newIndex     
 		Student peer = getStudentFromMatricNumber(matricNumber);
 		// find the course user wants to change currentIndex
-		Index userIndex = findIndex(oldIndex);
+		Index userIndex = Database.findIndex(oldIndex);
 		Course userCourse = getCourseFromIndex(userIndex);
 		
 		// if currentIndex and peer do not exist in database
@@ -598,7 +571,7 @@ public class StudentManager extends Manager {
 				}
 				
 				// get peer's index and course based on user's input
-				peerIndex = findIndex(newIndex);
+				peerIndex = Database.findIndex(newIndex);
 				peerCourse = getCourseFromIndex(peerIndex);
 				
 				// if new index does not exist in database
@@ -712,14 +685,14 @@ public class StudentManager extends Manager {
 				}
 				
 				// Update Course Database
-				updateCourseDB(userCourse);
-				updateCourseDB(peerCourse);
+				Database.updateCourseDB(userCourse);
+				Database.updateCourseDB(peerCourse);
 				// Update Student Database
-				updateStudentDB(user);
-				updateStudentDB(peer);
+				Database.updateStudentDB(user);
+				Database.updateStudentDB(peer);
 				System.out.println("\nIndex " + oldIndex + " from Course Code " + userCourse.getCourseCode() + " has been successfully swapped with " + peer.getMatricNumber() + "'s Index " + newIndex + ".");
 				System.out.println("");
-				printRegistered(user);
+				PrintManager.printRegistered(user);
 			}
 		}
 		return canSwap;
@@ -733,7 +706,7 @@ public class StudentManager extends Manager {
 	 */
 	private static Course getCourseFromIndex(Index index) {
 		Course course = null;
-		for (Course c : getCourseDB().values()) {
+		for (Course c : Database.getCourseDB().values()) {
 			if (c.getIndexList().contains(index)) {
 				course = c;
 			}
@@ -748,8 +721,8 @@ public class StudentManager extends Manager {
 	 */
 	private static Student getStudentFromMatricNumber(String matricNumber) {
 		Student student = null;
-		if (getStudentDB().containsKey(matricNumber)) {
-			student = getStudentDB().get(matricNumber);
+		if (Database.getStudentDB().containsKey(matricNumber)) {
+			student = Database.getStudentDB().get(matricNumber);
 		}
 		return student;
 	}
