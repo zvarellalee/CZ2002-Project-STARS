@@ -158,12 +158,15 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a student from the wait list 
-	 * @param student Student to be removed from the wait list
+	 * @param studentID ID of Student to be removed from the wait list
 	 */
-	public void removeWaitList(Student student) {
-		if (waitList.contains(student))
-			waitList.remove(student);
-
+	public void removeWaitList(String studentID) {
+		for (Student s: waitList) {
+			if (s.getMatricNumber().equals(studentID)) {
+				waitList.remove(s);
+				break;
+			}
+		}
 	}
 	
 	/**
