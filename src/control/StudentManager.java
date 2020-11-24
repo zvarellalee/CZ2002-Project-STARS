@@ -695,4 +695,4 @@ public class StudentManager extends Manager {
 		}
 		return canSwap;
 	}
-}	
+}
