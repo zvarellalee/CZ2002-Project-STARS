@@ -10,7 +10,6 @@ package boundary;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
-import entities.Course;
 import entities.Database;
 import entities.Index;
 
@@ -83,8 +82,8 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to edit access period: ");
 						matric = sc.next().toUpperCase();
 						// Find the student object using matriculation number
-						if (Database.getStudentDB().containsKey(matric)) {
-							student = Database.getStudentDB().get(matric);
+						student = StaffManager.getStudentFromMatricNumber(matric);
+						if (student!=null) {
 							boolean invalid = true;
 							// Ask staff for access and end date and time
 							Calendar accessStart = Calendar.getInstance();
@@ -124,8 +123,8 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to check access period: ");
 						String matric2 = sc.next().toUpperCase();
 						// Find the student object using matriculation number
-						if (Database.getStudentDB().containsKey(matric2)) {
-							student2 = Database.getStudentDB().get(matric2);
+						student2 = StaffManager.getStudentFromMatricNumber(matric2);
+						if (student2!=null) {
 							found2 = true;
 						}
 
@@ -194,9 +193,9 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter New Student's Matriculation Number: ");
 						String matricNumber = sc.next().toUpperCase();
 						
-						Student newStudent = new Student(username, password, false, firstName, 
-								lastName, email, matricNumber, gender, nationality, 0);
-						staffManager.addStudent(newStudent);
+						
+						staffManager.addStudent(username, password, firstName, 
+								lastName, email, matricNumber, gender, nationality);
 						break;
 					case 4:
 						// Add/Update a course
@@ -217,7 +216,7 @@ public class StaffUI implements UserUI {
 									System.out.println("Course already exist! Please add a new course.\n");
 									continue;
 								}
-								String clear = sc.nextLine();
+								sc.nextLine();
 								System.out.print("\nEnter Course Name to add: ");
 								String courseName = sc.nextLine();
 								System.out.print("\nEnter Faculty to add: ");
@@ -227,7 +226,7 @@ public class StaffUI implements UserUI {
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
 								System.out.println("\nCourse " + courseCode + " successfully added!");
-								Course newCourse = Database.findCourse(courseCode);
+								
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
 								// Error Handling
@@ -243,35 +242,36 @@ public class StaffUI implements UserUI {
 								for (int i = 0; i < numIndex; i++) {
 									System.out.println("Adding Index (" + (i+1) + "/" + numIndex + ")");
 									System.out.print("\nEnter Index Number: ");
-									int index = sc.nextInt();
+									int index;
+									do {
+										index = sc.nextInt();
+										if (StaffManager.indexExists(index))
+											System.out.print("\nIndex number already exists. Please enter a new index: ");
+									} while (StaffManager.indexExists(index));
 									System.out.print("\nEnter Number of Vacancies for Index " + index + ": ");
 									int vacancies = sc.nextInt();
-									Index newIndex = new Index(index, vacancies);
-									newCourse.addIndex(newIndex);
-									StaffManager.addIndex(newIndex);
+									staffManager.addIndex(courseCode, index, vacancies);
 								}
 								System.out.println("New Indexes Successfully Added!\n");
 							}
 							else if (selection == 2) {
 								// Update Course Code
 								PrintManager.printCourseList();
-								System.out.print("\nEnter Course Code to update: ");
+								System.out.print("\nSelect Course Code to update: ");
 								String courseCode = sc.next().toUpperCase();
-								String clear = sc.nextLine();
-								Course course = Database.findCourse(courseCode);
+								sc.nextLine();
 								// Error Handling
-								if (course == null) {
+								if (!StaffManager.courseExists(courseCode)) {
+									System.out.println("Selected Course Code does not exist! Please enter an existing course.\n");
 									continue;
 								}
-								staffManager.updateCourseCode(course, courseCode);
 								//Update Course Name
-								System.out.print("\nEnter Course Name to update: ");
+								System.out.print("\nUpdate Course Name: ");
 								String courseName = sc.nextLine();
-								staffManager.updateCourseName(course, courseName);
 								// Update Faculty
-								System.out.print("Enter Faculty to update: ");
+								System.out.print("Update Faculty: ");
 								String school = sc.nextLine();
-								staffManager.updateCourseSchool(course, school);
+								staffManager.updateCourse(courseCode, courseName, school);
 								
 								// Update Index Number
 								System.out.println("\n--Displaying Indexes in Updated Course--");
@@ -292,29 +292,24 @@ public class StaffUI implements UserUI {
 									// Update Vacancies
 									System.out.print("Enter new Vacancy to Index " + index + ": ");
 									int vacancy = sc.nextInt();
-									Index newIndex = new Index(index, vacancy);
-									course.addIndex(newIndex);
-									StaffManager.addIndex(newIndex);
+									staffManager.addIndex(courseCode, index, vacancy);
 									System.out.println("Index " + index + " Successfully added to Course " + courseCode + "!\n");
 								}
 								else if (iSelection == 2) {
 									System.out.print("Enter Index to update: ");
 									int index = sc.nextInt();
-									Index updatedIndex = Database.findIndex(index);
 									// Error Handling
-									if (updatedIndex == null) {
-										continue;
-									}
+									if (StaffManager.indexExists(index)) continue;
 									
-									if (!StaffManager.getCourseFromIndex(updatedIndex).equals(course)) {
+									if (!StaffManager.getCourseFromIndex(index).getCourseCode().equals(courseCode)) {
 										System.out.println("Index to be updated is from another course! Please try again.");
 										continue;
 									}
 									// Update Vacancies
 									System.out.print("Enter new Vacancy to Index " + index + ": ");
 									int vacancy = sc.nextInt();
-									updatedIndex.setVacancies(vacancy);
-									System.out.println("Course " + course.getCourseCode() + " Successfully Updated!\n");
+									staffManager.updateIndex(index,vacancy);
+									System.out.println("Course " + courseCode + " Successfully Updated!\n");
 								}
 								else if (iSelection == 3) {
 									continue;
@@ -341,9 +336,8 @@ public class StaffUI implements UserUI {
 						PrintManager.printCourseList();
 						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
-						Course course = Database.findCourse(courseCode);
-						if (course == null) break;
-						PrintManager.printIndexList(course);
+						if (!StaffManager.courseExists(courseCode)) break;
+						PrintManager.printIndexList(courseCode);
 						System.out.print("\nEnter index to display student list: ");
 						int index = sc.nextInt();
 						PrintManager.printStudentList(index);
@@ -361,12 +355,11 @@ public class StaffUI implements UserUI {
 						PrintManager.printCourseList();
 						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
-						course = Database.findCourse(courseCode);
-						if (course == null) break;
-						PrintManager.printIndexList(course);
+						if (!StaffManager.courseExists(courseCode)) break;
+						PrintManager.printIndexList(courseCode);
 						System.out.print("\nEnter Index to Check Session List: ");
-						Index index2 = Database.findIndex(sc.nextInt());
-						staffManager.printSessions(index2);
+						int selectedIndex = sc.nextInt();
+						PrintManager.printSessions(selectedIndex);
 						break;
 					case 0:
 						// Exits
