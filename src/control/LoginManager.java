@@ -7,10 +7,8 @@ package control;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
-
 import boundary.*;
 import entities.*;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
