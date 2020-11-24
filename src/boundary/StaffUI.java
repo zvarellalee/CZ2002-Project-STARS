@@ -404,7 +404,7 @@ public class StaffUI implements UserUI {
 				// Input Day
 				System.out.print("Enter Day: ");
 				day = sc.nextInt();
-				if (day < 1 || day > calendar.getActualMaximum(calendar.DAY_OF_MONTH)) {
+				if (day < 1 || day > calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
 					System.out.println("Please a valid date! Please try again.");
 					continue;
 				}
