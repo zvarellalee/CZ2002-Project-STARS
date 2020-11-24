@@ -28,7 +28,6 @@ public class StudentManager extends Manager {
 	public StudentManager(Student user) {
 		super();
 		this.user = user;
-		// Database.initialise(); // To remove
 	}
 	
 	/**
