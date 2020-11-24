@@ -96,4 +96,32 @@ public class Manager {
 		else
 			return false;
 	}
+	
+	/**
+	 * Obtain the Course object from the entered Index 
+	 * @param Index Object
+	 * @return Course Object
+	 */
+	public static Course getCourseFromIndex(Index index) {
+		Course course = null;
+		for (Course c : Database.getCourseDB().values()) {
+			if (c.getIndexList().contains(index)) {
+				course = c;
+			}
+		}
+		return course;
+	}
+	
+	/**
+	 * Obtain the Student object from the entered matriculation number
+	 * @param matricNumber Matriculation Number
+	 * @return Student Object
+	 */
+	public static Student getStudentFromMatricNumber(String matricNumber) {
+		Student student = null;
+		if (Database.getStudentDB().containsKey(matricNumber)) {
+			student = Database.getStudentDB().get(matricNumber);
+		}
+		return student;
+	}
 }	
