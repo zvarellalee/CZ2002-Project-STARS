@@ -5,8 +5,11 @@
  */
 package boundary;
 
+import database.Database;
+
 public class Main {
 	public static void main(String[] args) {
+		//Database.initialise();
 		UserUI login = new LoginUI();
 		login.showUI();
 	}

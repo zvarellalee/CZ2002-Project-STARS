@@ -174,49 +174,49 @@ public class StaffManager extends Manager {
 	}
 	
 	/**
-	 * Adds Student to the Index's ArrayList of Students and Waitlist
+	 * Adds students on the waitlist to any vacancies in the index
 	 * @param indexNumber Index Number
 	 * @parm courseCode Course Code
 	 */
-	public void addStudentToIndex(int indexNumber, String courseCode) {
+	public void addStudentsToIndex(int indexNumber, String courseCode) {
 		Course c = Database.findCourse(courseCode);
 		Index index = Database.findIndex(indexNumber);
-		int vacancy = index.getVacancies();
+		int vacancies = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
 		ArrayList<Student> studentlist = index.getStudentList();
 		
 		
-		if (vacancy <= 0) {
-			System.out.println("No vacancies");
+		if (vacancies <= 0) { // if there are no vacancies
 			return;
 		}
 		
-		for (Student s : studentWaitlist) {
-			if(vacancy > 0 && !studentWaitlist.isEmpty()) {
-				ArrayList<RegisteredCourse> registeredCourseList = s.getCourseList();
-				for ( RegisteredCourse rc : registeredCourseList) {
-					if (rc.getIndex().equals(index)) {
-												
-						rc.setOnWaitlist(false);
-						Database.updateStudentDB(s);
-						
-						studentWaitlist.remove(s);
-						index.setWaitList(studentWaitlist);
-						
-						studentlist.add(s);
-						index.setStudentList(studentlist);
-						
-						NotifManager.sendEmail(s.getEmail(), s, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
-												
-						vacancy--;
-					}
-				}
-						
-		     }
+		if (studentWaitlist.size() == 0) { // if there are no students on the waitlist
+			return;
 		}
-		
-		index.setVacancies(vacancy);
-		
+		for (int i=0; i<Math.min(vacancies,studentWaitlist.size());i++) {
+			Student waiting = index.getWaitList().get(0);
+			ArrayList<RegisteredCourse> newCourseList = waiting.getCourseList();
+			RegisteredCourse newCourse = new RegisteredCourse(false, c, index, waiting);
+			for (RegisteredCourse old : newCourseList) {
+				if (old.getIndex().getIndexNumber() == indexNumber) {
+					newCourseList.remove(old);
+					newCourseList.add(newCourse);
+					break;
+				}
+			}
+			waiting.setCourseList(newCourseList);
+			index.addStudentList(waiting);
+			index.removeWaitList(waiting.getMatricNumber());
+			vacancies--;
+			index.setVacancies(vacancies);
+
+			// Update Student Database
+			Database.updateStudentDB(waiting);
+			
+			// Notify enrolled student
+			System.out.println("Student " + waiting.getMatricNumber() + " has filled the new vacancy. Notifying student...");
+			NotifManager.sendEmail(waiting.getEmail(), waiting, courseCode, "Course " + courseCode + " has been successfully registered and you have been removed from the waitlist.");
+		}	
 		Database.updateCourseDB(c);
 	}
 

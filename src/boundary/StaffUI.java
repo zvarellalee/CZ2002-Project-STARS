@@ -10,8 +10,6 @@ package boundary;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
-import entities.Database;
-import entities.Index;
 
 import entities.Staff;
 import entities.Student;
@@ -299,7 +297,7 @@ public class StaffUI implements UserUI {
 									System.out.print("Enter Index to update: ");
 									int index = sc.nextInt();
 									// Error Handling
-									if (StaffManager.indexExists(index)) continue;
+									if (!StaffManager.indexExists(index)) continue;
 									
 									if (!StaffManager.getCourseFromIndex(index).getCourseCode().equals(courseCode)) {
 										System.out.println("Index to be updated is from another course! Please try again.");
@@ -310,6 +308,7 @@ public class StaffUI implements UserUI {
 									int vacancy = sc.nextInt();
 									staffManager.updateIndex(index,vacancy);
 									System.out.println("Course " + courseCode + " Successfully Updated!\n");
+									staffManager.addStudentsToIndex(index, courseCode);
 								}
 								else if (iSelection == 3) {
 									continue;

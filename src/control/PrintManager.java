@@ -144,8 +144,10 @@ public class PrintManager {
 		System.out.println("Course Code\tCourse Name\t\t\t\tIndex\tAU\tStatus\t\tSession Type\tDay\tTime\t\tVenue");
 		System.out.println("==============================================================================================================================================");
 		for(RegisteredCourse course: user.getCourseList()) {
+			Course courseDB = Database.getCourseDB().get(course.getCourse().getCourseCode());
+			
 			String status = course.getOnWaitlist() ?  "On Waitlist": "Registered";
-			String line = course.getCourse().getCourseCode() + "\t\t" + String.format("%-36.36s", course.getCourse().getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + course.getCourse().getAU() + "\t" + status + "\t";
+			String line = courseDB.getCourseCode() + "\t\t" + String.format("%-36.36s", courseDB.getCourseName()) + "\t" + course.getIndex().getIndexNumber() + "\t" + courseDB.getAU() + "\t" + status + "\t";
 			System.out.print(line);
 			int whitespaceSize = line.length() -1;
 			String whitespace = " ";

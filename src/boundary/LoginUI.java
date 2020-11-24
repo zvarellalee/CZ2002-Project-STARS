@@ -22,7 +22,6 @@ public class LoginUI implements UserUI{
 		}
 		Scanner sc = new Scanner(System.in);
 		LoginManager manager = new LoginManager();
-		UserUI newUI;
 		int choice = 1;
 		String username;
 		String password;
