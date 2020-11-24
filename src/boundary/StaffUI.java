@@ -11,11 +11,13 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import entities.Course;
+import entities.Database;
 import entities.Index;
 import entities.Session;
 import entities.Staff;
 import entities.Student;
 import control.Manager;
+import control.PrintManager;
 import control.StaffManager;
 
 public class StaffUI implements UserUI {
@@ -82,8 +84,8 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to edit access period: ");
 						matric = sc.next().toUpperCase();
 						// Find the student object using matriculation number
-						if (Manager.getStudentDB().containsKey(matric)) {
-							student = Manager.getStudentDB().get(matric);
+						if (Database.getStudentDB().containsKey(matric)) {
+							student = Database.getStudentDB().get(matric);
 							boolean invalid = true;
 							// Ask staff for access and end date and time
 							Calendar accessStart = Calendar.getInstance();
@@ -123,8 +125,8 @@ public class StaffUI implements UserUI {
 						System.out.print("Enter Student's Matric Number to check access period: ");
 						String matric2 = sc.next().toUpperCase();
 						// Find the student object using matriculation number
-						if (Manager.getStudentDB().containsKey(matric2)) {
-							student2 = Manager.getStudentDB().get(matric2);
+						if (Database.getStudentDB().containsKey(matric2)) {
+							student2 = Database.getStudentDB().get(matric2);
 							found2 = true;
 						}
 
@@ -148,7 +150,7 @@ public class StaffUI implements UserUI {
 						String firstName = null, lastName = null, gender = null, nationality = null;
 						boolean flag = true;
 						do {  // Error Checking
-							System.out.print("Enter New Student's First Name:");
+							System.out.print("Enter New Student's First Name: ");
 							firstName = sc.nextLine();
 							if (validateString(firstName) == false) {
 								System.out.println("Invalid Characters in Student's First Name! \n");
@@ -201,7 +203,7 @@ public class StaffUI implements UserUI {
 						// Add/Update a course
 						int selection;
 						do {
-							staffManager.printCourseList();
+							PrintManager.printCourseList();
 							System.out.println("Do you want to Add or Update a Course?");
 							System.out.println("(1) Add");
 							System.out.println("(2) Update");
@@ -226,7 +228,7 @@ public class StaffUI implements UserUI {
 								
 								staffManager.addCourse(courseCode, courseName, school, au);
 								System.out.println("\nCourse " + courseCode + " successfully added!");
-								Course newCourse = staffManager.findCourse(courseCode);
+								Course newCourse = Database.findCourse(courseCode);
 								System.out.print("\nEnter number of Indexes to insert into Course (" + courseName + ") : ");
 								int numIndex = sc.nextInt();
 								// Error Handling
@@ -253,11 +255,11 @@ public class StaffUI implements UserUI {
 							}
 							else if (selection == 2) {
 								// Update Course Code
-								staffManager.printCourseList();
+								PrintManager.printCourseList();
 								System.out.print("\nEnter Course Code to update: ");
 								String courseCode = sc.next().toUpperCase();
 								String clear = sc.nextLine();
-								Course course = staffManager.findCourse(courseCode);
+								Course course = Database.findCourse(courseCode);
 								// Error Handling
 								if (course == null) {
 									continue;
@@ -299,7 +301,7 @@ public class StaffUI implements UserUI {
 								else if (iSelection == 2) {
 									System.out.print("Enter Index to update: ");
 									int index = sc.nextInt();
-									Index updatedIndex = staffManager.findIndex(index);
+									Index updatedIndex = Database.findIndex(index);
 									// Error Handling
 									if (updatedIndex == null) {
 										continue;
@@ -321,45 +323,45 @@ public class StaffUI implements UserUI {
 						while (selection != 3);
 						break;
 					case 5:
-						staffManager.printCourseList();
+						PrintManager.printCourseList();
 						break;
 					case 6:	
 						// Check vacancies for all the indexes of course
-						staffManager.printCourseList();
+						PrintManager.printCourseList();
 						System.out.print("Enter Course Code to check Vacancies: ");
 						String courseCode = sc.next();
 						staffManager.checkVacancies(courseCode);
 						break;
 					case 7:
 						// Print student list by index number
-						staffManager.printCourseList();
+						PrintManager.printCourseList();
 						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
-						Course course = staffManager.findCourse(courseCode);
+						Course course = Database.findCourse(courseCode);
 						if (course == null) break;
-						staffManager.printIndexList(course);
+						PrintManager.printIndexList(course);
 						System.out.print("\nEnter index to display student list: ");
 						int index = sc.nextInt();
-						staffManager.printStudentList(index);
+						PrintManager.printStudentList(index);
 						break;
 					case 8:
 						// Print student list by course code
-						staffManager.printCourseList();
+						PrintManager.printCourseList();
 						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
-						staffManager.printStudentList(courseCode);
+						PrintManager.printStudentList(courseCode);
 						break;
 					// To check session list
 					case 9:
 						// Print student list by index number
-						staffManager.printCourseList();
+						PrintManager.printCourseList();
 						System.out.print("\nEnter Course Code: ");
 						courseCode = sc.next().toUpperCase();
-						course = staffManager.findCourse(courseCode);
+						course = Database.findCourse(courseCode);
 						if (course == null) break;
-						staffManager.printIndexList(course);
+						PrintManager.printIndexList(course);
 						System.out.print("\nEnter Index to Check Session List: ");
-						Index index2 = staffManager.findIndex(sc.nextInt());
+						Index index2 = Database.findIndex(sc.nextInt());
 						staffManager.printSessions(index2);
 						break;
 					case 0:
