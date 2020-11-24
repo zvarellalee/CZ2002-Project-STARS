@@ -1,3 +1,8 @@
+/**
+ * Handles the printing logic
+ * @version 1.0
+ * @since 2020-11-20
+ */
 package control;
 
 import java.text.SimpleDateFormat;
