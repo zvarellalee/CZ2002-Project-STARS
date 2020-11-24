@@ -121,7 +121,6 @@ public class StudentUI implements UserUI {
 						} while (!indexExists);
 						break;
 					case 6:
-						// TODO
 						boolean canSwap = false;
 						// let student input old index to change index
 						int oldIndex = 0;
