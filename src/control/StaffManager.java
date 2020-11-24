@@ -54,33 +54,17 @@ public class StaffManager extends Manager {
 		return student.getAccessEnd();
 	}
 	
+	
 	/**
-	 * Updates the Course Code
-	 * @param course Course
+	 * Update Course
 	 * @param courseCode Course Code
-	 */
-	public void updateCourseCode(Course course, String courseCode) {
-		course.setCourseCode(courseCode);
-		Database.updateCourseDB(course);
-	}
-	
-	/**
-	 * Updates the Course Name
-	 * @param course Course
 	 * @param courseName Course Name
+	 * @param school Faculty
 	 */
-	public void updateCourseName(Course course, String courseName) {
+	public void updateCourse(String courseCode, String courseName, String school) {
+		Course course = Database.findCourse(courseCode);
 		course.setCourseName(courseName);
-		Database.updateCourseDB(course);
-	}
-	
-	/**
-	 * Updates the Faculty of the Course
-	 * @param course Course
-	 * @param courseSchool Faculty
-	 */
-	public void updateCourseSchool(Course course, String courseSchool) {
-		course.setSchool(courseSchool);
+		course.setSchool(school);
 		Database.updateCourseDB(course);
 	}
 	
@@ -88,14 +72,18 @@ public class StaffManager extends Manager {
 	 * Adds Student
 	 * @param student Student
 	 */
-	public void addStudent(Student student) {
+	public void addStudent(String username, String password, String firstName,
+			String lastName, String email, String matricNumber, String gender, String nationality) {
 		
-		if (Database.getStudentDB().containsKey(student.getMatricNumber())) {
+		Student newStudent = new Student(username, password, false, firstName, 
+				lastName, email, matricNumber, gender, nationality, 0);
+		
+		if (Database.getStudentDB().containsKey(newStudent.getMatricNumber())) {
 			System.out.println("Student already exists");
 			return;
 		}
 		
-		Database.updateStudentDB(student);
+		Database.updateStudentDB(newStudent);
         
 		PrintManager.printStudentList();
 	}
@@ -118,15 +106,77 @@ public class StaffManager extends Manager {
 		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		
-        Database.updateCourseDB(newCourse); 
+        	Database.updateCourseDB(newCourse); 
 		
 		PrintManager.printCourseList();
 	}
 	
 	/**
+	 * Adds the Index to the specific Course
+	 * @param courseCode Course Code
+	 * @param index Index ID
+	 * @param vacancies Number of vacancies 
+	 */
+	public void addIndex(String courseCode, int index, int vacancies) {
+		Course newCourse = Database.findCourse(courseCode);
+		// Adding of Index
+		Index newIndex = new Index(index, vacancies);
+		newCourse.addIndex(newIndex);
+		StaffManager.addSession(newIndex);
+		Database.updateCourseDB(newCourse);
+	}
+	
+	/**
+	 * Updates the index parameters for a given Index
+	 * @param courseCode Course Code
+	 */
+	public void updateIndex(int indexNumber, int vacancies) {
+		Index index = Database.findIndex(indexNumber);
+		// Adding of Index
+		index.setVacancies(vacancies);
+		Course course = getCourseFromIndex(indexNumber);
+		for (Index i: course.getIndexList()) {
+			if (i.getIndexNumber() == indexNumber)
+				i = index;
+				break;
+		}
+		Database.updateCourseDB(course);
+	}
+	
+	/**
+	 * Add Sessions for a new Index
+	 * @param newIndex Index 
+	 */
+	public static void addSession(Index newIndex) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int lectureCount = sc.nextInt();
+		while (lectureCount < 1) {
+			System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
+			lectureCount = sc.nextInt();											
+		}
+		System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int tutorialCount = sc.nextInt();
+		System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int laboratoryCount = sc.nextInt();
+		for (int j = 1; j <= lectureCount; j++) {
+			Session newSession = StaffManager.inputSession("LEC", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+		for (int j = 1; j <= tutorialCount; j++) {
+			Session newSession = StaffManager.inputSession("TUT", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+		for (int j = 1; j <= laboratoryCount; j++) {
+			Session newSession = StaffManager.inputSession("LAB", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+	}
+	
+	/**
 	 * Adds Student to the Index's ArrayList of Students and Waitlist
 	 * @param indexNumber Index Number
-	 * @param courseCode Course Code
+	 * @parm courseCode Course Code
 	 */
 	public void addStudentToIndex(int indexNumber, String courseCode) {
 		Course c = Database.findCourse(courseCode);
@@ -195,7 +245,7 @@ public class StaffManager extends Manager {
 					System.out.println("Please enter a valid time! Please try again.");
 					continue;
 				}
-				
+		
 				calendar.set(Calendar.DAY_OF_WEEK, day + 1);
 				calendar.set(Calendar.HOUR_OF_DAY, hour);
 				calendar.set(Calendar.MINUTE, min);
@@ -224,51 +274,24 @@ public class StaffManager extends Manager {
 		sc.nextLine();
 		venue = sc.nextLine();
 		System.out.print("\nEnter Day of " + sessionType + " Session " + j + ": ");
-		sessionDay = sc.nextInt();
-		while (sessionDay < 1 || sessionDay > 7) {
-			System.out.println("Please a valid day of the week! Please try again.");
-			sessionDay = sc.nextInt();
+		sessionDay = sc.next().charAt(0);
+		while (!('0'>=sessionDay ||sessionDay<='7')) {
+			System.out.println("Please enter a valid day of the week! Please try again.");
+			sessionDay = sc.next().charAt(0);
 		}
+		int sessionDayInt = Integer.parseInt(String.valueOf(sessionDay));
 		System.out.println("Entering Session Start Time: ");
-		sessionStart = inputTime(sessionDay, startHour, startMin, sessionStart, sc);
+		sessionStart = inputTime(sessionDayInt, startHour, startMin, sessionStart, sc);
 		System.out.println("Entering Session End Time: ");
-		sessionEnd = inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
+		sessionEnd = inputTime(sessionDayInt, endHour, endMin, sessionEnd, sc);
 		if (sessionEnd.compareTo(sessionStart) < 0) {
 			System.out.println("Invalid Session period! Please try again.\n");
-			sessionEnd = inputTime(sessionDay, endHour, endMin, sessionEnd, sc);
+			sessionEnd = inputTime(sessionDayInt, endHour, endMin, sessionEnd, sc);
 		}
 		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
 		return newSession;
 	}
 	
-	/**
-	 * Add Sessions for a new Index
-	 * @param newIndex Index 
-	 */
-	public static void addIndex(Index newIndex) {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int lectureCount = sc.nextInt();
-		while (lectureCount < 1) {
-			System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
-			lectureCount = sc.nextInt();											
-		}
-		System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int tutorialCount = sc.nextInt();
-		System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int laboratoryCount = sc.nextInt();
-		for (int j = 1; j <= lectureCount; j++) {
-			Session newSession = StaffManager.inputSession("LEC", j, sc);
-			newIndex.addSessionList(newSession);
-		}
-		for (int j = 1; j <= tutorialCount; j++) {
-			Session newSession = StaffManager.inputSession("TUT", j, sc);
-			newIndex.addSessionList(newSession);
-		}
-		for (int j = 1; j <= laboratoryCount; j++) {
-			Session newSession = StaffManager.inputSession("LAB", j, sc);
-			newIndex.addSessionList(newSession);
-		}
-	}
+	
 	
 }
