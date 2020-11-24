@@ -304,5 +304,30 @@ public class StaffManager extends Manager{
 		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
 		return newSession;
 	}
+	public static void addIndex(Index newIndex) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int lectureCount = sc.nextInt();
+		while (lectureCount < 1) {
+			System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
+			lectureCount = sc.nextInt();											
+		}
+		System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int tutorialCount = sc.nextInt();
+		System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
+		int laboratoryCount = sc.nextInt();
+		for (int j = 1; j <= lectureCount; j++) {
+			Session newSession = StaffManager.inputSession("LEC", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+		for (int j = 1; j <= tutorialCount; j++) {
+			Session newSession = StaffManager.inputSession("TUT", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+		for (int j = 1; j <= laboratoryCount; j++) {
+			Session newSession = StaffManager.inputSession("LAB", j, sc);
+			newIndex.addSessionList(newSession);
+		}
+	}
 	
 }
