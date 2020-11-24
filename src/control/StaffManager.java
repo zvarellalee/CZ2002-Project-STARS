@@ -15,7 +15,7 @@ import entities.Session;
 import entities.Staff;
 import entities.Student;
 
-public class StaffManager extends Manager{
+public class StaffManager extends Manager {
 	/**
 	 * Stores which Staff is using the Manager
 	 */
@@ -28,7 +28,6 @@ public class StaffManager extends Manager{
 	public StaffManager(Staff user) {
 		super();
 		this.user = user;
-		// Database.initialise(); // To test out the UI
 	}
 	
 	/**
@@ -116,7 +115,6 @@ public class StaffManager extends Manager{
 			System.out.printf("%-25s%-25s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
 		}
 	}
-	
 
 	/**
 	 * Adds Course
@@ -187,7 +185,6 @@ public class StaffManager extends Manager{
 		updateCourseDB(c);
 	}
 	
-	
 	/**
 	 * Prints the List of Students enrolled in the Course
 	 * Displays the Name, Gender and Nationality of the Students
@@ -235,6 +232,7 @@ public class StaffManager extends Manager{
 	}
 	
 	/**
+	 * Obtain Calendar Object by inputting time
 	 * @param day Day
 	 * @param hour Hour
 	 * @param min Minute
@@ -275,6 +273,7 @@ public class StaffManager extends Manager{
 	}	
 	
 	/**
+	 * Adds a Session
 	 * @param sessionType Session Type (Tutorial/Lab)
 	 * @param j Session number
 	 * @param sc Scanner
@@ -304,6 +303,11 @@ public class StaffManager extends Manager{
 		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
 		return newSession;
 	}
+	
+	/**
+	 * Add Sessions for an Index
+	 * @param newIndex 
+	 */
 	public static void addIndex(Index newIndex) {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
