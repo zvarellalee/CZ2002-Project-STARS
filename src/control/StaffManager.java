@@ -10,7 +10,7 @@ import java.util.*;
 
 import entities.*;
 
-public class StaffManager extends Manager{
+public class StaffManager extends Manager {
 	/**
 	 * Stores which Staff is using the Manager
 	 */
