@@ -5,36 +5,15 @@
  */
 package control;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import entities.*;
 
 public class Manager {
 	/**
-	 * Store the data objects in HashMap
-	 */
-	private static Database db;
-	/**
 	 * Constructor method for manager, initializes the data objects via FileManager read method
 	 */
 	public Manager() {
-		db = new Database();
-	}
-	
-	/**
-	 * Prints the List of Sessions in the Index
-	 * @param index Object
-	 */
-	public void printSessions (Index index ){
-		for (Session s: index.getSessionList()) {
-			System.out.println("\nSession Type: " + s.getSessionType());
-			System.out.println("Venue: " + s.getVenue());
-			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-			SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
-			System.out.println("Day: " + sdf.format(s.getSessionStart().getTime()));
-			System.out.println("Start Time: " + sdf2.format(s.getSessionStart().getTime()));
-			System.out.println("End Time: " + sdf2.format(s.getSessionEnd().getTime()));
-		}
+		new Database();
 	}
 	
 	/**
@@ -99,11 +78,27 @@ public class Manager {
 	
 	/**
 	 * Obtain the Course object from the entered Index 
-	 * @param Index Object
+	 * @param index Object
 	 * @return Course Object
 	 */
 	public static Course getCourseFromIndex(Index index) {
 		Course course = null;
+		for (Course c : Database.getCourseDB().values()) {
+			if (c.getIndexList().contains(index)) {
+				course = c;
+			}
+		}
+		return course;
+	}
+	
+	/**
+	 * Overloaded method - utilises the index number
+	 * @param indexNumber Index Number
+	 * @return Course Object
+	 */
+	public static Course getCourseFromIndex(int indexNumber) {
+		Course course = null;
+		Index index = Database.findIndex(indexNumber);
 		for (Course c : Database.getCourseDB().values()) {
 			if (c.getIndexList().contains(index)) {
 				course = c;
