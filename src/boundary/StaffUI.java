@@ -238,29 +238,7 @@ public class StaffUI implements UserUI {
 									int vacancies = sc.nextInt();
 									Index newIndex = new Index(index, vacancies);
 									newCourse.addIndex(newIndex);
-									boolean done = false;
-									System.out.print("\nEnter Number of Lecture Sessions for Index " + index + ": ");
-									int lectureCount = sc.nextInt();
-									while (lectureCount < 1) {
-										System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + index + ": ");
-										lectureCount = sc.nextInt();											
-									}
-									System.out.print("\nEnter Number of Tutorial Sessions for Index " + index + ": ");
-									int tutorialCount = sc.nextInt();
-									System.out.print("\nEnter Number of Laboratory Sessions for Index " + index + ": ");
-									int laboratoryCount = sc.nextInt();
-									for (int j = 1; j <= lectureCount; j++) {
-										Session newSession = StaffManager.inputSession("LEC", j, sc);
-										newIndex.addSessionList(newSession);
-									}
-									for (int j = 1; j <= tutorialCount; j++) {
-										Session newSession = StaffManager.inputSession("TUT", j, sc);
-										newIndex.addSessionList(newSession);
-									}
-									for (int j = 1; j <= laboratoryCount; j++) {
-										Session newSession = StaffManager.inputSession("LAB", j, sc);
-										newIndex.addSessionList(newSession);
-									}
+									StaffManager.addIndex(newIndex);
 								}
 								System.out.println("New Indexes Successfully Added!\n");
 							}
@@ -306,6 +284,7 @@ public class StaffUI implements UserUI {
 									int vacancy = sc.nextInt();
 									Index newIndex = new Index(index, vacancy);
 									course.addIndex(newIndex);
+									StaffManager.addIndex(newIndex);
 									System.out.println("Index " + index + " Successfully added to Course " + courseCode + "!\n");
 								}
 								else if (iSelection == 2) {
