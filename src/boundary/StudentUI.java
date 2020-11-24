@@ -8,6 +8,7 @@
 package boundary;
 import java.util.Scanner;
 import entities.Student;
+import control.PrintManager;
 import control.StudentManager;
 
 public class StudentUI implements UserUI {
@@ -65,7 +66,7 @@ public class StudentUI implements UserUI {
 				switch(choice) {
 					case 1:
 						// add course 
-						studentManager.printCourseList();
+						PrintManager.printCourseList();
 						System.out.println("Enter the Course Code that you wish to add  (Enter Q to exit): ");
 						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
@@ -73,7 +74,7 @@ public class StudentUI implements UserUI {
 						break;
 					case 2:
 						// drop course 
-						studentManager.printRegistered(user);
+						PrintManager.printRegistered(user);
 						System.out.println("Enter the Course Code that you wish to drop (Enter Q to exit): ");
 						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
@@ -81,7 +82,7 @@ public class StudentUI implements UserUI {
 						break;
 					case 3:
 						// check/print courses registered
-						studentManager.printRegistered(user);
+						PrintManager.printRegistered(user);
 						break;
 					case 4:
 						// check vacancies 
@@ -89,7 +90,7 @@ public class StudentUI implements UserUI {
 						boolean courseExists = false;
 						// loop user to re-enter courseCode if course does not exist
 						do {
-							studentManager.printCourseList();
+							PrintManager.printCourseList();
 							System.out.print("Enter the Course Code that you wish to check (Enter Q to exit): ");
 							courseCode = sc.next().toUpperCase();
 							if (courseCode.toUpperCase().equals("Q")) {
@@ -108,7 +109,7 @@ public class StudentUI implements UserUI {
 						int currentIndex = 0;
 						do {
 							// print courses registered
-							studentManager.printRegistered(user);
+							PrintManager.printRegistered(user);
 							System.out.print("Enter the current Index you want to change (Enter 0 to exit): ");
 							currentIndex = sc.nextInt();
 							if (currentIndex == 0) {
@@ -126,7 +127,7 @@ public class StudentUI implements UserUI {
 						int oldIndex = 0;
 						do {
 							// print courses registered
-							studentManager.printRegistered(user);
+							PrintManager.printRegistered(user);
 							System.out.print("Enter the current Index you want to swap (Enter 0 to exit): ");
 							oldIndex = sc.nextInt();
 							if (oldIndex == 0) {
