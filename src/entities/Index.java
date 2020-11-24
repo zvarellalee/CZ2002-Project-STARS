@@ -128,11 +128,15 @@ public class Index implements Serializable {
 	
 	/**
 	 * Removes a student from the Array List of Students enrolled in the Index
-	 * @param student Student to remove from the student list
+	 * @param studentID ID of student to remove from the student list
 	 */
-	public void removeStudentList(Student student) {
-		if (studentList.contains(student))
-			studentList.remove(student);
+	public void removeStudentList(String studentID) {
+		for (Student s: studentList) {
+			if (s.getMatricNumber().equals(studentID)) {
+				studentList.remove(s);
+				break;
+			}
+		}
 
 	}
 	
