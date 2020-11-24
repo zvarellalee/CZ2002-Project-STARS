@@ -87,7 +87,8 @@ public class PrintManager {
 	 * Print the index list of a course 
 	 * @param course Object
 	 */
-	public static void printIndexList(Course course) {
+	public static void printIndexList(String courseCode) {
+		Course course = Database.getCourseDB().get(courseCode);
 		System.out.println("Course Code: " + course.getCourseCode());
 		System.out.println("Course Name: " + course.getCourseName());
 		System.out.println("================================================================");
@@ -99,10 +100,27 @@ public class PrintManager {
 	}
 	
 	/**
-	 * Prints the List of Sessions in the Index
+	 * Prints the List of Sessions in the Index using index number
+	 * @param indexNumber Index Number
+	 */
+	public static void printSessions (int indexNumber) {
+		Index index = Database.findIndex(indexNumber);
+		for (Session s: index.getSessionList()) {
+			System.out.println("\nSession Type: " + s.getSessionType());
+			System.out.println("Venue: " + s.getVenue());
+			SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+			SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
+			System.out.println("Day: " + sdf.format(s.getSessionStart().getTime()));
+			System.out.println("Start Time: " + sdf2.format(s.getSessionStart().getTime()));
+			System.out.println("End Time: " + sdf2.format(s.getSessionEnd().getTime()));
+		}
+	}
+	
+	/**
+	 * Prints the List of Sessions in the Index using Index Object
 	 * @param index Object
 	 */
-	public static void printSessions (Index index ){
+	public static void printSessions (Index index) {
 		for (Session s: index.getSessionList()) {
 			System.out.println("\nSession Type: " + s.getSessionType());
 			System.out.println("Venue: " + s.getVenue());
