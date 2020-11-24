@@ -145,10 +145,36 @@ public class StaffUI implements UserUI {
 					case 3:
 						// Add a student
 						sc.nextLine();
-						System.out.print("Enter New Student's First Name: ");
-						String firstName = sc.nextLine();
-						System.out.print("Enter New Student's Last Name: ");
-						String lastName = sc.next();
+						String firstName = null, lastName = null, gender = null, nationality = null;
+						boolean flag = true;
+						do {  // Error Checking
+							System.out.print("Enter New Student's First Name:");
+							firstName = sc.nextLine();
+							if (validateString(firstName) == false) {
+								System.out.println("Invalid Characters in Student's First Name! \n");
+								continue;
+							}
+							System.out.print("Enter New Student's Last Name: ");
+							lastName = sc.next();
+							if (validateString(lastName) == false) {
+								System.out.println("Invalid Characters in Student's Last Name!\n");
+								continue;
+							}
+							System.out.print("Enter New Student's Gender: ");
+							gender = sc.next();
+							if (validateString(gender) == false) {
+								System.out.println("Invalid Characters in Student's Gender!\n");
+								continue;
+							}
+							System.out.print("Enter New Student's Nationality: ");
+							nationality = sc.next();
+							if (validateString(nationality) == false) {
+								System.out.println("Invalid Characters in Student's Nationality!\n");
+								continue;
+							}
+							flag = false;
+						}
+						while (flag);
 						System.out.print("Enter New Student's Username: ");
 						String username = sc.next();
 						System.out.print("Enter New Student's Default Password: ");
@@ -157,10 +183,6 @@ public class StaffUI implements UserUI {
 						String email = sc.next();
 						System.out.print("Enter New Student's Matriculation Number: ");
 						String matricNumber = sc.next().toUpperCase();
-						System.out.print("Enter New Student's Gender: ");
-						String gender = sc.next();
-						System.out.print("Enter New Student's Nationality: ");
-						String nationality = sc.next();
 						
 						Student newStudent = new Student(username, password, false, firstName, 
 								lastName, email, matricNumber, gender, nationality, 0);
@@ -424,5 +446,17 @@ public class StaffUI implements UserUI {
 			System.out.println("Invalid input! Please try again.\n");
 		}
 		return calendar;
-	}	
+	}
+
+	public boolean validateString(String str) {
+	      str = str.toLowerCase();
+	      char[] charArray = str.toCharArray();
+	      for (int i = 0; i < charArray.length; i++) {
+	         char ch = charArray[i];
+	         if (!((ch >= 'a' && ch <= 'z') || (ch == ' '))) {
+	            return false;
+	         }
+	      }
+	      return true;
+	   }
 }
