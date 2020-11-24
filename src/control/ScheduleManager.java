@@ -8,7 +8,6 @@ package control;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import entities.Course;
 import entities.Index;
 import entities.RegisteredCourse;
