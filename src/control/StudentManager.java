@@ -188,7 +188,7 @@ public class StudentManager extends Manager {
 				if (course.getCourse().getCourseCode().equals(courseCode)) {
 					Index droppedIndex = findIndex(course.getIndex().getIndexNumber());
 					// Remove Student from the studentList in Index
-					droppedIndex.removeStudentList(user);
+					droppedIndex.removeStudentList(user.getMatricNumber());
 					// Update Student's number of AUs
 					user.setNumAU(user.getNumAU() - droppedCourse.getAU());
 					// Remove course from student's list of registered courses
@@ -247,7 +247,7 @@ public class StudentManager extends Manager {
 						}
 						waiting.setCourseList(newCourseList);
 						droppedIndex.addStudentList(waiting);
-						droppedIndex.removeWaitList(waiting);
+						droppedIndex.removeWaitList(waiting.getMatricNumber());
 	
 						// Update Student Database
 						updateStudentDB(waiting);
@@ -448,7 +448,7 @@ public class StudentManager extends Manager {
 				
 				// drop student from currentIndex
 				// remove student from studentList in currentIndex
-				selectedCurrentIndex.removeStudentList(user);
+				selectedCurrentIndex.removeStudentList(user.getMatricNumber());
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : courses) {
 					if (registered.getIndex() == selectedCurrentIndex) {
@@ -476,7 +476,7 @@ public class StudentManager extends Manager {
 					}
 					waiting.setCourseList(newCourseList);
 					selectedCurrentIndex.addStudentList(waiting);
-					selectedCurrentIndex.removeWaitList(waiting);
+					selectedCurrentIndex.removeWaitList(waiting.getMatricNumber());
 	
 					// Update Course Database
 					updateCourseDB(selectedCurrentCourse);
@@ -687,7 +687,7 @@ public class StudentManager extends Manager {
 				
 				// drop user from currentIndex
 				// remove user from studentList in currentIndex
-				userIndex.removeStudentList(user);
+				userIndex.removeStudentList(user.getMatricNumber());
 				// remove index from student's list of registered index
 				for (RegisteredCourse registered : userRegCourses) {
 					if (registered.getIndex().getIndexNumber() == oldIndex) {
@@ -703,7 +703,7 @@ public class StudentManager extends Manager {
 				RegisteredCourse userRegisteredIndex = new RegisteredCourse(false, userCourse, userIndex, peer);
 				peerRegCourses.add(userRegisteredIndex);
 				// drop peer from peerIndex
-				peerIndex.removeStudentList(peer);
+				peerIndex.removeStudentList(peer.getMatricNumber());
 				// remove peerIndex from peer's list of registered index
 				for (RegisteredCourse registered : peerRegCourses) {
 					if (registered.getIndex().getIndexNumber() == newIndex) {
