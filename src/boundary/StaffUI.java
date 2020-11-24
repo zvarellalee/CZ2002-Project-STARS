@@ -427,6 +427,11 @@ public class StaffUI implements UserUI {
 		return calendar;
 	}
 
+	/**
+	 * Check if an input String contains only alphabets and/or whitespace
+	 * @param str String
+	 * @return boolean value whether the String only contains alphabets and/or whitespace
+	 */
 	public boolean validateString(String str) {
 	      str = str.toLowerCase();
 	      char[] charArray = str.toCharArray();
