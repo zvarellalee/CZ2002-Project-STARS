@@ -115,6 +115,7 @@ public class StaffManager extends Manager {
 			System.out.printf("%-25s%-25s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
 		}
 	}
+	
 
 	/**
 	 * Adds Course
@@ -184,6 +185,7 @@ public class StaffManager extends Manager {
 		
 		updateCourseDB(c);
 	}
+	
 	
 	/**
 	 * Prints the List of Students enrolled in the Course
@@ -304,9 +306,10 @@ public class StaffManager extends Manager {
 		return newSession;
 	}
 	
+	
 	/**
-	 * Add Sessions for an Index
-	 * @param newIndex 
+	 * Add Sessions for a new Index
+	 * @param newIndex Index 
 	 */
 	public static void addIndex(Index newIndex) {
 		Scanner sc = new Scanner(System.in);
