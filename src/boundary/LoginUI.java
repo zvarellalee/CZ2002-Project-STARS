@@ -1,11 +1,11 @@
 /**
  * User Interface for Login
+ * @author Zachary Varella Lee Zheyu
  * @version 1.0
  * @since 2020-11-20
  */
 package boundary;
 import java.io.Console;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import control.*;
