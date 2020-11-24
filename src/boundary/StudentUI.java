@@ -71,6 +71,7 @@ public class StudentUI implements UserUI {
 						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
 							studentManager.addCourse(courseCode);
+							PrintManager.printRegistered(user);
 						break;
 					case 2:
 						// drop course 
@@ -79,6 +80,7 @@ public class StudentUI implements UserUI {
 						courseCode = sc.next().toUpperCase();
 						if (!courseCode.toUpperCase().equals("Q"))
 							studentManager.dropCourse(courseCode);
+							PrintManager.printRegistered(user);
 						break;
 					case 3:
 						// check/print courses registered
@@ -118,6 +120,7 @@ public class StudentUI implements UserUI {
 								break;
 							}
 							indexExists = studentManager.changeIndex(currentIndex);
+							if (indexExists) PrintManager.printRegistered(user);
 						} while (!indexExists);
 						break;
 					case 6:
@@ -142,6 +145,7 @@ public class StudentUI implements UserUI {
 								break;
 							}
 							canSwap = studentManager.swapIndex(oldIndex, matricNumber);
+							if (canSwap) PrintManager.printRegistered(user);
 						} while (!canSwap);
 						break;
 					case 7:
