@@ -97,6 +97,66 @@ public class Manager {
 		}
 		return courseIndexes;
 	}
+	
+	/**
+	 * Prints out the List of Students with their Matriculation Number and Full Name
+	 */
+	public void printStudentList() {
+		System.out.println("\n================================================================");
+		System.out.printf("%-25s%-25s\n", "Matriculation Number", "Full Name");
+		System.out.println("================================================================");
+		for (Student student : getStudentDB().values()){
+			System.out.printf("%-25s%-25s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
+		}
+	}
+	
+	
+	/**
+	 * Prints the List of Students enrolled in the Course
+	 * Displays the Name, Gender and Nationality of the Students
+	 * @param courseCode Course Code
+	 */
+	public void printStudentList(String courseCode) {
+		Course course = findCourse(courseCode);
+		if (course == null)
+			return;
+	
+		System.out.println("Course Code: " + courseCode);
+		System.out.println("================================================================");
+		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
+		System.out.println("================================================================");
+		
+		
+		ArrayList<Index> courseIndex = course.getIndexList();
+		
+		for (Index index : courseIndex) {
+			for (Student student : index.getStudentList()) {
+				System.out.printf("%-20s%-20s%-20s\n", student.getFirstName() + " " + student.getLastName(), student.getGender(), student.getNationality());
+			}
+		}
+		System.out.println();
+	}
+	
+	/**
+	 * Prints the List of Students enrolled in the Index
+	 * Displays the Name, Gender and Nationality of the Students
+	 * @param indexNumber Index Number
+	 */
+	public void printStudentList(int indexNumber) {
+		Index index = findIndex(indexNumber);
+		if (index == null)
+			return;
+		System.out.println("Index Number: " + indexNumber);
+		System.out.println("================================================================");
+		System.out.printf("%-20s%-20s%-20s\n", "Name", "Gender", "Nationality");
+		System.out.println("================================================================");
+		
+		for (Student student : index.getStudentList()) {
+			System.out.printf("%-20s%-20s%-20s\n", student.getFirstName() + " " + student.getLastName(), student.getGender(), student.getNationality());
+		}
+		System.out.println();
+	}
+	
 	/**
 	 * Prints the List of Courses with Course Code and Name
 	 */
@@ -108,6 +168,20 @@ public class Manager {
 			System.out.println(course.getCourseCode() + "\t\t" + course.getCourseName());
 		}
 		System.out.println("");
+	}
+	
+	/**
+	 * Print the index list of a course
+	 */
+	public void printIndexList(Course course) {
+		System.out.println("Course Code: " + course.getCourseCode());
+		System.out.println("Course Name: " + course.getCourseName());
+		System.out.println("================================================================");
+		System.out.println("Indexes");
+		System.out.println("================================================================");
+		for (Index i: course.getIndexList()) {
+			System.out.println(i.getIndexNumber());
+		}
 	}
 	
 	/**
