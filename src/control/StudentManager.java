@@ -304,7 +304,6 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public boolean changeIndex(int currentIndex) {
-		// TODO: check if fail test cases 
 		// initialise index number does not exist
 		boolean indexExists = false;
 		// find the course which student wants to change currentIndex
@@ -316,7 +315,6 @@ public class StudentManager extends Manager {
 			System.out.println("Selected Index does not exist. Please try again!");
 			return indexExists;
 		}
-		
 		
 		ArrayList<RegisteredCourse> courses = user.getCourseList();
 		// if student has no registered courses
@@ -509,7 +507,6 @@ public class StudentManager extends Manager {
 	 */
 	@SuppressWarnings("resource")
 	public boolean swapIndex(int oldIndex, String matricNumber) {
-		// TODO: check if fail test cases 
 		// initialise swap fail
 		boolean canSwap = false;
 		// find the peer to change student's currentIndex to peer's newIndex     

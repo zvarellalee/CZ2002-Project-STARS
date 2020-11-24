@@ -109,11 +109,11 @@ public class StaffManager extends Manager{
 	 * Prints out the List of Students with their Matriculation Number and Full Name
 	 */
 	private void printStudentList() {
-		System.out.println("================================================================");
-		System.out.printf("%-20s%-20s\n", "Matriculation Number", "Full Name");
+		System.out.println("\n================================================================");
+		System.out.printf("%-25s%-25s\n", "Matriculation Number", "Full Name");
 		System.out.println("================================================================");
 		for (Student student : getStudentDB().values()){
-			System.out.printf("%-20s%-20s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
+			System.out.printf("%-25s%-25s\n", student.getMatricNumber(), student.getFirstName() + " " + student.getLastName());		
 		}
 	}
 	

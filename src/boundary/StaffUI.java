@@ -144,8 +144,9 @@ public class StaffUI implements UserUI {
 						break;						
 					case 3:
 						// Add a student
+						sc.nextLine();
 						System.out.print("Enter New Student's First Name: ");
-						String firstName = sc.next();
+						String firstName = sc.nextLine();
 						System.out.print("Enter New Student's Last Name: ");
 						String lastName = sc.next();
 						System.out.print("Enter New Student's Username: ");

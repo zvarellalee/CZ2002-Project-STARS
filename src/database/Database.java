@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import control.FileManager;
 import entities.Course;
 import entities.Index;
