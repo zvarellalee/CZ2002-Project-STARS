@@ -4,12 +4,12 @@
  * @since 2020-11-20
  */
 package boundary;
-
-import database.Database;
+//import database.Database;
 
 public class Main {
 	public static void main(String[] args) {
-		//Database.initialise();
+		// to initialise pre-loaded values
+		//Database.initialise(); 
 		UserUI login = new LoginUI();
 		login.showUI();
 	}
