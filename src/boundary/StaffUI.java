@@ -158,12 +158,14 @@ public class StaffUI implements UserUI {
 							lastName = sc.next();
 							if (validateString(lastName) == false) {
 								System.out.println("Invalid Characters in Student's Last Name!\n");
+								sc.nextLine();
 								continue;
 							}
 							System.out.print("Enter New Student's Nationality: ");
 							nationality = sc.next();
 							if (validateString(nationality) == false) {
 								System.out.println("Invalid Characters in Student's Nationality!\n");
+								sc.nextLine();
 								continue;
 							}
 							flag = false;
@@ -283,12 +285,16 @@ public class StaffUI implements UserUI {
 								int iSelection = sc.nextInt();
 								
 								if (iSelection == 1) {
-									System.out.print("Enter Index to add: ");
-									int index = sc.nextInt();
-									if (StaffManager.indexExists(index)) {
-										System.out.println("Index already exist! Please add a new Index Number");
-										continue;
-									}
+									int index;
+									do {
+										System.out.print("Enter Index to add: ");
+										index = sc.nextInt();
+										if (StaffManager.indexExists(index)) {
+											System.out.println("Index already exist! Please add a new Index Number.\n");
+											continue;
+										}
+									} while (StaffManager.indexExists(index));
+									
 									// Update Vacancies
 									System.out.print("Enter new Vacancy to Index " + index + ": ");
 									int vacancy = sc.nextInt();
@@ -296,18 +302,25 @@ public class StaffUI implements UserUI {
 									System.out.println("Index " + index + " Successfully added to Course " + courseCode + "!\n");
 								}
 								else if (iSelection == 2) {
-									System.out.print("Enter Index to update: ");
-									int index = sc.nextInt();
 									// Error Handling
-									if (!StaffManager.indexExists(index)) {
-										System.out.println("Index does not exist! Please add this Index number before updating.");
-										continue;
-									}
+									int index;
+									flag = true;
+									do {
+										System.out.print("Enter Index to update: ");
+										index = sc.nextInt();
+										if (!StaffManager.indexExists(index)) {
+											System.out.println("Index does not exist! Please add this Index number before updating.\n");
+											continue;
+										}
+										
+										if (!StaffManager.getCourseFromIndex(index).getCourseCode().equals(courseCode)) {
+											System.out.println("Index to be updated is from another course! Please try again.\n");
+											continue;
+										}
+										flag = false;
+									} while (flag);
 									
-									if (!StaffManager.getCourseFromIndex(index).getCourseCode().equals(courseCode)) {
-										System.out.println("Index to be updated is from another course! Please try again.");
-										continue;
-									}
+									
 									// Update Vacancies
 									System.out.print("Enter new Vacancy to Index " + index + ": ");
 									int vacancy = sc.nextInt();
