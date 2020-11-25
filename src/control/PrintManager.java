@@ -85,7 +85,7 @@ public class PrintManager {
 	
 	/**
 	 * Print the index list of a course 
-	 * @param course Object
+	 * @param courseCode Course Code
 	 */
 	public static void printIndexList(String courseCode) {
 		Course course = Database.getCourseDB().get(courseCode);

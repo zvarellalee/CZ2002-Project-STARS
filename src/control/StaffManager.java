@@ -69,8 +69,15 @@ public class StaffManager extends Manager {
 	}
 	
 	/**
-	 * Adds Student
-	 * @param student Student
+	 * Adds a new student to the Database
+	 * @param username Student Username
+	 * @param password Student Password
+	 * @param firstName First Name
+	 * @param lastName Last Name
+	 * @param email Student Email Address
+	 * @param matricNumber Matriculation Number
+	 * @param gender Student Gender
+	 * @param nationality Student Nationality
 	 */
 	public void addStudent(String username, String password, String firstName,
 			String lastName, String email, String matricNumber, String gender, String nationality) {
@@ -128,7 +135,8 @@ public class StaffManager extends Manager {
 	
 	/**
 	 * Updates the index parameters for a given Index
-	 * @param courseCode Course Code
+	 * @param indexNumber Index Number
+	 * @param vacancies Number of vacancies
 	 */
 	public void updateIndex(int indexNumber, int vacancies) {
 		Index index = Database.findIndex(indexNumber);
@@ -217,7 +225,7 @@ public class StaffManager extends Manager {
 	/**
 	 * Adds students on the waitlist to any vacancies in the index
 	 * @param indexNumber Index Number
-	 * @parm courseCode Course Code
+	 * @param courseCode Course Code
 	 */
 	public void addStudentsToIndex(int indexNumber, String courseCode) {
 		Course c = Database.findCourse(courseCode);
