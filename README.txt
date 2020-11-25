@@ -3,8 +3,8 @@
 Run main.bat to view password masking
 
 ### Staff Accounts
-1)  Username: R010    Password:123zxc   StaffID:232A
-2)  Username: DDIXON2 Password: zxc123  StaffID:212B
+1)  Username: R010    Password: 123zxc    StaffID: 232A
+2)  Username: DDIXON2 Password: zxc123    StaffID: 212B
 
 ### Student Accounts
 
@@ -15,20 +15,20 @@ Run main.bat to view password masking
 2)  Username: TOMH002 Password: a321 Matric: U666H
 
 
-3) Username: JSMITH005  Password: john2   Matric: U432J
-4) Username: LIM037     Password: mlmm3   Matric: U858M
-5) Username: C1527      Password: curl    Matric: U876C
-6) Username: AME003     Password: amelia  Matric: U111C
-7) Username: S2005      Password: st200   Matric: U192J
-8) Username: JYO555     Password: jas3    Matric: U376J
-9) Username: SWO333     Password: sh3w    Matric: U246I
-10) Username: SM667     Password: sakura3 Matric: U676S
-11) Username: KBS1      Password: kiboolol Matric: U112L
-12) Username: J789      Password: jacq    Matic: U329D
-13) Username: SDHU888   Password: b12     Matric: U454J
-14) Username: JHO963    Password: jayh0   Matric: U223K
-15) Username: JTIAN008  Password: w432    Matric: U542L
-16) Username: SHO023    Password: s023    Matric: U998A
+3) Username: JSMITH005  Password: john2     Matric: U432J
+4) Username: LIM037     Password: mlmm3     Matric: U858M
+5) Username: C1527      Password: curl      Matric: U876C
+6) Username: AME003     Password: amelia    Matric: U111C
+7) Username: S2005      Password: st200     Matric: U192J
+8) Username: JYO555     Password: jas3      Matric: U376J
+9) Username: SWO333     Password: sh3w      Matric: U246I
+10) Username: SM667     Password: sakura3   Matric: U676S
+11) Username: KBS1      Password: kiboolol  Matric: U112L
+12) Username: J789      Password: jacq      Matric: U329D
+13) Username: SDHU888   Password: b12       Matric: U454J
+14) Username: JHO963    Password: jayh0     Matric: U223K
+15) Username: JTIAN008  Password: w432      Matric: U542L
+16) Username: SHO023    Password: s023      Matric: U998A
 
 ### Course Information
 
