@@ -27,6 +27,14 @@ public class StaffManager extends Manager {
 	}
 	
 	/**
+	 * Gets the Staff object
+	 * @return Staff Object
+	 */
+	public Staff getUser() {
+		return user;
+	}
+	
+	/**
 	 * Edits the Access Period of the Input Student
 	 * @param accessStart Calendar Access Start Period
 	 * @param accessEnd Calendar Access End Period
