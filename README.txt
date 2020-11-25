@@ -1,5 +1,7 @@
 # CZ2002-Project
 
+Run main.bat to view password masking
+
 ### Staff Accounts
 1)  Username: R010    Password:123zxc   StaffID:232A
 2)  Username: DDIXON2 Password: zxc123  StaffID:212B
