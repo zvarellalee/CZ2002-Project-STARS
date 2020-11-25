@@ -106,7 +106,7 @@ public class StaffManager extends Manager {
 		ArrayList<Index> il = new ArrayList<Index>();
 		newCourse.setIndexList(il);
 		
-        	Database.updateCourseDB(newCourse); 
+       		Database.updateCourseDB(newCourse); 
 		
 		PrintManager.printCourseList();
 	}
@@ -155,12 +155,51 @@ public class StaffManager extends Manager {
 	 */
 	public static void addSession(Index newIndex) {
 		Scanner sc = new Scanner(System.in);
-		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int lectureCount = sc.nextInt();
-		System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int tutorialCount = sc.nextInt();
-		System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
-		int laboratoryCount = sc.nextInt();
+		int lectureCount = 0;
+		int tutorialCount = 0;
+		int laboratoryCount = 0;
+		boolean flag = true;
+		do {
+			try {
+				System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
+				lectureCount = sc.nextInt();
+				flag = false;
+			}
+			catch (Exception InputMismatchException) {
+				System.out.println("Invalid input! Please try again.\n");
+				sc.next();
+			}
+		} while (flag);
+		
+		flag = true;
+		do {
+			try {
+				System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
+				tutorialCount = sc.nextInt();
+				flag = false;
+			}
+			catch (Exception InputMismatchException) {
+				System.out.println("Invalid input! Please try again.\n");
+				sc.next();
+				
+			}
+		} while (flag);
+		
+		flag = true;
+		do {
+			try {
+				System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
+				laboratoryCount = sc.nextInt();
+				flag = false;
+			}
+			catch (Exception InputMismatchException) {
+				System.out.println("Invalid input! Please try again.\n");
+				sc.next();
+			}
+		} while (flag);
+		
+	
+		
 		for (int j = 1; j <= lectureCount; j++) {
 			Session newSession = StaffManager.inputSession("LEC", j, sc);
 			newIndex.addSessionList(newSession);
@@ -277,15 +316,19 @@ public class StaffManager extends Manager {
 		sessionDay = sc.next().charAt(0);
 		while (!('0'>=sessionDay ||sessionDay<='7')) {
 			System.out.println("Please enter a valid day of the week! Please try again.");
+			System.out.print("\nEnter Day of " + sessionType + " Session " + j + ": ");
 			sessionDay = sc.next().charAt(0);
 		}
 		int sessionDayInt = Integer.parseInt(String.valueOf(sessionDay));
-		System.out.println("Entering Session Start Time: ");
+		System.out.println("\nEntering Session Start Time: ");
 		sessionStart = inputTime(sessionDayInt, startHour, startMin, sessionStart, sc);
-		System.out.println("Entering Session End Time: ");
+		System.out.println("\nEntering Session End Time: ");
 		sessionEnd = inputTime(sessionDayInt, endHour, endMin, sessionEnd, sc);
-		if (sessionEnd.compareTo(sessionStart) < 0) {
-			System.out.println("Invalid Session period! Please try again.\n");
+		while (sessionEnd.compareTo(sessionStart) < 0) {
+			System.out.println("Session Ends before Session Start! Please try again.\n");
+			System.out.println("Entering Session Start Time: ");
+			sessionStart = inputTime(sessionDayInt, startHour, startMin, sessionStart, sc);
+			System.out.println("Entering Session End Time: ");
 			sessionEnd = inputTime(sessionDayInt, endHour, endMin, sessionEnd, sc);
 		}
 		Session newSession = new Session(sessionType, venue, sessionStart, sessionEnd);
