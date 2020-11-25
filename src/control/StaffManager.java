@@ -132,13 +132,19 @@ public class StaffManager extends Manager {
 	 */
 	public void updateIndex(int indexNumber, int vacancies) {
 		Index index = Database.findIndex(indexNumber);
-		// Adding of Index
-		index.setVacancies(vacancies);
-		Course course = getCourseFromIndex(indexNumber);
+		Course course = getCourseFromIndex(index);
+		// Referencing to Index in Course
 		for (Index i: course.getIndexList()) {
 			if (i.getIndexNumber() == indexNumber)
-				i = index;
+				index = i;
 				break;
+		}
+		
+		// Update vacancies
+		index.setVacancies(vacancies);
+		
+		if (index.getWaitListSize() > 0) {
+			addStudentsToIndex(indexNumber, course.getCourseCode());
 		}
 		Database.updateCourseDB(course);
 	}
@@ -151,10 +157,6 @@ public class StaffManager extends Manager {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("\nEnter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
 		int lectureCount = sc.nextInt();
-		while (lectureCount < 1) {
-			System.out.print("\nInvalid Entry. Lecture Session is Required. Please Enter Number of Lecture Sessions for Index " + newIndex.getIndexNumber() + ": ");
-			lectureCount = sc.nextInt();											
-		}
 		System.out.print("\nEnter Number of Tutorial Sessions for Index " + newIndex.getIndexNumber() + ": ");
 		int tutorialCount = sc.nextInt();
 		System.out.print("\nEnter Number of Laboratory Sessions for Index " + newIndex.getIndexNumber() + ": ");
@@ -183,8 +185,6 @@ public class StaffManager extends Manager {
 		Index index = Database.findIndex(indexNumber);
 		int vacancies = index.getVacancies();
 		ArrayList<Student> studentWaitlist = index.getWaitList();
-		ArrayList<Student> studentlist = index.getStudentList();
-		
 		
 		if (vacancies <= 0) { // if there are no vacancies
 			return;
